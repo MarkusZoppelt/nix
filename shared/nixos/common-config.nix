@@ -60,7 +60,11 @@
     enableSSHSupport = true;
   };
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
   services.tailscale.enable = true;
   services.yubikey-agent.enable = true;
   services.pcscd.enable = true;
