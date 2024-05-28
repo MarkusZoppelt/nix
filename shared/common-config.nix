@@ -21,6 +21,7 @@
     tree
     unzip
     yt-dlp
+    yubikey-manager
     zsh
     zsh-completions
     zsh-autosuggestions
