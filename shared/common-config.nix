@@ -3,7 +3,6 @@
   environment.systemPackages = with pkgs; [
     age
     age-plugin-yubikey
-    clang
     fd
     fzf
     gh
