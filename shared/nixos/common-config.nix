@@ -48,7 +48,6 @@
 
   environment.systemPackages = with pkgs; [
     clang
-    fzf
     git
     starship
     wofi
