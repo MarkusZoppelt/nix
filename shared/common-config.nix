@@ -35,4 +35,11 @@
   programs.zsh.enable = true;
   programs.tmux.enable = true;
   programs.direnv.enable = true;
+
+
+  # Set up npm so that it installs global packages in the user's home directory
+  environment.variables = {
+    NPM_CONFIG_PREFIX = "$HOME/.npm";
+    PATH = "$HOME/.npm/bin:${pkgs.lib.makeSearchPath "bin" [ pkgs.nodejs ]}:$PATH";
+  };
 }
