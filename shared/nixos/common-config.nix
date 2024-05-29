@@ -35,7 +35,6 @@
     pulse.enable = true;
   };
 
-  programs.tmux.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
   programs.firefox.enable = true;
