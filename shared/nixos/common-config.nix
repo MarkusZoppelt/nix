@@ -41,6 +41,11 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+  };
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
