@@ -2,8 +2,11 @@
   description = "MarkusZoppelt's Nix configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    darwin.url = "github:LnL7/nix-darwin";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, darwin }: {
