@@ -6,6 +6,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       alacritty
+      signal-desktop
+      spotify
+      wezterm
     ];
   };
 
@@ -17,6 +20,7 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   programs.hyprland.enable = true;
+  programs.waybar.enable = true;
 
   services.xserver.xkb = {
     layout = "us";
@@ -52,9 +56,9 @@
   };
 
   environment.systemPackages = with pkgs; [
+    btop
     clang
-    git
-    starship
+    pavucontrol
     wofi
   ];
 
@@ -68,6 +72,7 @@
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
   };
+
   services.tailscale.enable = true;
   services.yubikey-agent.enable = true;
   services.pcscd.enable = true;
