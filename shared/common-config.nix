@@ -34,4 +34,5 @@
 
   programs.zsh.enable = true;
   programs.tmux.enable = true;
+  programs.direnv.enable = true;
 }
