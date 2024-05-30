@@ -1,5 +1,13 @@
 { pkgs, ... }:
 {
+  ### GENERAL CONFIGURATION ###
+  nixpkgs.config.allowUnfree = true;
+  networking.networkmanager.enable = true;
+  time.timeZone = "Europe/Berlin";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+
+  ### USER CONFIGURATION ###
   users.users.mz = {
     isNormalUser = true;
     description = "mz";
@@ -11,24 +19,20 @@
       wezterm
     ];
   };
+  users.defaultUserShell = pkgs.zsh;
 
-  networking.networkmanager.enable = true;
-  time.timeZone = "Europe/Berlin";
-  i18n.defaultLocale = "en_US.UTF-8";
 
+  ### DESKTOP ENVIRONMENT ###
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
-
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-  services.printing.enable = true;
 
+  ### SOUND ###
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -39,40 +43,40 @@
     pulse.enable = true;
   };
 
-  users.defaultUserShell = pkgs.zsh;
 
-  programs.firefox.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-
+  ### PROGRAMS ###
   programs.zsh = {
     enable = true;
     autosuggestions.enable = true;
   };
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
   };
-
-  environment.systemPackages = with pkgs; [
-    btop
-    clang
-    pavucontrol
-    wofi
-  ];
-
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
+  programs.firefox.enable = true;
 
+
+  ### ENVIRONMENT ###
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.systemPackages = with pkgs; [
+    btop
+    clang
+    hyprlock
+    pavucontrol
+    wofi
+  ];
+
+
+  ### SERVICES ###
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
   };
-
   services.tailscale.enable = true;
   services.yubikey-agent.enable = true;
   services.pcscd.enable = true;
