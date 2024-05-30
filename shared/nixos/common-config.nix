@@ -24,13 +24,16 @@
 
 
   ### DESKTOP ENVIRONMENT ###
-  services.xserver.enable = true;
+  services.xserver = {
+    enable = true;
+    displayManager.lightdm.enable = false;
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
 
   ### SOUND ###
