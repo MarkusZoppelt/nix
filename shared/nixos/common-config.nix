@@ -65,8 +65,14 @@
   environment.systemPackages = with pkgs; [
     btop
     clang
+    grim
     hyprlock
+    libnotify
     pavucontrol
+    slurp
+    swaynotificationcenter
+    swww
+    wl-clipboard
     wofi
   ];
 
