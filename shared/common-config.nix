@@ -29,6 +29,13 @@
     zsh-completions
   ];
 
+  fonts = {
+    fontDir.enable = true;
+    fonts = with pkgs; [
+      monaspace
+    ];
+  };
+
   programs.zsh = {
     enable = true;
     enableCompletion = true;
