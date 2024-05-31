@@ -8,23 +8,25 @@
     gh
     git
     go
+    gum
     jq
     lazygit
+    monaspace
     neovim
     nodejs
     passage
     qrencode
     restic
-    rustup
     ripgrep
+    rustup
     starship
     tree
     unzip
     yt-dlp
     yubikey-manager
     zsh
-    zsh-completions
     zsh-autosuggestions
+    zsh-completions
   ];
 
   programs.zsh.enable = true;
