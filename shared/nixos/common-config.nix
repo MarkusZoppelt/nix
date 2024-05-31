@@ -84,4 +84,12 @@
   services.tailscale.enable = true;
   services.yubikey-agent.enable = true;
   services.pcscd.enable = true;
+
+
+  ### LD FIX ### <- Uncomment this block if you have issues with missing libs
+  # programs.nix-ld.enable = true;
+  # programs.nix-ld.libraries = with pkgs; [
+  #   # Add any missing dynamic libraries for unpackaged
+  #   # programs here, NOT in environment.systemPackages.
+  # ];
 }
