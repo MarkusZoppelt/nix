@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  users.users.mz.home = "/Users/mz";
   environment.systemPackages = with pkgs; [
     mas
   ];

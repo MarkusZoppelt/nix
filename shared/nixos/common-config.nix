@@ -9,6 +9,7 @@
   ### USER CONFIGURATION ###
   users.users.mz = {
     isNormalUser = true;
+    home = "/home/mz";
     description = "mz";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
