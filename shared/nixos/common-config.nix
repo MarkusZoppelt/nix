@@ -45,6 +45,12 @@
     pulse.enable = true;
   };
 
+  programs.zsh = {
+    enable = true;
+    shellInit = ''export NIX_LD=$(nix eval --impure --raw --expr '
+    let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD ')'';
+  };
+
 
   ### PROGRAMS ###
   programs.neovim = {
@@ -86,10 +92,10 @@
   services.pcscd.enable = true;
 
 
-  ### LD FIX ### <- Uncomment this block if you have issues with missing libs
-  # programs.nix-ld.enable = true;
-  # programs.nix-ld.libraries = with pkgs; [
-  #   # Add any missing dynamic libraries for unpackaged
-  #   # programs here, NOT in environment.systemPackages.
-  # ];
+  ### LD FIX ###
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged
+    # programs here, NOT in environment.systemPackages.
+  ];
 }
