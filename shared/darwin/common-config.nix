@@ -33,4 +33,6 @@
 
   # Enable the Nix daemon service
   services.nix-daemon.enable = true;
+  security.pam.enableSudoTouchIdAuth = true;
+
 }
