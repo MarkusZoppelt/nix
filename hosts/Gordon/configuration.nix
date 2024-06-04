@@ -7,8 +7,6 @@
   ### BOOTLOADER & INITRD ###
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices."luks-c3f7f747-e412-4955-8f77-2d3b3ed12cbd".device = "/dev/disk/by-uuid/c3f7f747-e412-4955-8f77-2d3b3ed12cbd";
-
 
   networking.hostName = "Gordon";
   
