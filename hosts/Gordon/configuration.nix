@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   imports = [
       ./hardware-configuration.nix
@@ -42,6 +42,17 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  system.autoUpgrade = {
+    enable = true;
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      # "-L" # print build logs
+    ];
+    dates = "02:00";
+    randomizedDelaySec = "45min";
+  };
 
   system.stateVersion = "23.11";
 }

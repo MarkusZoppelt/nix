@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   ### GENERAL CONFIGURATION ###
   nixpkgs.config.allowUnfree = true;

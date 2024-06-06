@@ -19,6 +19,7 @@
           ./shared/nixos/common-config.nix
           ./hosts/Gordon/configuration.nix
         ];
+        specialArgs = { inputs = { inherit self; inherit nixpkgs; inherit darwin; }; };
       };
     };
 
