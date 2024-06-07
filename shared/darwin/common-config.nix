@@ -12,12 +12,17 @@
       cleanup = "zap";
     };
 
+    taps = [
+      "nikitabobko/tap"
+    ];
+
     brews = [
       "ollama"
       "yubikey-agent"
     ];
 
     casks = [
+      "aerospace"
       "alacritty"
       "chatgpt"
       "orbstack"
