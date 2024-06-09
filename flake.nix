@@ -21,6 +21,15 @@
         ];
         specialArgs = { inputs = { inherit self; inherit nixpkgs; inherit darwin; }; };
       };
+      Homelab = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules =
+        [
+          ./shared/common-config.nix
+          ./shared/nixos/server.nix
+          ./hosts/Homelab/configuration.nix
+        ];
+      };
     };
 
     darwinConfigurations = {
