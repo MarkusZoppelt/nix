@@ -7,6 +7,7 @@
   ### BOOTLOADER & INITRD ###
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   networking.hostName = "Gordon";
   
@@ -16,8 +17,15 @@
     packages = with pkgs; [
       tor-browser
     ];
+    extraGroups =
+       [ "qemu-libvirtd" "libvirtd"
+         "wheel" "networkmanager"
+       ];
   };
 
+  ### Virtualisation ###
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
   ### DOCKER ###
   virtualisation.docker.rootless = {
