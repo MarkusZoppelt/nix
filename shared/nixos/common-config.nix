@@ -20,7 +20,6 @@
   };
   users.defaultUserShell = pkgs.zsh;
 
-
   ### DESKTOP ENVIRONMENT ###
   services.xserver = {
     enable = true;
@@ -32,7 +31,6 @@
   };
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
-
 
   ### SOUND ###
   sound.enable = true;
@@ -51,20 +49,20 @@
     let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD ')'';
   };
 
-
   ### PROGRAMS ###
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
+  programs = {
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    firefox.enable = true;
   };
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-  programs.firefox.enable = true;
 
-
-  ### ENVIRONMENT ###
+  ### ENVIRONMENT VARIABLES ###
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
     btop
@@ -80,22 +78,26 @@
     wofi
   ];
 
-
   ### SERVICES ###
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
+  services = {
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+      };
+    };
+    tailscale.enable = true;
+    yubikey-agent.enable = true;
+    pcscd.enable = true;
   };
-  services.tailscale.enable = true;
-  services.yubikey-agent.enable = true;
-  services.pcscd.enable = true;
-
 
   ### LD FIX ###
-  programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged
-    # programs here, NOT in environment.systemPackages.
-  ];
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      # Add any missing dynamic libraries for unpackaged
+      # programs here, NOT in environment.systemPackages.
+    ];
+  };
 }
