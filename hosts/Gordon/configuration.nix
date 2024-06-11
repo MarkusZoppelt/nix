@@ -9,6 +9,14 @@
 
   networking.hostName = "Gordon";
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    sandbox = false;
+    writablePaths = [ "/home/mz/ollama" ];
+    models = "/home/mz/ollama/models";
+  };
+
   ### USER CONFIGURATION ###
   users.users.mz = {
     packages = with pkgs; [
