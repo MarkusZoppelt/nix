@@ -28,7 +28,9 @@
     ];
   };
 
-  ### VIRTUALIZATION ###
+  programs.steam.enable = true;
+
+  ### VIRTUALISATION ###
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
 
