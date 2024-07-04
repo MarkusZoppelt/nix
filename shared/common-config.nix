@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     age
     age-plugin-yubikey
+    btop
     fd
     fzf
     gh
