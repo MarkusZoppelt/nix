@@ -18,7 +18,6 @@
     ];
 
     casks = [
-      "alacritty"
       "chatgpt"
       "orbstack"
       "raycast"
