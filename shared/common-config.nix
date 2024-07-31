@@ -24,6 +24,7 @@
     starship
     tree
     unzip
+    uutils-coreutils-noprefix
     yt-dlp
     yubikey-manager
     zsh
