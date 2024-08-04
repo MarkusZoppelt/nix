@@ -21,6 +21,7 @@
     restic
     ripgrep
     rustup
+    sd
     starship
     tree
     unzip
