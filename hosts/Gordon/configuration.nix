@@ -8,6 +8,7 @@
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
   networking.hostName = "Gordon";
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   services.ollama = {
     enable = true;
@@ -25,8 +26,6 @@
       "wheel" "networkmanager"
     ];
   };
-
-  programs.steam.enable = true;
 
   ### VIRTUALISATION ###
   virtualisation.libvirtd.enable = true;
@@ -64,5 +63,5 @@
     randomizedDelaySec = "45min";
   };
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }
