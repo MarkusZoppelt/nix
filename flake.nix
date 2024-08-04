@@ -37,6 +37,8 @@
         system = "aarch64-darwin";
         modules =
         [
+          ./shared/common-config.nix
+          ./shared/darwin/common-config.nix
           ./hosts/G-Man/configuration.nix
         ];
       };
