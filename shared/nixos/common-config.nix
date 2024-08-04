@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
   ### GENERAL CONFIGURATION ###
   nixpkgs.config.allowUnfree = true;
@@ -13,6 +13,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       alacritty
+      protonmail-desktop
       signal-desktop
       spotify
       wezterm
@@ -96,7 +97,7 @@
     libraries = with pkgs; [
       # Add any missing dynamic libraries for unpackaged
       # programs here, NOT in environment.systemPackages.
-      pkgs.stdenv.cc.cc
+      stdenv.cc.cc
     ];
   };
 }

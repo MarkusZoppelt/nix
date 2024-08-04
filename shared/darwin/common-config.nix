@@ -21,12 +21,14 @@
       "chatgpt"
       "orbstack"
       "raycast"
+      "signal"
+      "spotify"
       "wezterm"
     ];
 
     masApps = {
       "Tailscale"   = 1475387142;
-      "Xcode"       = 497799835;
+      # "Xcode"       = 497799835;
     };
   };
 
