@@ -2,7 +2,14 @@
 {
   environment.systemPackages = with pkgs; [
     azure-cli
+    clang_16
+    libcxx
+    cmake
+    gnumake
+    go
+    lcov
     llvm_16
+    openjdk
   ];
 
   networking.hostName = "G-Man";
@@ -16,6 +23,7 @@
     };
 
     brews = [
+      "bazelisk"
       "ollama"
       # "llvm@16"
       "yubikey-agent"
