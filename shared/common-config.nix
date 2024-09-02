@@ -13,7 +13,6 @@
     gum
     jq
     lazygit
-    monaspace
     neovim
     nodejs
     passage
@@ -25,7 +24,6 @@
     starship
     tree
     unzip
-    uutils-coreutils-noprefix
     wget
     yt-dlp
     yubikey-manager

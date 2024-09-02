@@ -10,12 +10,6 @@
   networking.hostName = "Gordon";
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-    models = "/home/mz/ollama/models";
-  };
-
   ### USER CONFIGURATION ###
   users.users.mz = {
     packages = with pkgs; [

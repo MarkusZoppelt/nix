@@ -22,13 +22,6 @@
       cleanup = "zap";
     };
 
-    brews = [
-      "bazelisk"
-      "ollama"
-      # "llvm@16"
-      "yubikey-agent"
-    ];
-
     casks = [
       "1password"
       "1password-cli"

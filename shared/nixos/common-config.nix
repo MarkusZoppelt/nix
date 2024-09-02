@@ -16,7 +16,6 @@
       protonmail-desktop
       signal-desktop
       spotify
-      wezterm
     ];
   };
   users.defaultUserShell = pkgs.zsh;
