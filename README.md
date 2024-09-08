@@ -20,3 +20,6 @@ On NixOS:
     cp /etc/nixos/hardware-configuration.nix ./hosts/<host>/hardware-configuration.nix
     sudo nixos-rebuild switch --flake .#<host>
 
+On Linux:
+
+    nix run nixpkgs#home-manager -- switch --flake .#Linux

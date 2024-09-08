@@ -7,9 +7,13 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, darwin }: {
+  outputs = { self, nixpkgs, darwin, home-manager }: {
     nixosConfigurations = {
       Gordon = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -20,6 +24,16 @@
           ./hosts/Gordon/configuration.nix
         ];
         specialArgs = { inputs = { inherit self; inherit nixpkgs; inherit darwin; }; };
+      };
+    };
+
+    # for Linux, use home-manager
+    homeConfigurations = {
+        Linux = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        modules = [
+          ./shared/linux/home.nix
+        ];
       };
     };
 
