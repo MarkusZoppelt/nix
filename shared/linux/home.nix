@@ -8,19 +8,14 @@
     age
     age-plugin-yubikey
     btop
-    clang
-    cmake
     fd
     fzf
     gh
     git
-    gnumake
     go
     gum
     jq
     lazygit
-    lcov
-    llvm
     monaspace
     neovim
     nodejs
@@ -33,10 +28,10 @@
     starship
     tree
     unzip
-    wezterm
     wget
     yt-dlp
     yubikey-manager
+    zip
     zsh
     zsh-autosuggestions
     zsh-completions
