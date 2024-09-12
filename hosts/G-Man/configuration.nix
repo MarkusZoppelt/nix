@@ -25,6 +25,7 @@
     casks = [
       "1password"
       "1password-cli"
+      "orbstack"
       "slack"
       "visual-studio-code"
     ];

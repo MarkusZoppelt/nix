@@ -19,7 +19,6 @@
 
     casks = [
       "chatgpt"
-      "orbstack"
       "raycast"
       "signal"
       "spotify"
