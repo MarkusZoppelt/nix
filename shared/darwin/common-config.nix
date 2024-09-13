@@ -14,9 +14,18 @@
     };
 
     brews = [
-      "ollama"
-      "syncthing"
-      "yubikey-agent"
+      {
+        name = "ollama";
+        restart_service = "changed";
+      }
+      {
+        name = "yubikey-agent";
+        restart_service = "changed";
+      }
+      {
+        name = "syncthing";
+        restart_service = "changed";
+      }
     ];
 
     casks = [
