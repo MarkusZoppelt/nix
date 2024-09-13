@@ -13,6 +13,10 @@
       cleanup = "zap";
     };
 
+    taps = [
+      "homebrew/services"
+    ];
+
     brews = [
       {
         name = "ollama";
