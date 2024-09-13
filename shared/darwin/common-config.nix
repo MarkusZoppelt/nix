@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  system.stateVersion = 5;
   environment.systemPackages = with pkgs; [
     mas
   ];
@@ -14,6 +15,7 @@
 
     brews = [
       "ollama"
+      "syncthing"
       "yubikey-agent"
     ];
 

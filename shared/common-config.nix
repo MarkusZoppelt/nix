@@ -22,7 +22,6 @@
     rustup
     sd
     starship
-    syncthing
     tree
     unzip
     wget
