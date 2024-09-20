@@ -34,7 +34,6 @@
 
     casks = [
       "chatgpt"
-      "raycast"
       "signal"
       "spotify"
       "wezterm"
