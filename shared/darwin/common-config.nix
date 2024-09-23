@@ -33,7 +33,6 @@
     ];
 
     casks = [
-      "chatgpt"
       "signal"
       "spotify"
       "wezterm"
