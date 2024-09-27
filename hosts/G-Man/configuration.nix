@@ -32,7 +32,7 @@
 
     masApps = {
       "Xcode"       = 497799835;
-      "Microsoft Remote Desktop" = 1295203466;
+      "Windows App" = 1295203466;
     };
   };
 
