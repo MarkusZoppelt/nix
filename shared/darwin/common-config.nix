@@ -18,6 +18,11 @@
     ];
 
     brews = [
+      "bazelisk"
+      "cmake"
+      "lcov"
+      "llvm@16"
+      "openjdk@17"
       {
         name = "ollama";
         restart_service = "changed";
@@ -33,6 +38,7 @@
     ];
 
     casks = [
+      "orbstack"
       "signal"
       "spotify"
       "wezterm"
