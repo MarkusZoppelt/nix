@@ -49,6 +49,11 @@
     };
   };
 
+  
+  system.defaults.dock.autohide = true;
+  system.defaults.dock.autohide-delay = 0.0;
+  system.defaults.dock.autohide-time-modifier = 0.0;
+
   services.nix-daemon.enable = true;
   security.pam.enableSudoTouchIdAuth = true;
 }
