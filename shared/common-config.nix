@@ -16,6 +16,7 @@
     lazygit
     neovim
     nodejs
+    openssh
     passage
     qrencode
     restic
