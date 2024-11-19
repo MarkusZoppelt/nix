@@ -87,7 +87,7 @@
     PATH = ''
       /opt/homebrew/opt/llvm@16/bin:$HOME/.npm/bin:${pkgs.lib.makeSearchPath "bin" [ pkgs.nodejs ]}:$PATH
     '';
-    LDFLAGS="-L/opt/homebrew/opt/llvm@16/lib";
+    LDFLAGS="-L/opt/homebrew/opt/llvm@16/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm@16/lib/c++";
     CPPFLAGS="-I/opt/homebrew/opt/llvm@16/include";
   };
 }
