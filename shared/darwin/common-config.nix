@@ -41,7 +41,6 @@
       "orbstack"
       "signal"
       "spotify"
-      "wezterm"
     ];
 
     masApps = {

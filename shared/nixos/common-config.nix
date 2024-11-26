@@ -13,8 +13,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       alacritty
-      protonmail-desktop
-      signal-desktop
       spotify
     ];
   };
@@ -23,14 +21,13 @@
   ### DESKTOP ENVIRONMENT ###
   services.xserver = {
     enable = true;
-    displayManager.lightdm.enable = false;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
     xkb = {
       layout = "us";
       variant = "";
     };
   };
-  programs.hyprland.enable = true;
-  programs.waybar.enable = true;
 
   ### SOUND ###
   hardware.pulseaudio.enable = false;
@@ -65,15 +62,7 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
     clang
-    grim
-    hyprlock
-    libnotify
-    pavucontrol
-    slurp
-    swaynotificationcenter
-    swww
     wl-clipboard
-    wofi
   ];
 
   ### SERVICES ###
@@ -88,15 +77,5 @@
     tailscale.enable = true;
     yubikey-agent.enable = true;
     pcscd.enable = true;
-  };
-
-  ### LD FIX ###
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      # Add any missing dynamic libraries for unpackaged
-      # programs here, NOT in environment.systemPackages.
-      stdenv.cc.cc
-    ];
   };
 }

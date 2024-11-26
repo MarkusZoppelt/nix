@@ -1,8 +1,4 @@
-{ pkgs, lib, ... }:
 {
-  environment.systemPackages = with pkgs; [
-  ];
-
   homebrew = {
     casks = [
       "1password"

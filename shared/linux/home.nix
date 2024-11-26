@@ -3,6 +3,8 @@ let
   packageList = import ./packages.nix { inherit pkgs; };
 in
 {
+  programs.home-manager.enable = true;
+
   home.username = "mz";
   home.homeDirectory = "/home/mz";
   home.stateVersion = "24.05";
@@ -11,7 +13,6 @@ in
 
   fonts.fontconfig.enable = true;
 
-    # Set up npm so that it installs global packages in the user's home directory
   home.sessionVariables = {
     EDITOR = "nvim";
     NPM_CONFIG_PREFIX = "$HOME/.npm";
@@ -19,5 +20,4 @@ in
   };
 
   programs.fzf.enable = true;
-  programs.home-manager.enable = true;
 }

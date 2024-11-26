@@ -12,21 +12,12 @@
 
   ### USER CONFIGURATION ###
   users.users.mz = {
-    packages = with pkgs; [
-      tor-browser
-    ];
-    extraGroups = [
-      "qemu-libvirtd" "libvirtd"
-      "wheel" "networkmanager"
-    ];
+    packages = [];
+    extraGroups = [ "docker" "wheel" "networkmanager"];
   };
 
-  ### VIRTUALISATION ###
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
-
   ### DOCKER ###
-  virtualisation.docker.rootless = {
+  virtualisation.docker = {
     enable = true;
     setSocketVariable = true;
   };
@@ -44,17 +35,6 @@
     open = false;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  system.autoUpgrade = {
-    enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input"
-      "nixpkgs"
-    ];
-    dates = "02:00";
-    randomizedDelaySec = "45min";
   };
 
   system.stateVersion = "24.05";
