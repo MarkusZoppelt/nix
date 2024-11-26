@@ -51,14 +51,5 @@ in
     '';
   };
 
-  # Set up npm so that it installs global packages in the user's home directory
-  environment.variables = {
-    NPM_CONFIG_PREFIX = "$HOME/.npm";
-    PATH = ''
-      /opt/homebrew/opt/llvm@16/bin:$HOME/.npm/bin:${pkgs.lib.makeSearchPath "bin" [ pkgs.nodejs ]}:$PATH
-    '';
-    LDFLAGS="-L/opt/homebrew/opt/llvm@16/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm@16/lib/c++";
-    CPPFLAGS="-I/opt/homebrew/opt/llvm@16/include";
-  };
   programs.direnv.enable = true;
 }
