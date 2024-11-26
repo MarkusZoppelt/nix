@@ -32,6 +32,7 @@
         Linux = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
+          ./shared/common-config.nix
           ./shared/linux/home.nix
         ];
       };

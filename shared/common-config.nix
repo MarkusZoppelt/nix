@@ -25,8 +25,6 @@ in
 
   programs.tmux = {
     enable = true;
-    # keep up to date with ~/.dotfiles/.tmux.conf
-    # until I find a better way to do this...
     extraConfig = ''
       unbind C-b
       set -g prefix C-a
