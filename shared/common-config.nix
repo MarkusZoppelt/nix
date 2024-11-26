@@ -50,7 +50,6 @@ in
       set-option -g focus-events on
     '';
   };
-  programs.direnv.enable = true;
 
   # Set up npm so that it installs global packages in the user's home directory
   environment.variables = {
@@ -61,4 +60,5 @@ in
     LDFLAGS="-L/opt/homebrew/opt/llvm@16/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm@16/lib/c++";
     CPPFLAGS="-I/opt/homebrew/opt/llvm@16/include";
   };
+  programs.direnv.enable = true;
 }

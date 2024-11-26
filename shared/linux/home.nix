@@ -19,6 +19,5 @@ in
   };
 
   programs.fzf.enable = true;
-  programs.direnv.enable = true;
   programs.home-manager.enable = true;
 }
