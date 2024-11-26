@@ -1,38 +1,11 @@
 {  pkgs, ... }:
+let
+  packageList = import ./packages.nix { inherit pkgs; };
+in
 {
   nix.settings.experimental-features = "nix-command flakes";
-  environment.systemPackages = with pkgs; [
-    age
-    age-plugin-yubikey
-    btop
-    delta
-    fd
-    fzf
-    gh
-    git
-    go
-    gum
-    jq
-    lazygit
-    neovim
-    nodejs
-    openssh
-    passage
-    qrencode
-    restic
-    ripgrep
-    rustup
-    sd
-    starship
-    tree
-    unzip
-    wget
-    yt-dlp
-    yubikey-manager
-    zsh
-    zsh-autosuggestions
-    zsh-completions
-  ];
+
+  environment.systemPackages = packageList;
 
   fonts = {
     packages = with pkgs; [

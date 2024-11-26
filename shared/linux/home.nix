@@ -1,42 +1,13 @@
 {  pkgs, ... }:
+let
+  packageList = import ./packages.nix { inherit pkgs; };
+in
 {
   home.username = "mz";
   home.homeDirectory = "/home/mz";
   home.stateVersion = "24.05";
 
-  home.packages = with pkgs; [
-    age
-    age-plugin-yubikey
-    btop
-    fd
-    fzf
-    gh
-    git
-    go
-    gum
-    jq
-    lazygit
-    monaspace
-    neovim
-    nodejs
-    passage
-    qrencode
-    restic
-    ripgrep
-    rustup
-    sd
-    starship
-    syncthing
-    tree
-    unzip
-    wget
-    yt-dlp
-    yubikey-manager
-    zip
-    zsh
-    zsh-autosuggestions
-    zsh-completions
-  ];
+  home.packages = packageList;
 
   fonts.fontconfig.enable = true;
 
