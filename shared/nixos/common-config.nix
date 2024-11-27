@@ -1,7 +1,10 @@
 { pkgs, ... }:
 {
   ### GENERAL CONFIGURATION ###
+  nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
+
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -13,7 +16,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       alacritty
+      clang
       spotify
+      wl-clipboard
     ];
   };
   users.defaultUserShell = pkgs.zsh;
@@ -29,6 +34,13 @@
     };
   };
 
+  ### FONTS ###
+  fonts = {
+    packages = with pkgs; [
+      monaspace
+    ];
+  };
+
   ### SOUND ###
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -39,12 +51,15 @@
     pulse.enable = true;
   };
 
-  programs.zsh = {
-    enable = true;
-  };
-
   ### PROGRAMS ###
   programs = {
+    direnv.enable = true;
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableAutosuggestions = true;
+    };
+    tmux = import ../tmux.nix;
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -58,10 +73,7 @@
 
   ### ENVIRONMENT VARIABLES ###
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  environment.systemPackages = with pkgs; [
-    clang
-    wl-clipboard
-  ];
+  environment.systemPackages = import ../packages.nix { inherit pkgs; };
 
   ### SERVICES ###
   services = {

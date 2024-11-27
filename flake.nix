@@ -19,7 +19,6 @@
         system = "x86_64-linux";
         modules = 
         [
-          ./shared/common-config.nix
           ./shared/nixos/common-config.nix
           ./hosts/Gordon/configuration.nix
         ];
@@ -32,7 +31,6 @@
         Linux = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
-          ./shared/common-config.nix
           ./shared/linux/home.nix
         ];
       };
@@ -43,7 +41,6 @@
         system = "aarch64-darwin";
         modules = 
         [ 
-          ./shared/common-config.nix
           ./shared/darwin/common-config.nix
           ./hosts/Alyx/configuration.nix
         ];
@@ -52,7 +49,6 @@
         system = "aarch64-darwin";
         modules =
         [
-          ./shared/common-config.nix
           ./shared/darwin/common-config.nix
           ./hosts/G-Man/configuration.nix
         ];

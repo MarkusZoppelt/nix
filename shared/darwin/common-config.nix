@@ -1,9 +1,27 @@
 { pkgs, ... }:
 {
+  nix.settings.experimental-features = "nix-command flakes";
+
   system.stateVersion = 5;
-  environment.systemPackages = with pkgs; [
-    mas
-  ];
+  environment.systemPackages = import ../packages.nix { inherit pkgs; };
+
+  fonts = {
+    packages = with pkgs; [
+      monaspace
+    ];
+  };
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    # We can't set enableAutosuggestions on darwin,
+    # so we'll have to do it like this:
+    interactiveShellInit = ''
+      source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+    '';
+  };
+  programs.tmux = import ../tmux.nix;
+  programs.direnv.enable = true;
 
   # Set up npm so that it installs global packages in the user's home directory
   environment.variables = {

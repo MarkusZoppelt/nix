@@ -1,5 +1,4 @@
 { pkgs }:
-
 with pkgs; [
     age
     age-plugin-yubikey
@@ -24,7 +23,6 @@ with pkgs; [
     rustup
     sd
     starship
-    syncthing
     tree
     unzip
     wget
