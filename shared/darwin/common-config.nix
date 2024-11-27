@@ -14,8 +14,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    # We can't set enableAutosuggestions on darwin,
-    # so we'll have to do it like this:
+    # We can't set autosuggestions.enable on darwin, so we'll do it like this:
     interactiveShellInit = ''
       source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     '';

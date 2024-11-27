@@ -57,7 +57,7 @@
     zsh = {
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      autosuggestions.enable = true;
     };
     tmux = import ../tmux.nix;
     neovim = {
