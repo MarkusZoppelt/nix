@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/0.1";
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,7 +14,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager }: {
+  outputs = { self, nixpkgs, determinate, darwin, home-manager }: {
     nixosConfigurations = {
       Gordon = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -31,6 +32,7 @@
         Linux = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
+          determinate.darwinModules.default
           ./shared/linux/home.nix
         ];
       };
@@ -41,6 +43,7 @@
         system = "aarch64-darwin";
         modules = 
         [ 
+          determinate.darwinModules.default
           ./shared/darwin/common-config.nix
           ./hosts/Alyx/configuration.nix
         ];
@@ -49,6 +52,7 @@
         system = "aarch64-darwin";
         modules =
         [
+          determinate.darwinModules.default
           ./shared/darwin/common-config.nix
           ./hosts/G-Man/configuration.nix
         ];
