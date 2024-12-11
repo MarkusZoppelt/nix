@@ -22,16 +22,6 @@
   programs.tmux = import ../tmux.nix;
   programs.direnv.enable = true;
 
-  # Set up npm so that it installs global packages in the user's home directory
-  environment.variables = {
-    NPM_CONFIG_PREFIX = "$HOME/.npm";
-    PATH = ''
-      /opt/homebrew/opt/llvm@16/bin:$HOME/.npm/bin:${pkgs.lib.makeSearchPath "bin" [ pkgs.nodejs ]}:$PATH
-    '';
-    LDFLAGS="-L/opt/homebrew/opt/llvm@16/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm@16/lib/c++";
-    CPPFLAGS="-I/opt/homebrew/opt/llvm@16/include";
-  };
-
   homebrew = {
     enable = true;
     onActivation = {
@@ -45,11 +35,6 @@
     ];
 
     brews = [
-      "bazelisk"
-      "cmake"
-      "lcov"
-      "llvm@16"
-      "openjdk@17"
       {
         name = "ollama";
         restart_service = "changed";
