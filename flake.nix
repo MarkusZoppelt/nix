@@ -20,6 +20,7 @@
         system = "x86_64-linux";
         modules = 
         [
+          determinate.nixosModules.default
           ./shared/nixos/common-config.nix
           ./hosts/Gordon/configuration.nix
         ];
@@ -32,7 +33,6 @@
         Linux = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         modules = [
-          determinate.darwinModules.default
           ./shared/linux/home.nix
         ];
       };
