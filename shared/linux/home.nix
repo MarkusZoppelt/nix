@@ -10,7 +10,7 @@
 
   home.username = "mz";
   home.homeDirectory = "/home/mz";
-  home.stateVersion = "24.05";
+  home.stateVersion = "24.11";
   home.packages = import ../packages.nix { inherit pkgs; };
   home.sessionVariables = {
     EDITOR = "nvim";
