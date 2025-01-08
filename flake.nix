@@ -26,6 +26,14 @@
         ];
         specialArgs = { inputs = { inherit self; inherit nixpkgs; inherit darwin; }; };
       };
+      Orbstack = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules =
+        [
+          ./hosts/Orbstack/configuration.nix
+        ];
+        specialArgs = { inputs = { inherit self; inherit nixpkgs; inherit darwin; }; };
+      };
     };
 
     # for Linux, use home-manager
