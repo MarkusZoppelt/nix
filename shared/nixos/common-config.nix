@@ -16,7 +16,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       alacritty
-      clang
       spotify
       wl-clipboard
     ];

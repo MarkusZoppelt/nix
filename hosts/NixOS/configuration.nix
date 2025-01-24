@@ -7,7 +7,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
 
-  networking.hostName = "Gordon";
+  networking.hostName = "NixOS";
   systemd.services.NetworkManager-wait-online.enable = false;
 
   ### USER CONFIGURATION ###

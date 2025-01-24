@@ -4,6 +4,7 @@
 
   system.stateVersion = 5;
   environment.systemPackages = import ../packages.nix { inherit pkgs; };
+  networking.hostName = "Alyx";
 
   fonts = {
     packages = with pkgs; [
