@@ -5,6 +5,7 @@ with pkgs; [
   fd
   fzf
   gh
+  ghostty
   git
   go
   gum

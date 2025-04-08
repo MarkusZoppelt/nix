@@ -15,7 +15,6 @@
     description = "mz";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      alacritty
       spotify
       wl-clipboard
     ];
