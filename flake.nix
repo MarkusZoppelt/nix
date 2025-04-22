@@ -25,6 +25,11 @@
           ./hosts/NixOS/configuration.nix
         ];
 
+        NixOS-headless = mkSystem "x86_64-linux" [
+          ./shared/nixos/common-config.nix
+          ./hosts/NixOS-headless/configuration.nix
+        ];
+
         Orbstack =
           mkSystem "aarch64-linux" [ ./hosts/Orbstack/configuration.nix ];
       };

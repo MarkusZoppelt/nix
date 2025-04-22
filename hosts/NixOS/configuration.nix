@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 {
   imports = [ ./hardware-configuration.nix ];
 
@@ -12,11 +12,43 @@
 
   ### USER CONFIGURATION ###
   users.users.mz = {
-    packages = [];
+    packages = with pkgs; [
+      spotify
+      wl-clipboard
+    ];
     extraGroups = [ "docker" "wheel" "networkmanager"];
   };
 
   virtualisation.docker.enable = true;
+
+  ### DESKTOP ENVIRONMENT ###
+  services.xserver = {
+    enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    xkb = {
+      layout = "us";
+      variant = "";
+    };
+  };
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  ### FONTS ###
+  fonts = {
+    packages = with pkgs; [
+      monaspace
+    ];
+  };
+
+  ### SOUND ###
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   ### NVIDIA / GRAPHICS ###
   hardware.graphics = {
@@ -33,5 +65,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  system.stateVersion = "24.11";
+  services.yubikey-agent.enable = true;
+  services.pcscd.enable = true;
+
+  system.stateVersion = "25.04";
 }

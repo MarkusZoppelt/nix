@@ -14,40 +14,9 @@
     isNormalUser = true;
     description = "mz";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      spotify
-      wl-clipboard
-    ];
   };
   users.defaultUserShell = pkgs.zsh;
 
-  ### DESKTOP ENVIRONMENT ###
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-    xkb = {
-      layout = "us";
-      variant = "";
-    };
-  };
-
-  ### FONTS ###
-  fonts = {
-    packages = with pkgs; [
-      monaspace
-    ];
-  };
-
-  ### SOUND ###
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   ### PROGRAMS ###
   programs = {
@@ -66,11 +35,7 @@
       enable = true;
       enableSSHSupport = true;
     };
-    firefox.enable = true;
   };
-
-  ### ENVIRONMENT VARIABLES ###
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = import ../packages.nix { inherit pkgs; };
 
   ### SERVICES ###
@@ -83,7 +48,5 @@
       };
     };
     tailscale.enable = true;
-    yubikey-agent.enable = true;
-    pcscd.enable = true;
   };
 }
