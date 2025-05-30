@@ -1,14 +1,12 @@
 { pkgs }:
 with pkgs; [
   btop
-  delta
   fd
   fzf
   gh
   ghostty
   git
   go
-  gum
   jq
   lazygit
   neovim

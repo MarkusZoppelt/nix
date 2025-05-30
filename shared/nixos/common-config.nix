@@ -17,7 +17,6 @@
   };
   users.defaultUserShell = pkgs.zsh;
 
-
   ### PROGRAMS ###
   programs = {
     direnv.enable = true;

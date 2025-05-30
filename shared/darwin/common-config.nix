@@ -31,10 +31,6 @@
       cleanup = "zap";
     };
 
-    taps = [
-      "homebrew/services"
-    ];
-
     brews = [
       {
         name = "ollama";
@@ -55,10 +51,6 @@
       "signal"
       "spotify"
     ];
-
-    masApps = {
-      "Tailscale"   = 1475387142;
-    };
   };
 
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
