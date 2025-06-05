@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  nix.enable = false;
   nix.settings.experimental-features = "nix-command flakes";
 
   system.stateVersion = 5;
@@ -53,6 +54,7 @@
     ];
   };
 
+  system.primaryUser = "mz";
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
   system.defaults.NSGlobalDomain.KeyRepeat = 1;
   
@@ -60,6 +62,5 @@
   system.defaults.dock.autohide-delay = 0.0;
   system.defaults.dock.autohide-time-modifier = 0.0;
 
-  services.nix-daemon.enable = true;
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 }
