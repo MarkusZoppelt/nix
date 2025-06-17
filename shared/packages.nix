@@ -14,7 +14,6 @@ with pkgs; [
   ripgrep
   rustup
   sd
-  starship
   tree
   unzip
   wget
