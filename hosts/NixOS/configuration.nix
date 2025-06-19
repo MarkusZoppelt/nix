@@ -24,13 +24,13 @@
   ### DESKTOP ENVIRONMENT ###
   services.xserver = {
     enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     xkb = {
       layout = "us";
       variant = "";
     };
   };
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   ### FONTS ###
