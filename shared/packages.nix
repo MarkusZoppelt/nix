@@ -1,5 +1,7 @@
 { pkgs }:
 with pkgs; [
+  age
+  age-plugin-yubikey
   btop
   fd
   fzf
@@ -11,12 +13,15 @@ with pkgs; [
   neovim
   nodejs
   openssh
+  passage
+  qrencode
   ripgrep
   rustup
   sd
   tree
   unzip
   wget
+  wireguard-tools
   yt-dlp
   zip
   zsh
