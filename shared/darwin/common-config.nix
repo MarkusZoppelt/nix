@@ -5,7 +5,7 @@
 
   system.stateVersion = 5;
   environment.systemPackages = import ../packages.nix { inherit pkgs; };
-  networking.hostName = "Alyx";
+  networking.hostName = "G-Man";
 
   fonts = {
     packages = with pkgs; [
@@ -16,7 +16,6 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    # We can't set autosuggestions.enable on darwin, so we'll do it like this:
     interactiveShellInit = ''
       source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     '';
@@ -34,10 +33,6 @@
 
     brews = [
       {
-        name = "ollama";
-        restart_service = "changed";
-      }
-      {
         name = "yubikey-agent";
         restart_service = "changed";
       }
@@ -48,9 +43,7 @@
     ];
 
     casks = [
-      "orbstack"
       "signal"
-      "spotify"
     ];
   };
 
