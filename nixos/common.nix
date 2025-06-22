@@ -13,7 +13,7 @@
   users.users.mz = {
     isNormalUser = true;
     description = "mz";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "docker" "wheel" "networkmanager"];
   };
   users.defaultUserShell = pkgs.zsh;
 
@@ -25,7 +25,7 @@
       enableCompletion = true;
       autosuggestions.enable = true;
     };
-    tmux = import ../tmux.nix;
+    tmux = import ../shared/tmux.nix;
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -35,7 +35,10 @@
       enableSSHSupport = true;
     };
   };
-  environment.systemPackages = import ../packages.nix { inherit pkgs; };
+  environment.systemPackages = import ../shared/packages.nix { inherit pkgs; };
+
+  ### VIRTUALIZATION ###
+  virtualisation.docker.enable = true;
 
   ### SERVICES ###
   services = {
@@ -47,5 +50,9 @@
       };
     };
     tailscale.enable = true;
+    syncthing = {
+      enable = true;
+      openDefaultPorts = true;
+    };
   };
 }

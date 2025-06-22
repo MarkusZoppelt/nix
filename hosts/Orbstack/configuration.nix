@@ -28,7 +28,6 @@
 
     packages = with pkgs; [
       clang
-      zig
     ];
   };
   users.mutableUsers = false;

@@ -3,6 +3,7 @@ with pkgs; [
   age
   age-plugin-yubikey
   btop
+  clang
   fd
   fzf
   gh
@@ -23,6 +24,7 @@ with pkgs; [
   wget
   wireguard-tools
   yt-dlp
+  zig
   zip
   zsh
   zsh-autosuggestions

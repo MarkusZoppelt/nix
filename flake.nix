@@ -7,49 +7,36 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, darwin, home-manager }: {
+  outputs = { self, nixpkgs, darwin }: {
     nixosConfigurations = {
       NixOS = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./shared/nixos/common-config.nix
+          ./nixos/common.nix
           ./hosts/NixOS/configuration.nix
         ];
       };
-      NixOS-headless = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      NixOS-aarch64 = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
         modules = [
-          ./shared/nixos/common-config.nix
-          ./hosts/NixOS-headless/configuration.nix
+          ./nixos/common.nix
+          ./hosts/NixOS-aarch64/configuration.nix
         ];
       };
       Orbstack = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
-        modules = [ ./hosts/Orbstack/configuration.nix ];
+        modules = [
+          ./hosts/Orbstack/configuration.nix
+        ];
       };
     };
 
     darwinConfigurations = {
       Darwin = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
-        modules = [ ./shared/darwin/common-config.nix ];
-      };
-    };
-
-    homeConfigurations = {
-      Linux = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [ ./shared/linux/home.nix ];
-      };
-      Linux-aarch64 = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.aarch64-linux;
-        modules = [ ./shared/linux/home.nix ];
+        modules = [ ./darwin/common.nix ];
       };
     };
   };

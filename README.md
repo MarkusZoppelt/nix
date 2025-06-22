@@ -1,6 +1,6 @@
 # Nix(OS) config files
 
-Cross-platform Nix configuration for NixOS, macOS (Darwin), and Linux with home-manager.
+Cross-platform Nix configuration for NixOS and macOS (Darwin).
 
 ## Setup
 
@@ -11,10 +11,10 @@ Replace the dummy hardware config with your real one:
     cp /etc/nixos/hardware-configuration.nix ./hosts/NixOS/hardware-configuration.nix
     sudo nixos-rebuild switch --flake .#NixOS
 
-For headless systems:
+For aarch64 systems:
 
-    cp /etc/nixos/hardware-configuration.nix ./hosts/NixOS-headless/hardware-configuration.nix
-    sudo nixos-rebuild switch --flake .#NixOS-headless
+    cp /etc/nixos/hardware-configuration.nix ./hosts/NixOS-aarch64/hardware-configuration.nix
+    sudo nixos-rebuild switch --flake .#NixOS-aarch64
 
 ### Orbstack (NixOS VM)
 
@@ -31,14 +31,3 @@ Initial setup:
 After that, use:
 
     darwin-rebuild switch --flake .#Darwin
-
-### Linux (home-manager)
-
-For x86_64 systems:
-
-    nix run nixpkgs#home-manager -- switch --flake .#Linux
-
-For aarch64 systems:
-
-    nix run nixpkgs#home-manager -- switch --flake .#Linux-aarch64
-
