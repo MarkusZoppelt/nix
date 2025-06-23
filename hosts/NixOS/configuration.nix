@@ -5,6 +5,7 @@
     ../../nixos/gui.nix
   ];
 
+  networking.hostName = "Gordon";
 
   ### USER CONFIGURATION ###
   users.users.mz = {
