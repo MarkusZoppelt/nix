@@ -56,8 +56,22 @@
       signal-desktop
       wl-clipboard
       wofi
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
     ];
   };
+
+  environment.systemPackages = with pkgs; [ tokyonight-gtk-theme ];
+  programs.dconf.profiles.user.databases = [
+      {
+        settings = {
+          "org/gnome/desktop/interface" = {
+            gtk-theme = "Tokyonight-Dark";
+            color-scheme = "prefer-dark";
+          };
+        };
+      }
+  ];
 
   ### YUBIKEY SUPPORT ###
   services.yubikey-agent.enable = true;

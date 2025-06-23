@@ -5,8 +5,6 @@
     ../../nixos/gui.nix
   ];
 
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];
-  networking.hostName = "NixOS";
 
   ### USER CONFIGURATION ###
   users.users.mz = {
