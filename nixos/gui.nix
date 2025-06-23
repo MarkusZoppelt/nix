@@ -50,9 +50,12 @@
       ghostty
       gnome-settings-daemon
       hyprpaper
+      mako # notifications
       nautilus
       networkmanagerapplet
       pavucontrol
+      pcsclite # for yubikey-stuff
+      pkg-config
       signal-desktop
       wl-clipboard
       wofi
