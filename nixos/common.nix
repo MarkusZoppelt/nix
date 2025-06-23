@@ -52,6 +52,8 @@
     tailscale.enable = true;
     syncthing = {
       enable = true;
+      user = "mz";
+      configDir = "/home/mz/.config/syncthing";
       openDefaultPorts = true;
     };
   };
