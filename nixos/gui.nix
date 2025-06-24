@@ -19,6 +19,7 @@
   programs.hyprland.enable = true;
   programs.waybar.enable = true;
   programs.hyprlock.enable = true;
+  security.pam.services.hyprlock = {};
 
   programs.dconf.enable = true;
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -49,6 +50,7 @@
       chromium
       ghostty
       gnome-settings-daemon
+      hypridle
       hyprpaper
       mako # notifications
       nautilus
@@ -75,6 +77,12 @@
         };
       }
   ];
+
+
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+  services.samba.enable = true;
+  security.polkit.enable = true;
 
   ### YUBIKEY SUPPORT ###
   services.yubikey-agent.enable = true;
