@@ -52,12 +52,17 @@
       gnome-settings-daemon
       hypridle
       hyprpaper
-      mako # notifications
+      hyprpolkitagent
+      hyprshot
+      mako
       nautilus
       networkmanagerapplet
+      obsidian
+      papers
       pavucontrol
       pcsclite # for yubikey-stuff
       pkg-config
+      playerctl
       signal-desktop
       wl-clipboard
       wofi
