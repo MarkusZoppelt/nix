@@ -23,6 +23,7 @@ with pkgs; [
   unzip
   wget
   wireguard-tools
+  yazi
   yt-dlp
   zig
   zip
