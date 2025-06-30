@@ -11,6 +11,7 @@
   users.users.mz = {
     packages = with pkgs; [
       spotify
+      (btop.override { cudaSupport = true; })
     ];
   };
 
