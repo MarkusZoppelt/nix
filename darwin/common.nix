@@ -38,7 +38,6 @@
 
     casks = [
       "signal"
-      "utm"
     ];
   };
 
