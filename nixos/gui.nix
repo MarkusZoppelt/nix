@@ -13,8 +13,6 @@
 
   environment = {
     systemPackages = with pkgs; [
-      _1password-cli
-      _1password-gui
       chromium
       ghostty
       hyprpaper
@@ -42,6 +40,11 @@
     hyprland.enable = true;
     waybar.enable = true;
     hyprlock.enable = true;
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ "mz" ];
+    };
     dconf = {
       enable = true;
       profiles.user.databases = [{
