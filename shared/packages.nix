@@ -2,6 +2,7 @@
 with pkgs; [
   btop
   clang
+  clang-tools
   fd
   fzf
   gh
