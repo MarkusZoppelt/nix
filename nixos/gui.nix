@@ -84,6 +84,8 @@
     };
     playerctld.enable = true;
 
+    power-profiles-daemon.enable = true;
+
     # for mounting stuff
     gvfs.enable = true;
     udisks2.enable = true;
