@@ -14,11 +14,14 @@
   environment = {
     systemPackages = with pkgs; [
       chromium
+      ffmpegthumbnailer
       ghostty
+      gnome-disk-utility
       hyprpaper
       hyprpolkitagent
       hyprshot
       mako
+      mpv
       nautilus
       networkmanagerapplet
       obsidian
@@ -27,6 +30,7 @@
       pcsclite
       pkg-config
       signal-desktop
+      sushi
       tokyonight-gtk-theme
       wl-clipboard
       wofi

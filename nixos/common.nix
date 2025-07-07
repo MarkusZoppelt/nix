@@ -13,7 +13,7 @@
   users.users.mz = {
     isNormalUser = true;
     description = "mz";
-    extraGroups = [ "docker" "wheel" "networkmanager"];
+    extraGroups = [ "docker" "wheel" "disk" "networkmanager"];
   };
   users.defaultUserShell = pkgs.zsh;
 
