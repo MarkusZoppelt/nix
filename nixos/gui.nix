@@ -38,6 +38,9 @@
       xdg-desktop-portal-hyprland
     ];
     sessionVariables.NIXOS_OZONE_WL = "1";
+    variables = {
+      TERMINAL = "ghostty";
+    };
   };
 
   programs = {
@@ -69,6 +72,7 @@
         layout = "us";
         variant = "";
       };
+      excludePackages = with pkgs; [ xterm ];
     };
 
     displayManager.gdm.enable = true;
