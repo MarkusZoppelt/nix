@@ -5,6 +5,35 @@
     ../../nixos/gui.nix
   ];
 
+  boot = {
+    plymouth = {
+      enable = true;
+      theme = "hexagon_alt";
+      themePackages = with pkgs; [
+        (adi1090x-plymouth-themes.override {
+          selected_themes = [ "hexagon_alt" ];
+        })
+      ];
+    };
+
+    # Enable Plymouth in initrd for LUKS decryption
+    initrd.systemd.enable = true;
+
+    # Enable "Silent boot"
+    consoleLogLevel = 3;
+    initrd.verbose = false;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "boot.shell_on_fail"
+      "udev.log_priority=3"
+      "rd.systemd.show_status=auto"
+    ];
+    # Hide the OS choice for bootloaders.
+    # It's still possible to open the bootloader list by pressing any key
+    loader.timeout = 0;
+  };
+
   networking.hostName = "Gordon";
 
   ### USER CONFIGURATION ###
