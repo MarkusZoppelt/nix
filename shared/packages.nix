@@ -19,7 +19,6 @@ with pkgs; [
   spotify-player
   unzip
   wget
-  yt-dlp
   zip
   zsh
   zsh-autosuggestions

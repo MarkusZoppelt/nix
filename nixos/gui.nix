@@ -14,7 +14,6 @@
   environment = {
     systemPackages = with pkgs; [
       chromium
-      ffmpegthumbnailer
       ghostty
       gnome-disk-utility
       hyprpaper
@@ -23,8 +22,6 @@
       mako
       mpv
       nautilus
-      networkmanagerapplet
-      obsidian
       papers
       pavucontrol
       pcsclite
