@@ -10,6 +10,7 @@ with pkgs; [
   go
   jq
   lazygit
+  mpv
   neovim
   nodejs
   openssh
