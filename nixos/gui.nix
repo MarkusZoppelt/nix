@@ -23,12 +23,12 @@
       mpv
       nautilus
       papers
-      pavucontrol
       pcsclite
       pkg-config
       signal-desktop
       sushi
       tokyonight-gtk-theme
+      wiremix
       wl-clipboard
       wofi
       xdg-desktop-portal-gtk
