@@ -28,6 +28,7 @@
       signal-desktop
       sushi
       tokyonight-gtk-theme
+      walker
       wiremix
       wl-clipboard
       wofi
