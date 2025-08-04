@@ -6,6 +6,24 @@
   ];
 
   boot = {
+    # Limine bootloader with Secure Boot support
+    loader = {
+      systemd-boot.enable = false;
+      grub.enable = false;
+      limine = {
+        enable = true;
+        secureBoot.enable = true;
+      };
+      timeout = 0;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
+    };
+
+    # Secure Boot configuration
+    bootspec.enable = true;
+    
     plymouth = {
       enable = true;
       theme = "hexagon_alt";
@@ -29,9 +47,6 @@
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
     ];
-    # Hide the OS choice for bootloaders.
-    # It's still possible to open the bootloader list by pressing any key
-    loader.timeout = 0;
   };
 
   networking.hostName = "Gordon";
@@ -57,6 +72,21 @@
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
+  ];
+
+  # Security and Secure Boot related services
+  security = {
+    tpm2 = {
+      enable = true;
+      pkcs11.enable = true;
+      tctiEnvironment.enable = true;
+    };
+  };
+
+  # Additional packages for Secure Boot management
+  environment.systemPackages = with pkgs; [
+    sbctl  # Secure Boot key manager
+    tpm2-tools
   ];
 
   system.stateVersion = "25.04";
