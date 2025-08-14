@@ -2,6 +2,7 @@
   description = "MarkusZoppelt's Nix configuration";
 
   inputs = {
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     darwin = {
       url = "github:LnL7/nix-darwin";
@@ -9,11 +10,12 @@
     };
   };
 
-  outputs = { self, nixpkgs, darwin }: {
+  outputs = { self, determinate, nixpkgs, darwin }: {
     nixosConfigurations = {
       NixOS = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
+          determinate.nixosModules.default
           ./nixos/common.nix
           ./hosts/NixOS/configuration.nix
         ];
