@@ -56,7 +56,26 @@
     packages = with pkgs; [
       (btop.override { cudaSupport = true; })
       remmina
+      virt-manager
     ];
+    extraGroups = [ "libvirtd" "kvm" ];
+  };
+
+  ### VIRTUALIZATION ###
+  virtualisation = {
+    libvirtd = {
+      enable = true;
+      qemu = {
+        package = pkgs.qemu_kvm;
+        runAsRoot = false;
+        swtpm.enable = true;
+        ovmf = {
+          enable = true;
+          packages = [ pkgs.OVMFFull.fd ];
+        };
+      };
+    };
+    spiceUSBRedirection.enable = true;
   };
 
   ### NVIDIA / GRAPHICS ###
