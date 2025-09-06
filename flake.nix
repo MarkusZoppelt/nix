@@ -27,12 +27,6 @@
           ./hosts/NixOS-aarch64/configuration.nix
         ];
       };
-      Orbstack = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          ./hosts/Orbstack/configuration.nix
-        ];
-      };
     };
 
     darwinConfigurations = {
