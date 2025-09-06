@@ -1,12 +1,22 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   nix.enable = false;
   nix.settings.experimental-features = "nix-command flakes";
+
+  nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = 5;
   networking.hostName = "G-Man";
 
   fonts.packages = with pkgs; [ monaspace ];
+
+  # User configuration for Darwin
+  users.users.${user} = {
+    name = user;
+    home = "/Users/${user}";
+  };
+
+  programs.zsh.enable = true;
 
   homebrew = {
     enable = true;
@@ -34,7 +44,7 @@
     ];
   };
 
-  system.primaryUser = "mz";
+  system.primaryUser = user;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
   system.defaults.NSGlobalDomain.KeyRepeat = 1;
   

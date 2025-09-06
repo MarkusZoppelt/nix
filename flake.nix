@@ -61,6 +61,8 @@
 
     darwinConfigurations = {
       Darwin = darwin.lib.darwinSystem {
+        inherit specialArgs;
+        
         system = "aarch64-darwin";
         modules = [
           ./darwin.nix
