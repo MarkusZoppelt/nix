@@ -4,11 +4,9 @@
 
   systemd.services.NetworkManager-wait-online.enable = false;
 
-  hardware.graphics = {
-    enable = true;
-  };
+  hardware.graphics.enable = true;
 
-  fonts = import ../shared/fonts.nix { inherit pkgs; };
+  fonts.packages = with pkgs; [ monaspace ];
 
   environment = {
     systemPackages = with pkgs; [

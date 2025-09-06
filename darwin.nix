@@ -4,18 +4,9 @@
   nix.settings.experimental-features = "nix-command flakes";
 
   system.stateVersion = 5;
-  environment.systemPackages = import ../shared/packages.nix { inherit pkgs; };
   networking.hostName = "G-Man";
 
-  fonts = import ../shared/fonts.nix { inherit pkgs; };
-
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableAutosuggestions = true;
-  };
-  programs.tmux = import ../shared/tmux.nix;
-  programs.direnv.enable = true;
+  fonts.packages = with pkgs; [ monaspace ];
 
   homebrew = {
     enable = true;
@@ -37,6 +28,8 @@
     ];
 
     casks = [
+      "1password"
+      "ghostty"
       "signal"
     ];
   };

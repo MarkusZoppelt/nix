@@ -113,5 +113,5 @@
     tpm2-tools
   ];
 
-  system.stateVersion = "25.04";
+  system.stateVersion = "25.05";
 }

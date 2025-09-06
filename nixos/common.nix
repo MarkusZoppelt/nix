@@ -3,7 +3,7 @@
   ### GENERAL CONFIGURATION ###
   nix.settings.experimental-features = "nix-command flakes";
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = true;
+  nixpkgs.config.allowUnsupportedSystem = false;
 
   networking.networkmanager.enable = true;
   time.timeZone = "Europe/Berlin";
@@ -16,27 +16,8 @@
     description = "mz";
     extraGroups = [ "docker" "wheel" "disk" "networkmanager"];
   };
+  programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
-
-  ### PROGRAMS ###
-  programs = {
-    direnv.enable = true;
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      autosuggestions.enable = true;
-    };
-    tmux = import ../shared/tmux.nix;
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-    };
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-  };
-  environment.systemPackages = import ../shared/packages.nix { inherit pkgs; };
 
   ### VIRTUALIZATION ###
   virtualisation.docker.enable = true;

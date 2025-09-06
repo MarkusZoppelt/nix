@@ -20,5 +20,5 @@
   services.xserver.videoDrivers = [ "modesetting" ];
   services.spice-vdagentd.enable = true;
 
-  system.stateVersion = "25.04";
+  system.stateVersion = "25.05";
 }
