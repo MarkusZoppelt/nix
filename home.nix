@@ -28,10 +28,11 @@
 
     packages = with pkgs; [
       _1password-cli
+      lazydocker
       nodejs
+      restic
       rustup
       sd
-      spotify-player
       tree
       unzip
       wget
@@ -170,7 +171,7 @@
 
         git_branch = {
           symbol = "";
-          format = "on [[$branch](purple)]($style)";
+          format = "on [[$branch](purple)]($style) ";
         };
 
         git_status = {
@@ -179,7 +180,7 @@
 
         hostname = {
           ssh_only = true;
-          format = "[@$hostname](bold green)";
+          format = "[@$hostname](bold green) ";
         };
       };
     };
