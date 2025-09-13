@@ -86,10 +86,6 @@
     gvfs.enable = true;
     udisks2.enable = true;
     samba.enable = true;
-
-    # YUBIKEY SUPPORT
-    yubikey-agent.enable = true;
-    pcscd.enable = true;
   };
 
   security = {

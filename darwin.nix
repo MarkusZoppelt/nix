@@ -28,10 +28,6 @@
 
     brews = [
       {
-        name = "yubikey-agent";
-        restart_service = "changed";
-      }
-      {
         name = "syncthing";
         restart_service = "changed";
       }
