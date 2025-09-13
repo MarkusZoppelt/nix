@@ -72,7 +72,10 @@
 
     displayManager.gdm.enable = true;
     gnome.gnome-settings-daemon.enable = true;
+    gnome.gnome-keyring.enable = true;
     hypridle.enable = true;
+
+    dbus.packages = [ pkgs.gnome-keyring pkgs.gcr ];
     
     pulseaudio.enable = false;
     pipewire = {
@@ -96,7 +99,10 @@
   };
 
   security = {
-    pam.services.hyprlock = {};
+    pam.services = {
+      hyprlock = {};
+      login.enableGnomeKeyring = true;
+    };
     rtkit.enable = true;
     polkit.enable = true;
   };
