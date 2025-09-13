@@ -44,10 +44,13 @@
         ];
       };
       NixOS-aarch64 = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+
         system = "aarch64-linux";
         modules = [
           ./nixos/common.nix
           ./hosts/NixOS-aarch64/configuration.nix
+          home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = false;
