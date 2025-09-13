@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   ...
 }:
 {
@@ -27,7 +28,6 @@
     };
 
     packages = with pkgs; [
-      _1password-cli
       lazydocker
       luarocks
       nodejs
@@ -38,6 +38,11 @@
       unzip
       wget
       zip
+    ] ++ lib.optionals pkgs.stdenv.isLinux [
+      _1password-cli
+      _1password-gui
+      signal-desktop
+      syncthing
     ];
 
   };
@@ -185,6 +190,12 @@
           format = "[@$hostname](bold green) ";
         };
       };
+    };
+  };
+
+  services = lib.optionalAttrs pkgs.stdenv.isLinux {
+    syncthing = {
+      enable = true;
     };
   };
 }

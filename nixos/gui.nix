@@ -22,7 +22,6 @@
       papers
       pcsclite
       pkg-config
-      signal-desktop
       sushi
       tokyonight-gtk-theme
       walker
@@ -42,11 +41,6 @@
     hyprland.enable = true;
     waybar.enable = true;
     hyprlock.enable = true;
-    _1password.enable = true;
-    _1password-gui = {
-      enable = true;
-      polkitPolicyOwners = [ "mz" ];
-    };
     dconf = {
       enable = true;
       profiles.user.databases = [{
