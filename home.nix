@@ -14,9 +14,9 @@
     };
 
     sessionPath = [
-      ".local/bin"
-      ".npm/bin"
-      "code/go/bin"
+      "$HOME/.local/bin"
+      "$HOME/.npm/bin"
+      "$HOME/code/go/bin"
     ];
 
     shellAliases = {
@@ -29,6 +29,7 @@
     packages = with pkgs; [
       _1password-cli
       lazydocker
+      luarocks
       nodejs
       restic
       rustup

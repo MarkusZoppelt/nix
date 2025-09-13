@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, user, ... }:
 {
   ### GENERAL CONFIGURATION ###
   nix.settings.experimental-features = "nix-command flakes";
@@ -11,9 +11,9 @@
   documentation.nixos.enable = false;
 
   ### USER CONFIGURATION ###
-  users.users.mz = {
+  users.users.${user} = {
     isNormalUser = true;
-    description = "mz";
+    description = "${user}";
     extraGroups = [ "docker" "wheel" "disk" "networkmanager"];
   };
   programs.zsh.enable = true;

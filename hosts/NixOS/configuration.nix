@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -52,7 +52,7 @@
   networking.hostName = "Gordon";
 
   ### USER CONFIGURATION ###
-  users.users.mz = {
+  users.users.${user} = {
     packages = with pkgs; [
       (btop.override { cudaSupport = true; })
       remmina

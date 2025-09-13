@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -8,7 +8,7 @@
   networking.hostName = "NixOS";
 
   ### USER CONFIGURATION ###
-  users.users.mz = {
+  users.users.${user} = {
     packages = with pkgs; [
       mesa-demos
       spice
