@@ -6,7 +6,7 @@
   nixpkgs.config.allowUnfree = true;
 
   system.stateVersion = 5;
-  networking.hostName = "G-Man";
+  networking.hostName = "Alyx";
 
   fonts.packages = with pkgs; [ monaspace ];
 
@@ -28,15 +28,18 @@
 
     brews = [
       {
+        name = "ollama";
+        restart_service = "changed";
+      }
+      {
         name = "syncthing";
         restart_service = "changed";
       }
     ];
 
     casks = [
-      "1password"
       "ghostty"
-      "signal"
+      "orbstack"
     ];
   };
 
