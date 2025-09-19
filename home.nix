@@ -180,7 +180,7 @@
 
     go = {
       enable = true;
-      goPath = "code/go";
+      env.GOPATH = [ "code/go" ];
     };
 
     fd.enable = true;
