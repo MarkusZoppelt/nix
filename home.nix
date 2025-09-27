@@ -185,6 +185,7 @@
 
     fd.enable = true;
     jq.enable = true;
+    obsidian.enable = true;
     ripgrep.enable = true;
 
     starship = {
