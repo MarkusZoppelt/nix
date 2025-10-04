@@ -30,6 +30,7 @@
         system = "x86_64-linux";
         modules = [
           ./nixos/common.nix
+          ./nixos/virtualization.nix
           ./hosts/NixOS/configuration.nix
           home-manager.nixosModules.home-manager
           {
