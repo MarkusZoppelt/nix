@@ -22,6 +22,7 @@
       papers
       pcsclite
       pkg-config
+      spotify
       sushi
       tokyonight-gtk-theme
       walker
