@@ -1,4 +1,9 @@
-{ config, pkgs, user, ... }:
+{
+  config,
+  pkgs,
+  user,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -23,7 +28,7 @@
 
     # Secure Boot configuration
     bootspec.enable = true;
-    
+
     plymouth = {
       enable = true;
       theme = "hexagon_alt";
@@ -63,7 +68,7 @@
   virtualization.vm.enable = true;
 
   ### NVIDIA / GRAPHICS ###
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -93,7 +98,7 @@
 
   # Additional packages for Secure Boot management
   environment.systemPackages = with pkgs; [
-    sbctl  # Secure Boot key manager
+    sbctl # Secure Boot key manager
     tpm2-tools
   ];
 

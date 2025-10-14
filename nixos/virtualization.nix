@@ -1,4 +1,10 @@
-{ config, lib, pkgs, user, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  user,
+  ...
+}:
 
 with lib;
 
@@ -24,7 +30,10 @@ with lib;
       packages = with pkgs; [
         virt-manager
       ];
-      extraGroups = [ "libvirtd" "kvm" ];
+      extraGroups = [
+        "libvirtd"
+        "kvm"
+      ];
     };
   };
 }

@@ -44,14 +44,16 @@
     hyprlock.enable = true;
     dconf = {
       enable = true;
-      profiles.user.databases = [{
-        settings = {
-          "org/gnome/desktop/interface" = {
-            gtk-theme = "Tokyonight-Dark";
-            color-scheme = "prefer-dark";
+      profiles.user.databases = [
+        {
+          settings = {
+            "org/gnome/desktop/interface" = {
+              gtk-theme = "Tokyonight-Dark";
+              color-scheme = "prefer-dark";
+            };
           };
-        };
-      }];
+        }
+      ];
     };
   };
 
@@ -70,8 +72,11 @@
     gnome.gnome-keyring.enable = true;
     hypridle.enable = true;
 
-    dbus.packages = [ pkgs.gnome-keyring pkgs.gcr ];
-    
+    dbus.packages = [
+      pkgs.gnome-keyring
+      pkgs.gcr
+    ];
+
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -91,7 +96,7 @@
 
   security = {
     pam.services = {
-      hyprlock = {};
+      hyprlock = { };
       login.enableGnomeKeyring = true;
     };
     rtkit.enable = true;

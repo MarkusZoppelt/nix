@@ -1,11 +1,22 @@
 # Dummy hardware configuration for CI/flake checks
 # Copy your real hardware-configuration.nix from /etc/nixos/ when deploying
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [ ];
 
-  boot.initrd.availableKernelModules = [ "virtio_pci" "xhci_pci" "usbhid" "usb_storage" ];
+  boot.initrd.availableKernelModules = [
+    "virtio_pci"
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];

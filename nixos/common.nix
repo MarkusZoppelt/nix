@@ -14,7 +14,12 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "${user}";
-    extraGroups = [ "docker" "wheel" "disk" "networkmanager"];
+    extraGroups = [
+      "docker"
+      "wheel"
+      "disk"
+      "networkmanager"
+    ];
   };
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
