@@ -125,6 +125,39 @@
     neovim = {
       enable = true;
       defaultEditor = true;
+      plugins = with pkgs.vimPlugins; [
+        cmp-buffer
+        cmp-nvim-lsp
+        harpoon
+        lazygit-nvim
+        mason-lspconfig-nvim
+        mason-nvim
+        noice-nvim
+        nui-nvim
+        nvim-cmp
+        nvim-lspconfig
+        nvim-notify
+        nvim-treesitter.withAllGrammars
+        nvim-treesitter-context
+        plenary-nvim
+        telescope-nvim
+        tokyonight-nvim
+        trouble-nvim
+        vim-fugitive
+      ];
+      extraLuaConfig = ''
+        ${builtins.readFile ./nvim/options.lua}
+        ${builtins.readFile ./nvim/keymaps.lua}
+        ${builtins.readFile ./nvim/plugins/mason-lsp.lua}
+        ${builtins.readFile ./nvim/plugins/cmp.lua}
+        ${builtins.readFile ./nvim/plugins/telescope.lua}
+        ${builtins.readFile ./nvim/plugins/harpoon.lua}
+        ${builtins.readFile ./nvim/plugins/treesitter.lua}
+        ${builtins.readFile ./nvim/plugins/trouble.lua}
+        ${builtins.readFile ./nvim/plugins/lazygit.lua}
+        ${builtins.readFile ./nvim/plugins/noice.lua}
+        ${builtins.readFile ./nvim/theme.lua}
+      '';
     };
 
     lazygit = {
