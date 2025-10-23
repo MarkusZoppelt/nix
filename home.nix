@@ -53,9 +53,9 @@
   programs = {
     git = {
       enable = true;
-      userName = "Markus Zoppelt";
-      userEmail = "markus@zoppelt.net";
-      extraConfig = {
+      settings = {
+        user.name = "Markus Zoppelt";
+        user.email = "markus@zoppelt.net";
         branch.autosetuprebase = "always";
         color.ui = true;
         core.editor = "nvim";
@@ -82,7 +82,6 @@
         ".opencode/"
         ".direnv"
       ];
-      delta.enable = true;
     };
 
     ssh = {
@@ -203,6 +202,11 @@
     go = {
       enable = true;
       env.GOPATH = [ "code/go" ];
+    };
+
+    delta = {
+      enable = true;
+      enableGitIntegration = true;
     };
 
     fd.enable = true;
