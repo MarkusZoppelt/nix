@@ -51,23 +51,6 @@
             }
           ];
         };
-        NixOS-aarch64 = nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-
-          system = "aarch64-linux";
-          modules = [
-            ./nixos/common.nix
-            ./hosts/NixOS-aarch64/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = false;
-              home-manager.users."${user}" = {
-                imports = [ ./home.nix ];
-              };
-            }
-          ];
-        };
       };
 
       darwinConfigurations = {
@@ -92,6 +75,5 @@
 
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
-      formatter.aarch64-linux = nixpkgs.legacyPackages.aarch64-linux.nixfmt-rfc-style;
     };
 }
