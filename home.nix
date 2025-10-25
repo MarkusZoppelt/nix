@@ -141,7 +141,16 @@
         nvim-cmp
         nvim-lspconfig
         nvim-notify
-        nvim-treesitter.withAllGrammars
+        (nvim-treesitter.withPlugins (p: [
+          p.go
+          p.javascript
+          p.json
+          p.lua
+          p.nix
+          p.rust
+          p.toml
+          p.typescript
+        ]))
         nvim-treesitter-context
         plenary-nvim
         telescope-nvim
