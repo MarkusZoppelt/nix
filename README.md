@@ -6,9 +6,7 @@ Cross-platform Nix configuration for NixOS and macOS (Darwin).
 
 ### NixOS
 
-Replace the dummy hardware config with your real one:
-
-    cp /etc/nixos/hardware-configuration.nix ./hosts/NixOS/hardware-configuration.nix
+    ./hosts/NixOS/label-partitions.sh
     sudo nixos-rebuild switch --flake .#NixOS
 
 ### Darwin (macOS)
