@@ -211,7 +211,7 @@
 
     go = {
       enable = true;
-      env.GOPATH = [ "code/go" ];
+      env.GOPATH = if pkgs.stdenv.isDarwin then [ "/Users/mz/code/go" ] else [ "/home/mz/code/go" ];
     };
 
     delta = {
