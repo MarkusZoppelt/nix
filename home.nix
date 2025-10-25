@@ -152,6 +152,7 @@
           p.typescript
         ]))
         nvim-treesitter-context
+        oil-nvim
         plenary-nvim
         telescope-nvim
         tokyonight-nvim
@@ -170,6 +171,7 @@
         ${builtins.readFile ./nvim/plugins/lazygit.lua}
         ${builtins.readFile ./nvim/plugins/noice.lua}
         ${builtins.readFile ./nvim/theme.lua}
+        ${builtins.readFile ./nvim/oil.lua}
       '';
     };
 
