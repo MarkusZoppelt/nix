@@ -25,9 +25,6 @@
       name' = "Markus Zoppelt";
       email = "markus@zoppelt.net";
       specialArgs = { inherit user name' email; };
-
-      inherit (nixpkgs) lib;
-      inherit (nixpkgs) legacyPackages;
     in
     {
       nixosConfigurations = {

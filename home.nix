@@ -15,6 +15,7 @@
     };
 
     sessionPath = [
+      "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.npm/bin"
       "$HOME/code/go/bin"
@@ -30,12 +31,12 @@
     packages =
       with pkgs;
       [
+        cargo
+        gcc
         lazydocker
         luarocks
         nodejs
         restic
-        rustup
-        sd
         tree
         unzip
         wget
@@ -114,14 +115,12 @@
       autocd = true;
       enableCompletion = true;
       autosuggestion.enable = true;
-
       history = {
         size = 9999999;
         save = 9999999;
         share = true;
         extended = true;
       };
-
       initContent = ''
         ${builtins.readFile ./zshrc}
       '';

@@ -13,10 +13,4 @@ Replace the dummy hardware config with your real one:
 
 ### Darwin (macOS)
 
-Initial setup:
-
     nix run nix-darwin -- switch --flake .#Darwin
-
-After that, use:
-
-    darwin-rebuild switch --flake .#Darwin
