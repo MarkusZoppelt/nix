@@ -173,6 +173,8 @@
         ${builtins.readFile ./nvim/theme.lua}
         ${builtins.readFile ./nvim/oil.lua}
       '';
+      viAlias = true;
+      vimAlias = true;
     };
 
     lazygit = {
