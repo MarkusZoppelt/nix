@@ -13,4 +13,4 @@ require('nvim-treesitter.configs').setup {
 vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/treesitter")
 
 -- Treesitter Context Configuration
-require('treesitter-context').setup { enable = false }
+require('treesitter-context').setup { enable = true }

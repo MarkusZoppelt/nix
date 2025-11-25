@@ -4,7 +4,6 @@ require("mason-lspconfig").setup({
     ensure_installed = {
         "lua_ls",
         "nil_ls",
-        "rust_analyzer",
         "ts_ls",
     },
 })
@@ -57,6 +56,9 @@ vim.lsp.config('rust_analyzer', {
         },
     },
 })
+
+-- Manually enable rust_analyzer since it's managed by Nix, not Mason
+vim.lsp.enable('rust_analyzer')
 
 vim.diagnostic.config({
     virtual_text = true

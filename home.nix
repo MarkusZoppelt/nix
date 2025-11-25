@@ -7,6 +7,9 @@
   home = {
     stateVersion = "24.11";
 
+    # remove after upgrading to 25.11
+    enableNixpkgsReleaseCheck = false;
+
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
@@ -32,226 +35,47 @@
       with pkgs;
       [
         cargo
-        gcc
+        delta
+        fd
         lazydocker
         luarocks
         nodejs
         restic
+        rust-analyzer
         tree
         unzip
+        uv
         wget
         zip
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         _1password-cli
         _1password-gui
+        clang
         signal-desktop
         syncthing
       ];
-
   };
 
+  imports = [
+    ./programs/btop.nix
+    ./programs/direnv.nix
+    ./programs/fzf.nix
+    ./programs/git.nix
+    ./programs/go.nix
+    ./programs/lazygit.nix
+    ./programs/neovim.nix
+    ./programs/ssh.nix
+    ./programs/starship.nix
+    ./programs/tmux.nix
+    ./programs/zsh.nix
+  ];
+
   programs = {
-    git = {
-      enable = true;
-      settings = {
-        user.name = "Markus Zoppelt";
-        user.email = "markus@zoppelt.net";
-        branch.autosetuprebase = "always";
-        color.ui = true;
-        core.editor = "nvim";
-        core.askPass = ""; # needs to be empty to use terminal for ask pass
-        github.user = "MarkusZoppelt";
-        push.default = "simple";
-        pull.rebase = true;
-        init.defaultBranch = "main";
-      };
-      ignores = [
-        "result"
-        ".idea"
-        "*~"
-        "*.swp"
-        ".DS_Store"
-        ".Spotlight-V100"
-        ".Trashes"
-        ".vimrc.local"
-        ".vim/.netrwhist"
-        ".vim/spell/"
-        ".vim/colors/"
-        ".vscode/"
-        "dump.rdb"
-        ".opencode/"
-        ".direnv"
-      ];
-    };
-
-    ssh = {
-      enable = true;
-      enableDefaultConfig = false;
-      includes = lib.optionals pkgs.stdenv.isDarwin [
-        "~/.orbstack/ssh/config"
-      ];
-      matchBlocks = {
-        "100.* *.ts.net" = {
-          forwardAgent = true;
-        };
-        "*" = { };
-      };
-      extraConfig =
-        let
-          identityAgent =
-            if pkgs.stdenv.isDarwin then
-              "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-            else
-              "~/.1password/agent.sock";
-        in
-        ''
-          IdentityAgent "${identityAgent}"
-        '';
-    };
-
-    zsh = {
-      enable = true;
-      autocd = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      history = {
-        size = 9999999;
-        save = 9999999;
-        share = true;
-        extended = true;
-      };
-      initContent = ''
-        ${builtins.readFile ./zshrc}
-      '';
-    };
-
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      plugins = with pkgs.vimPlugins; [
-        cmp-buffer
-        cmp-nvim-lsp
-        harpoon
-        lazygit-nvim
-        mason-lspconfig-nvim
-        mason-nvim
-        noice-nvim
-        nui-nvim
-        nvim-cmp
-        nvim-lspconfig
-        nvim-notify
-        (nvim-treesitter.withPlugins (p: [
-          p.go
-          p.javascript
-          p.json
-          p.lua
-          p.nix
-          p.rust
-          p.toml
-          p.typescript
-        ]))
-        nvim-treesitter-context
-        oil-nvim
-        plenary-nvim
-        telescope-nvim
-        tokyonight-nvim
-        trouble-nvim
-        vim-fugitive
-      ];
-      extraLuaConfig = ''
-        ${builtins.readFile ./nvim/options.lua}
-        ${builtins.readFile ./nvim/keymaps.lua}
-        ${builtins.readFile ./nvim/plugins/mason-lsp.lua}
-        ${builtins.readFile ./nvim/plugins/cmp.lua}
-        ${builtins.readFile ./nvim/plugins/telescope.lua}
-        ${builtins.readFile ./nvim/plugins/harpoon.lua}
-        ${builtins.readFile ./nvim/plugins/treesitter.lua}
-        ${builtins.readFile ./nvim/plugins/trouble.lua}
-        ${builtins.readFile ./nvim/plugins/lazygit.lua}
-        ${builtins.readFile ./nvim/plugins/noice.lua}
-        ${builtins.readFile ./nvim/theme.lua}
-        ${builtins.readFile ./nvim/oil.lua}
-      '';
-      viAlias = true;
-      vimAlias = true;
-    };
-
-    lazygit = {
-      enable = true;
-      settings = {
-        git.autoFetch = false;
-        git.paging = {
-          colorArg = "always";
-          pager = "delta --dark --paging=never";
-        };
-      };
-    };
-
-    btop = {
-      enable = true;
-      settings = {
-        color_theme = "tokyo-night";
-      };
-    };
-
-    fzf = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
-    tmux = {
-      enable = true;
-      extraConfig = builtins.readFile ./tmux.conf;
-    };
-
-    direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
-    };
-
-    go = {
-      enable = true;
-      env.GOPATH = if pkgs.stdenv.isDarwin then [ "/Users/mz/code/go" ] else [ "/home/mz/code/go" ];
-    };
-
-    delta = {
-      enable = true;
-      enableGitIntegration = true;
-    };
-
     fd.enable = true;
     jq.enable = true;
     obsidian.enable = true;
     ripgrep.enable = true;
-
-    starship = {
-      enable = true;
-      settings = {
-        add_newline = false;
-        format = "$hostname$directory$git_branch$git_status$character";
-
-        directory = {
-          style = "fg:#769ff0 bold";
-          truncation_length = 3;
-        };
-
-        git_branch = {
-          symbol = "";
-          format = "on [[$branch](purple)]($style) ";
-        };
-
-        git_status = {
-          format = "[[($all_status$ahead_behind )](fg:#769ff0)]($style)";
-        };
-
-        hostname = {
-          ssh_only = true;
-          format = "[@$hostname](bold green) ";
-        };
-      };
-    };
   };
 
   services = lib.optionalAttrs pkgs.stdenv.isLinux {

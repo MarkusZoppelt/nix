@@ -1,0 +1,30 @@
+{ ... }:
+
+{
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      format = "$hostname$directory$git_branch$git_status$character";
+
+      directory = {
+        style = "fg:#769ff0 bold";
+        truncation_length = 3;
+      };
+
+      git_branch = {
+        symbol = "";
+        format = "on [[$branch](purple)]($style) ";
+      };
+
+      git_status = {
+        format = "[[($all_status$ahead_behind )](fg:#769ff0)]($style)";
+      };
+
+      hostname = {
+        ssh_only = true;
+        format = "[@$hostname](bold green) ";
+      };
+    };
+  };
+}
