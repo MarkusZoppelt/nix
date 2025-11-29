@@ -7,9 +7,6 @@
   home = {
     stateVersion = "24.11";
 
-    # remove after upgrading to 25.11
-    enableNixpkgsReleaseCheck = false;
-
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
