@@ -35,7 +35,6 @@
       with pkgs;
       [
         cargo
-        delta
         fd
         lazydocker
         luarocks
