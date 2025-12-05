@@ -18,7 +18,7 @@
       "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.npm/bin"
-      "$HOME/code/go/bin"
+      "$HOME/Documents/go/bin"
     ];
 
     shellAliases = {
