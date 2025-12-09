@@ -12,6 +12,7 @@
       LC_CTYPE = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
       NPM_CONFIG_PREFIX = "$HOME/.npm";
+      RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     };
 
     sessionPath = [
@@ -31,13 +32,16 @@
     packages =
       with pkgs;
       [
+        rustc
         cargo
+        rust-analyzer
+        rustfmt
+        clippy
         fd
         lazydocker
         luarocks
         nodejs
         restic
-        rust-analyzer
         tree
         unzip
         uv
