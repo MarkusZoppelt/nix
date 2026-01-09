@@ -44,12 +44,49 @@
   };
 
   system.primaryUser = user;
-  system.defaults.NSGlobalDomain.InitialKeyRepeat = 15;
-  system.defaults.NSGlobalDomain.KeyRepeat = 1;
 
-  system.defaults.dock.autohide = true;
-  system.defaults.dock.autohide-delay = 0.0;
-  system.defaults.dock.autohide-time-modifier = 0.0;
+  # https://nix-darwin.github.io/nix-darwin/manual/
+  system.defaults = {
+    CustomUserPreferences = {
+      # Disable siri
+      "com.apple.Siri" = {
+        "UAProfileCheckingStatus" = 0;
+        "siriEnabled" = 0;
+      };
+      # Disable personalized ads
+      "com.apple.AdLib" = {
+        allowApplePersonalizedAdvertising = false;
+      };
+      "com.apple.desktopservices" = {
+        # Avoid creating .DS_Store files on network or USB volumes
+        DSDontWriteNetworkStores = true;
+        DSDontWriteUSBStores = true;
+      };
+    };
+
+    NSGlobalDomain.InitialKeyRepeat = 15;
+    NSGlobalDomain.KeyRepeat = 1;
+
+    # Whether to enable “Natural” scrolling direction
+    NSGlobalDomain."com.apple.swipescrolldirection" = true;
+
+    # Enable tap to click behaviour
+    NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
+
+    # trackpad.Clicking = true;
+
+    dock.autohide = true;
+    dock.autohide-delay = 0.0;
+    dock.autohide-time-modifier = 0.0;
+    dock.show-recents = false;
+
+    finder.AppleShowAllExtensions = true;
+    finder.NewWindowTarget = "Home";
+    finder.ShowPathbar = true;
+    finder.ShowStatusBar = true;
+
+    screensaver.askForPasswordDelay = 0;
+  };
 
   security.pam.services.sudo_local.touchIdAuth = true;
 }
