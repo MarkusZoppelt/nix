@@ -32,6 +32,7 @@
     packages =
       with pkgs;
       [
+        claude-code
         rustc
         cargo
         rust-analyzer
@@ -40,6 +41,7 @@
         fd
         lazydocker
         luarocks
+        nh
         nodejs
         restic
         tree
