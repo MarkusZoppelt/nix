@@ -11,6 +11,7 @@
   environment = {
     systemPackages = with pkgs; [
       chromium
+      discord
       ghostty
       gnome-disk-utility
       hyprpaper

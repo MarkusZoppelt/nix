@@ -11,19 +11,9 @@
   ];
 
   boot = {
-    # Limine bootloader with Secure Boot support
     loader = {
-      systemd-boot.enable = false;
-      grub.enable = false;
-      limine = {
-        enable = true;
-        secureBoot.enable = true;
-      };
-      timeout = 5;
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
-      };
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
     };
 
     # Secure Boot configuration
@@ -65,7 +55,7 @@
   };
 
   ### VIRTUALIZATION ###
-  virtualization.vm.enable = true;
+  virtualization.vm.enable = false;
 
   ### NVIDIA / GRAPHICS ###
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -81,13 +71,19 @@
   programs.steam.gamescopeSession.enable = true;
   programs.gamemode.enable = true;
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
   ];
 
-  # Security and Secure Boot related services
   security = {
     tpm2 = {
       enable = true;
@@ -95,12 +91,6 @@
       tctiEnvironment.enable = true;
     };
   };
-
-  # Additional packages for Secure Boot management
-  environment.systemPackages = with pkgs; [
-    sbctl # Secure Boot key manager
-    tpm2-tools
-  ];
 
   system.stateVersion = "25.05";
 }
