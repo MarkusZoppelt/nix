@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../nixos/gui.nix
+    ../../nixos/gaming.nix
   ];
 
   boot = {
@@ -54,6 +55,9 @@
     ];
   };
 
+  ### GAMING ###
+  gaming.enable = true;
+
   ### VIRTUALIZATION ###
   virtualization.vm.enable = false;
 
@@ -61,21 +65,10 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
+    powerManagement.enable = true;
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
-  programs.gamemode.enable = true;
-
-  services.sunshine = {
-    enable = true;
-    autoStart = true;
-    capSysAdmin = true;
-    openFirewall = true;
   };
 
   programs.nix-ld.enable = true;
