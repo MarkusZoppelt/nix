@@ -20,6 +20,7 @@
       "$HOME/.local/bin"
       "$HOME/.npm/bin"
       "$HOME/Documents/go/bin"
+      "$HOME/Documents/nix/bin"
     ];
 
     shellAliases = {

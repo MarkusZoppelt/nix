@@ -43,6 +43,7 @@
               home-manager.users."${user}" = {
                 imports = [
                   ./home.nix
+                  ./nixos/hyprland.nix
                 ];
               };
             }
@@ -67,9 +68,9 @@
             }
           ];
         };
-        checks.aarch64-darwin.mac = self.darwinConfigurations.darwin-arm64.system;
       };
 
+      checks.aarch64-darwin.mac = self.darwinConfigurations.Darwin.system;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-rfc-style;
     };
