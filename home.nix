@@ -41,7 +41,6 @@
         fd
         lazydocker
         luarocks
-        nh
         nodejs
         restic
         tree
@@ -76,6 +75,10 @@
   programs = {
     fd.enable = true;
     jq.enable = true;
+    nh = {
+      enable = true;
+      flake = "$HOME/Documents/nix";
+    };
     obsidian.enable = true;
     ripgrep.enable = true;
   };
