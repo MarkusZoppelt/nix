@@ -51,7 +51,6 @@
   users.users.${user} = {
     packages = with pkgs; [
       (btop.override { cudaSupport = true; })
-      remmina
     ];
   };
 

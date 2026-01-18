@@ -24,6 +24,7 @@
       papers
       pcsclite
       pkg-config
+      remmina
       signal-desktop
       spotify
       sushi
