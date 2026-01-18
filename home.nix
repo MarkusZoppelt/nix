@@ -51,10 +51,7 @@
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         _1password-cli
-        _1password-gui
         clang
-        signal-desktop
-        syncthing
       ];
   };
 

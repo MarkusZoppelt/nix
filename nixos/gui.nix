@@ -10,6 +10,7 @@
 
   environment = {
     systemPackages = with pkgs; [
+      _1password-gui
       chromium
       discord
       ghostty
@@ -23,8 +24,10 @@
       papers
       pcsclite
       pkg-config
+      signal-desktop
       spotify
       sushi
+      syncthing
       tokyonight-gtk-theme
       walker
       wiremix
