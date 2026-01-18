@@ -15,7 +15,18 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = false;
 
-  networking.networkmanager.enable = true;
+  networking = {
+    networkmanager.enable = true;
+    firewall = {
+      enable = true;
+      # Trust Tailscale interface completely
+      trustedInterfaces = [ "tailscale0" ];
+      # Deny all other incoming connections by default
+      allowedTCPPorts = [ ];
+      allowedUDPPorts = [ ];
+    };
+  };
+
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
   documentation.nixos.enable = false;
