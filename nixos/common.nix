@@ -1,7 +1,17 @@
 { pkgs, user, ... }:
 {
   ### GENERAL CONFIGURATION ###
-  nix.settings.experimental-features = "nix-command flakes";
+  nix = {
+    settings.experimental-features = "nix-command flakes";
+    # Automatic garbage collection
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 14d";
+    };
+    optimise.automatic = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnsupportedSystem = false;
 
@@ -9,6 +19,9 @@
   time.timeZone = "Europe/Berlin";
   i18n.defaultLocale = "en_US.UTF-8";
   documentation.nixos.enable = false;
+
+  # Clean /tmp on boot
+  boot.tmp.cleanOnBoot = true;
 
   ### USER CONFIGURATION ###
   users.users.${user} = {
@@ -36,6 +49,8 @@
         KbdInteractiveAuthentication = false;
       };
     };
+    earlyoom.enable = true;
+    fwupd.enable = true;
     tailscale.enable = true;
   };
 }
