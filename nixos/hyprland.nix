@@ -12,6 +12,10 @@
   # Waybar status bar
   xdg.configFile."waybar/config.jsonc".source = ./waybar/config.jsonc;
   xdg.configFile."waybar/style.css".source = ./waybar/style.css;
+  xdg.configFile."waybar/scripts" = {
+    source = ./waybar/scripts;
+    recursive = true;
+  };
 
   # Mako notifications
   xdg.configFile."mako/config".source = ./mako/config;
