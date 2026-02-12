@@ -40,25 +40,14 @@ vim.lsp.config('*', {
     capabilities = lsp_capabilities,
 })
 
-vim.lsp.config('rust_analyzer', {
-    capabilities = lsp_capabilities,
-    settings = {
-        ['rust-analyzer'] = {
-            inlayHints = {
-                chainingHints = false,
-                closureReturnTypeHints = false,
-                lifetimeElisionHints = {
-                    enable = false,
-                },
-                parameterHints = false,
-                typeHints = false,
-            },
-        },
-    },
-})
-
--- Manually enable rust_analyzer since it's managed by Nix, not Mason
-vim.lsp.enable('rust_analyzer')
+-- Enable LSP servers installed by mason
+-- rust_analyzer is excluded because rustaceanvim manages its own client
+local installed_servers = require("mason-lspconfig").get_installed_servers()
+for _, server in ipairs(installed_servers) do
+    if server ~= 'rust_analyzer' then
+        vim.lsp.enable(server)
+    end
+end
 
 vim.diagnostic.config({
     virtual_text = true
