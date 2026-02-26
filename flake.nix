@@ -22,9 +22,7 @@
     }:
     let
       user = "mz";
-      name' = "Markus Zoppelt";
-      email = "markus@zoppelt.net";
-      specialArgs = { inherit user name' email; };
+      specialArgs = { inherit user; };
     in
     {
       nixosConfigurations = {
