@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,6 +23,7 @@
       nixpkgs,
       darwin,
       home-manager,
+      lanzaboote,
     }:
     let
       user = "mz";
@@ -31,6 +36,7 @@
 
           system = "x86_64-linux";
           modules = [
+            lanzaboote.nixosModules.lanzaboote
             ./nixos/common.nix
             ./nixos/virtualization.nix
             ./hosts/NixOS/configuration.nix

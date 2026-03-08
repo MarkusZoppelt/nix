@@ -9,7 +9,19 @@
     ./hardware-configuration.nix
     ../../nixos/gui.nix
     ../../nixos/gaming.nix
+    ../../nixos/secure-boot.nix
+    ../../nixos/tpm-luks.nix
   ];
+
+  secureboot.enable = true;
+
+  tpmLuks = {
+    enable = true;
+    devices = [
+      "nixos-crypt-root"
+      "nixos-crypt-swap"
+    ];
+  };
 
   boot = {
     loader = {
@@ -17,20 +29,8 @@
       efi.canTouchEfiVariables = true;
     };
 
-    # Secure Boot configuration
     bootspec.enable = true;
 
-    plymouth = {
-      enable = true;
-      theme = "hexagon_alt";
-      themePackages = with pkgs; [
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "hexagon_alt" ];
-        })
-      ];
-    };
-
-    # Enable Plymouth in initrd for LUKS decryption
     initrd.systemd.enable = true;
 
     # Enable "Silent boot"
@@ -38,7 +38,6 @@
     initrd.verbose = false;
     kernelParams = [
       "quiet"
-      "splash"
       "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
@@ -75,14 +74,6 @@
     # Add any missing dynamic libraries for unpackaged programs
     # here, NOT in environment.systemPackages
   ];
-
-  security = {
-    tpm2 = {
-      enable = true;
-      pkcs11.enable = true;
-      tctiEnvironment.enable = true;
-    };
-  };
 
   system.stateVersion = "25.05";
 }

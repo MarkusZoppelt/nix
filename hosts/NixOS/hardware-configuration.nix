@@ -28,6 +28,7 @@
     "usbhid"
     "usb_storage"
     "sd_mod"
+    "r8169"
   ];
   boot.initrd.kernelModules = [ ];
 
