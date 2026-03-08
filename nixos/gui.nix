@@ -44,6 +44,10 @@
   };
 
   programs = {
+    ausweisapp = {
+      enable = true;
+      openFirewall = true;
+    };
     hyprland.enable = true;
     waybar.enable = true;
     hyprlock.enable = true;
