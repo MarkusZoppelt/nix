@@ -100,7 +100,6 @@
     # for mounting stuff
     gvfs.enable = true;
     udisks2.enable = true;
-    samba.enable = true;
   };
 
   security = {
