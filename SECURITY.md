@@ -16,12 +16,12 @@ Enable Secure Boot in BIOS and reboot.
 
 ## TPM2 disk unlock (run once after Secure Boot is enabled)
 
-Enroll the TPM into both LUKS volumes (PCR 7 = Secure Boot state):
+Enroll the TPM into both LUKS volumes (PCR 0 = firmware, PCR 7 = Secure Boot state, PCR 12 = kernel cmdline):
 
-    sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p2
-    sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=7 /dev/nvme0n1p3
+    sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7+12 /dev/nvme0n1p2
+    sudo systemd-cryptenroll --tpm2-device=auto --tpm2-pcrs=0+7+12 /dev/nvme0n1p3
 
-Re-enroll after BIOS firmware updates or Secure Boot key changes (PCR 7 will change):
+Re-enroll after BIOS firmware updates or Secure Boot key changes (PCR 0 and PCR 7 will change):
 
     sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p2
     sudo systemd-cryptenroll --wipe-slot=tpm2 /dev/nvme0n1p3

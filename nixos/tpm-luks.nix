@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
   options.tpmLuks = {
-    enable = lib.mkEnableOption "TPM2 automatic LUKS unlock bound to PCR 7 (Secure Boot state)";
+    enable = lib.mkEnableOption "TPM2 automatic LUKS unlock bound to PCRs 0+7+12 (firmware + Secure Boot state + kernel cmdline)";
     devices = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -17,7 +17,8 @@
     boot.initrd.luks.devices = lib.genAttrs config.tpmLuks.devices (_: {
       crypttabExtraOpts = [
         "tpm2-device=auto"
-        "tpm2-pcrs=7"
+        "tpm2-pcrs=0+7+12"
+        "tpm2-measure-pcr=yes"
       ];
     });
 
