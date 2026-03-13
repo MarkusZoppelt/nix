@@ -7,6 +7,8 @@ set -euo pipefail
 ROOT_DEV=$(findmnt -no SOURCE /)
 BOOT_DEV=$(findmnt -no SOURCE /boot)
 SWAP_DEV=$(swapon --show=NAME --noheadings | head -1 || echo "")
+DATA1_DEV=$(findmnt -no SOURCE /run/media/mz/data1 2>/dev/null || echo "")
+DATA2_DEV=$(findmnt -no SOURCE /run/media/mz/data2 2>/dev/null || echo "")
 
 # Normalize /dev/dm-X to /dev/mapper/* paths
 if [[ $ROOT_DEV == /dev/dm-* ]]; then
@@ -53,9 +55,11 @@ gum style --border rounded --padding "1 2" --margin "1" \
 
 gum style --margin "1" \
   "Current setup:" \
-  "  Boot: $BOOT_DEV" \
-  "  Root: $ROOT_DEV" \
-  "  Swap: ${SWAP_DEV:-none}"
+  "  Boot:     $BOOT_DEV" \
+  "  Root:     $ROOT_DEV" \
+  "  Swap:     ${SWAP_DEV:-none}" \
+  "  Data1:    ${DATA1_DEV:-none (not mounted)}" \
+  "  Data2:    ${DATA2_DEV:-none (not mounted)}"
 
 lsblk -o NAME,SIZE,TYPE,FSTYPE,LABEL,PARTLABEL,MOUNTPOINT
 
@@ -79,9 +83,17 @@ gum spin --spinner dot --title "Labeling root filesystem..." -- \
 [ -n "$SWAP_DEV" ] && gum spin --spinner dot --title "Labeling swap..." -- \
   bash -c "sudo swapoff '$SWAP_DEV' && sudo swaplabel -L nixos-swap '$SWAP_DEV' && sudo swapon '$SWAP_DEV'"
 
+[ -n "$DATA1_DEV" ] && gum spin --spinner dot --title "Labeling data1 filesystem..." -- \
+  sudo e2label "$DATA1_DEV" data1
+
+[ -n "$DATA2_DEV" ] && gum spin --spinner dot --title "Labeling data2 filesystem..." -- \
+  sudo e2label "$DATA2_DEV" data2
+
 # Label LUKS containers
 [[ $ROOT_DEV == /dev/mapper/* ]] && label_luks "$ROOT_DEV" "nixos-crypt-root"
 [[ -n "$SWAP_DEV" && $SWAP_DEV == /dev/mapper/* ]] && label_luks "$SWAP_DEV" "nixos-crypt-swap"
+[[ -n "$DATA1_DEV" && $DATA1_DEV == /dev/mapper/* ]] && label_luks "$DATA1_DEV" "crypt-data1"
+[[ -n "$DATA2_DEV" && $DATA2_DEV == /dev/mapper/* ]] && label_luks "$DATA2_DEV" "crypt-data2"
 
 # Verify all labels
 gum style --foreground 42 --margin "1" "✓ Labeling complete! Verifying..."
@@ -94,6 +106,8 @@ FAILED=0
 verify "Root filesystem: nixos-root" "[ \"\$(sudo e2label '$ROOT_DEV')\" = 'nixos-root' ]" || FAILED=1
 verify "Boot partition: nixos-boot" "[ \"\$(sudo fatlabel '$BOOT_DEV')\" = 'nixos-boot' ]" || FAILED=1
 [ -n "$SWAP_DEV" ] && { verify "Swap device: nixos-swap" "sudo swaplabel '$SWAP_DEV' | grep -q 'LABEL: nixos-swap'" || FAILED=1; }
+[ -n "$DATA1_DEV" ] && { verify "Data1 filesystem: data1" "[ \"\$(sudo e2label '$DATA1_DEV')\" = 'data1' ]" || FAILED=1; }
+[ -n "$DATA2_DEV" ] && { verify "Data2 filesystem: data2" "[ \"\$(sudo e2label '$DATA2_DEV')\" = 'data2' ]" || FAILED=1; }
 
 # Verify LUKS partition labels (check if they exist, regardless of current mount state)
 if [ -d /dev/disk/by-partlabel ]; then
@@ -105,6 +119,20 @@ if [ -d /dev/disk/by-partlabel ]; then
     [[ $SWAP_DEV == /dev/mapper/* ]] && IS_LUKS=1
     [[ $SWAP_DEV == /dev/dm-* ]] && IS_LUKS=1
     [ $IS_LUKS -eq 1 ] && { verify "Swap LUKS partition: nixos-crypt-swap" "[ -e /dev/disk/by-partlabel/nixos-crypt-swap ]" || FAILED=1; }
+  fi
+
+  # Check for SATA SSD LUKS partitions if the data volumes are mounted
+  if [ -n "$DATA1_DEV" ]; then
+    IS_LUKS=0
+    [[ $DATA1_DEV == /dev/mapper/* ]] && IS_LUKS=1
+    [[ $DATA1_DEV == /dev/dm-* ]] && IS_LUKS=1
+    [ $IS_LUKS -eq 1 ] && { verify "Data1 LUKS partition: crypt-data1" "[ -e /dev/disk/by-partlabel/crypt-data1 ]" || FAILED=1; }
+  fi
+  if [ -n "$DATA2_DEV" ]; then
+    IS_LUKS=0
+    [[ $DATA2_DEV == /dev/mapper/* ]] && IS_LUKS=1
+    [[ $DATA2_DEV == /dev/dm-* ]] && IS_LUKS=1
+    [ $IS_LUKS -eq 1 ] && { verify "Data2 LUKS partition: crypt-data2" "[ -e /dev/disk/by-partlabel/crypt-data2 ]" || FAILED=1; }
   fi
 fi
 

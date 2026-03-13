@@ -20,6 +20,8 @@
     devices = [
       "nixos-crypt-root"
       "nixos-crypt-swap"
+      "crypt-data1"
+      "crypt-data2"
     ];
   };
 
@@ -60,6 +62,9 @@
   virtualization.vm.enable = false;
 
   services.flatpak.enable = true;
+  services.fstrim.enable = true;
+  services.smartd.enable = true;
+  environment.systemPackages = with pkgs; [ smartmontools ];
 
   ### NVIDIA / GRAPHICS ###
   services.xserver.videoDrivers = [ "nvidia" ];
