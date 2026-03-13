@@ -59,6 +59,8 @@
   ### VIRTUALIZATION ###
   virtualization.vm.enable = false;
 
+  services.flatpak.enable = true;
+
   ### NVIDIA / GRAPHICS ###
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
