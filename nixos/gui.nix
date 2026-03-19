@@ -12,28 +12,25 @@
     systemPackages = with pkgs; [
       _1password-gui
       chromium
-      discord
       ghostty
-      gnome-disk-utility
+      gnome-connections
       hyprpaper
       hyprpolkitagent
       hyprshot
+      loupe
       mako
       mpv
       nautilus
       papers
       pcsclite
       pkg-config
-      remmina
       signal-desktop
       spotify
-      sushi
       syncthing
       tokyonight-gtk-theme
       walker
       wiremix
       wl-clipboard
-      wofi
       xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
     ];

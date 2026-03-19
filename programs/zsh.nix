@@ -29,6 +29,8 @@
       in
       ''
         ${builtins.readFile ./zshrc}
-      '' + linuxInit + darwinInit;
+      ''
+      + linuxInit
+      + darwinInit;
   };
 }

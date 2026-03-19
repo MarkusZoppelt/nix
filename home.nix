@@ -33,17 +33,20 @@
     packages =
       with pkgs;
       [
-        claude-code
-        rustc
         cargo
-        rust-analyzer
-        rustfmt
+        claude-code
         clippy
+        dua
+        duf
         fd
         lazydocker
         luarocks
+        nil
         nodejs
         restic
+        rust-analyzer
+        rustc
+        rustfmt
         tree
         unzip
         uv
