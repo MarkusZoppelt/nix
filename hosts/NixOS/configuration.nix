@@ -43,6 +43,8 @@
       "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
+      # Required for NVIDIA open kernel module + proper KMS/DRM
+      "nvidia_drm.fbdev=1"
     ];
   };
 
