@@ -7,7 +7,7 @@ show_power_menu() {
 \u2060󰜉 Restart
 󰐥\u2063 Shutdown" # These first characters are invisible sort keys
 
-  local selection=$(echo -e "$menu_options" | wofi --show dmenu --prompt "Power Options" --width 200 --height 250 -O alphabetical)
+  local selection=$(echo -e "$menu_options" | walker --dmenu -p "Power Options")
 
   case "$selection" in
   *Lock*) hyprlock ;;
