@@ -25,7 +25,7 @@
 
     shellAliases = {
       ls = "ls -F --color=always";
-      ll = "ls -l";
+      ll = "ls -lh";
       lg = "lazygit";
       vim = "nvim";
     };
