@@ -65,5 +65,8 @@ with lib;
     # libseat probes for seatd first (no socket on logind-only systems),
     # silently failing and breaking virtual input device seat attachment.
     systemd.user.services.sunshine.environment.LIBSEAT_BACKEND = "logind";
+
+    # Monitor memory usage and take action before the system runs out of memory.
+    systemd.oomd.enable = true;
   };
 }
