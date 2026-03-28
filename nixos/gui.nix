@@ -11,7 +11,7 @@
   environment = {
     systemPackages = with pkgs; [
       _1password-gui
-      chromium
+      (chromium.override { enableWideVine = true; })
       ghostty
       gnome-connections
       hyprpaper
