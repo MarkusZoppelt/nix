@@ -73,7 +73,10 @@
       excludePackages = with pkgs; [ xterm ];
     };
 
-    displayManager.gdm.enable = true;
+    displayManager.gdm = {
+      enable = true;
+      autoSuspend = false;
+    };
     gnome.gnome-settings-daemon.enable = true;
     gnome.gnome-keyring.enable = true;
     hypridle.enable = true;
