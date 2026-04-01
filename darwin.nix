@@ -38,7 +38,6 @@
     ];
 
     casks = [
-      "ghostty"
       "orbstack"
     ];
   };

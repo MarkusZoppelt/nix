@@ -63,6 +63,7 @@
     ./programs/btop.nix
     ./programs/direnv.nix
     ./programs/fzf.nix
+    ./programs/ghostty.nix
     ./programs/git.nix
     ./programs/go.nix
     ./programs/lazygit.nix

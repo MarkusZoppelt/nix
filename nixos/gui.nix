@@ -12,7 +12,6 @@
     systemPackages = with pkgs; [
       _1password-gui
       (chromium.override { enableWideVine = true; })
-      ghostty
       gnome-connections
       hyprpaper
       hyprpolkitagent
