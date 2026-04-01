@@ -1,0 +1,95 @@
+{ ... }:
+{
+  programs.waybar = {
+    enable = true;
+    systemd.enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        "modules-left" = [ "hyprland/workspaces" ];
+        "modules-center" = [ "clock" ];
+        "modules-right" = [
+          "pulseaudio"
+          "battery"
+          "network"
+          "cpu"
+          "custom/gpu"
+          "memory"
+          "tray"
+          "custom/lock"
+        ];
+        "hyprland/workspaces" = {
+          format = "{name}: {icon}";
+          format-icons = {
+            active = "●";
+            default = "○";
+          };
+        };
+        tray = {
+          icon-size = 21;
+          spacing = 10;
+        };
+        clock = {
+          timezone = "Europe/Berlin";
+          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          format = "{:%d - %H:%M}";
+        };
+        network = {
+          format-wifi = "󰤢 ";
+          format-ethernet = "󰈀 ";
+          format-disconnected = "󰤠 ";
+          interval = 5;
+          tooltip = false;
+        };
+        cpu = {
+          interval = 1;
+          format = "󰻠 {icon0}{icon1}{icon2}{icon3} {usage:>2}%";
+          format-icons = [
+            "▁"
+            "▂"
+            "▃"
+            "▄"
+            "▅"
+            "▆"
+            "▇"
+            "█"
+          ];
+        };
+        memory = {
+          interval = 5;
+          format = "󰍛 {used:0.1f}G/{total:0.1f}G";
+        };
+        pulseaudio = {
+          format = "{icon} {volume}%";
+          format-muted = "󰸈";
+          format-icons = {
+            default = [
+              "󰕿"
+              "󰖀"
+              "󰕾"
+            ];
+          };
+          on-click = "ghostty --command=wiremix";
+        };
+        "custom/lock" = {
+          tooltip = false;
+          on-click = "~/.local/bin/power-menu";
+          format = "󰐥";
+        };
+        "custom/gpu" = {
+          exec = "$HOME/.config/waybar/scripts/gpu.sh";
+          return-type = "json";
+          interval = 2;
+          format = "{}";
+        };
+      };
+    };
+    style = builtins.readFile ../waybar/style.css;
+  };
+
+  xdg.configFile."waybar/scripts" = {
+    source = ../waybar/scripts;
+    recursive = true;
+  };
+}

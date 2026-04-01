@@ -1,0 +1,22 @@
+{ ... }:
+{
+  services.mako = {
+    enable = true;
+    settings = {
+      background-color = "#1a1b26ee";
+      text-color = "#c0caf5";
+      border-color = "#7aa2f7";
+      border-size = 1;
+      border-radius = 8;
+      width = 400;
+      padding = "20";
+      font = "Monaspace Neon 11";
+      max-icon-size = 40;
+      layer = "overlay";
+      default-timeout = 5000;
+      "app-name=Spotify" = {
+        invisible = 1;
+      };
+    };
+  };
+}

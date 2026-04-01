@@ -30,8 +30,7 @@
       walker
       wiremix
       wl-clipboard
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
+
     ];
     sessionVariables.NIXOS_OZONE_WL = "1";
     variables = {
@@ -99,6 +98,15 @@
     # for mounting stuff
     gvfs.enable = true;
     udisks2.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+    config.common.default = "*";
   };
 
   security = {

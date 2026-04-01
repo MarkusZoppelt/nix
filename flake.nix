@@ -47,7 +47,7 @@
               home-manager.users."${user}" = {
                 imports = [
                   ./home.nix
-                  ./nixos/hyprland.nix
+                  ./nixos/desktop
                 ];
               };
             }
