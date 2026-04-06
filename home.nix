@@ -48,6 +48,7 @@
         rustc
         rustfmt
         tree
+        tree-sitter
         unzip
         uv
         wget

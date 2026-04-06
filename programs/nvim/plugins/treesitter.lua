@@ -1,16 +1,9 @@
 -- Treesitter Configuration
-require('nvim-treesitter.configs').setup {
-    -- Disable auto_install and parser updates since Nix manages everything
-    auto_install = false,
-    ensure_installed = {},
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
+-- nvim-treesitter was rewritten for Neovim 0.12; highlighting is now handled
+-- by Neovim's built-in treesitter engine. setup() only configures install_dir.
+require('nvim-treesitter').setup {
+    install_dir = vim.fn.stdpath('data') .. '/site',
 }
-
--- Prevent Treesitter from trying to write to read-only Nix store
-vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/treesitter")
 
 -- Treesitter Context Configuration
 require('treesitter-context').setup { enable = true }

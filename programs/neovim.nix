@@ -1,11 +1,12 @@
-{ pkgs, ... }:
+{ pkgs-unstable, ... }:
 {
   programs.neovim = {
     enable = true;
+    package = pkgs-unstable.neovim-unwrapped;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs-unstable.vimPlugins; [
       cmp-buffer
       cmp-nvim-lsp
       fidget-nvim
