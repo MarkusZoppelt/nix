@@ -1,7 +1,5 @@
--- Leader key
 vim.g.mapleader = " "
 
--- General vim options
 vim.o.termguicolors = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -16,6 +14,14 @@ vim.opt.autoindent = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.linebreak = true
-vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.completeopt = "menuone,noselect,popup,fuzzy"
+vim.opt.complete = ".,w,b,u,o"
+vim.o.autocomplete = true
 vim.opt.visualbell = false
 vim.opt.hlsearch = false
+
+vim.o.winborder = "rounded"
+vim.o.pumborder = "rounded"
+vim.o.pumwidth = 40
+vim.o.pummaxwidth = 40
+vim.o.pumheight = 16

@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs-unstable,
   lib,
   ...
 }:
@@ -39,16 +40,19 @@
         dua
         duf
         fd
+        gopls
         lazydocker
+        lua-language-server
         luarocks
         nil
+        nodePackages.typescript-language-server
         nodejs
         restic
         rust-analyzer
         rustc
         rustfmt
         tree
-        tree-sitter
+        pkgs-unstable.tree-sitter
         unzip
         uv
         wget

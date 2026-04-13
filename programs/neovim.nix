@@ -7,16 +7,7 @@
     viAlias = true;
     vimAlias = true;
     plugins = with pkgs-unstable.vimPlugins; [
-      cmp-buffer
-      cmp-nvim-lsp
       fidget-nvim
-      harpoon
-      lazygit-nvim
-      mason-lspconfig-nvim
-      mason-nvim
-      nvim-cmp
-      nvim-lspconfig
-      nvim-notify
       (nvim-treesitter.withPlugins (p: [
         p.go
         p.javascript
@@ -27,27 +18,20 @@
         p.toml
         p.typescript
       ]))
-      nvim-treesitter-context
-      oil-nvim
       plenary-nvim
       rustaceanvim
       telescope-nvim
       tokyonight-nvim
-      vim-fugitive
     ];
     extraLuaConfig = ''
       ${builtins.readFile ./nvim/options.lua}
       ${builtins.readFile ./nvim/keymaps.lua}
-      ${builtins.readFile ./nvim/plugins/cmp.lua}
+      ${builtins.readFile ./nvim/lsp.lua}
+      ${builtins.readFile ./nvim/theme.lua}
       ${builtins.readFile ./nvim/plugins/fidget.lua}
-      ${builtins.readFile ./nvim/plugins/harpoon.lua}
-      ${builtins.readFile ./nvim/plugins/lazygit.lua}
-      ${builtins.readFile ./nvim/plugins/mason-lsp.lua}
-      ${builtins.readFile ./nvim/plugins/oil.lua}
       ${builtins.readFile ./nvim/plugins/rustaceanvim.lua}
       ${builtins.readFile ./nvim/plugins/telescope.lua}
       ${builtins.readFile ./nvim/plugins/treesitter.lua}
-      ${builtins.readFile ./nvim/theme.lua}
     '';
   };
 }
