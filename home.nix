@@ -28,7 +28,6 @@
       ls = "ls -F --color=always";
       ll = "ls -lh";
       lg = "lazygit";
-      vim = "nvim";
     };
 
     packages =
@@ -52,7 +51,6 @@
         rustc
         rustfmt
         tree
-        pkgs-unstable.tree-sitter
         unzip
         uv
         wget

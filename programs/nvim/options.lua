@@ -1,24 +1,24 @@
 vim.g.mapleader = " "
 
-vim.o.termguicolors = true
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.colorcolumn = "80"
-vim.opt.backspace = "indent,eol,start"
-vim.opt.mouse = "a"
-vim.opt.autoindent = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.linebreak = true
-vim.opt.completeopt = "menuone,noselect,popup,fuzzy"
-vim.opt.complete = ".,w,b,u,o"
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.colorcolumn = "80"
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.linebreak = true
+vim.o.completeopt = "menuone,noselect,popup,fuzzy"
+vim.o.complete = ".,w,b,u,o"
 vim.o.autocomplete = true
-vim.opt.visualbell = false
-vim.opt.hlsearch = false
+vim.o.visualbell = false
+vim.o.hlsearch = false
+
+-- Security
+vim.o.modeline = false
+vim.o.secure = true
 
 vim.o.winborder = "rounded"
 vim.o.pumborder = "rounded"

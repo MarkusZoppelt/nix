@@ -13,12 +13,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		local opts = { buffer = event.buf, silent = true }
 
-		vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
-		vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
-		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-		vim.keymap.set("n", "grr", "<cmd>Telescope lsp_references<cr>", opts)
-		vim.keymap.set("n", "<space>df", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
-		vim.keymap.set("n", "<space>dl", "<cmd>Telescope diagnostics<cr>", opts)
+		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>",
+			vim.tbl_extend("force", opts, { desc = "Format buffer" }))
+		vim.keymap.set("n", "grr", "<cmd>Telescope lsp_references<cr>",
+			vim.tbl_extend("force", opts, { desc = "LSP references (Telescope)" }))
+		vim.keymap.set("n", "<space>df", "<cmd>lua vim.diagnostic.open_float()<cr>",
+			vim.tbl_extend("force", opts, { desc = "Diagnostic float" }))
+		vim.keymap.set("n", "<space>dl", "<cmd>Telescope diagnostics<cr>",
+			vim.tbl_extend("force", opts, { desc = "Diagnostics list (Telescope)" }))
 	end,
 })
 
