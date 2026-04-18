@@ -8,6 +8,7 @@
     vimAlias = true;
     plugins = with pkgs-unstable.vimPlugins; [
       fidget-nvim
+      nvim-lspconfig
       (nvim-treesitter.withPlugins (p: [
         p.go
         p.javascript

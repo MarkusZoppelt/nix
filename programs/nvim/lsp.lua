@@ -13,46 +13,42 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		local opts = { buffer = event.buf, silent = true }
 
-		vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>",
-			vim.tbl_extend("force", opts, { desc = "Format buffer" }))
-		vim.keymap.set("n", "grr", "<cmd>Telescope lsp_references<cr>",
-			vim.tbl_extend("force", opts, { desc = "LSP references (Telescope)" }))
-		vim.keymap.set("n", "<space>df", "<cmd>lua vim.diagnostic.open_float()<cr>",
-			vim.tbl_extend("force", opts, { desc = "Diagnostic float" }))
-		vim.keymap.set("n", "<space>dl", "<cmd>Telescope diagnostics<cr>",
-			vim.tbl_extend("force", opts, { desc = "Diagnostics list (Telescope)" }))
+		vim.keymap.set(
+			{ "n", "x" },
+			"<F3>",
+			"<cmd>lua vim.lsp.buf.format({async = true})<cr>",
+			vim.tbl_extend("force", opts, { desc = "Format buffer" })
+		)
+		vim.keymap.set(
+			"n",
+			"grr",
+			"<cmd>Telescope lsp_references<cr>",
+			vim.tbl_extend("force", opts, { desc = "LSP references (Telescope)" })
+		)
+		vim.keymap.set(
+			"n",
+			"<space>df",
+			"<cmd>lua vim.diagnostic.open_float()<cr>",
+			vim.tbl_extend("force", opts, { desc = "Diagnostic float" })
+		)
+		vim.keymap.set(
+			"n",
+			"<space>dl",
+			"<cmd>Telescope diagnostics<cr>",
+			vim.tbl_extend("force", opts, { desc = "Diagnostics list (Telescope)" })
+		)
 	end,
 })
 
--- Server configs (rust_analyzer is managed by rustaceanvim)
-vim.lsp.config("gopls", {
-	cmd = { "gopls" },
-	filetypes = { "go", "gomod" },
-	root_markers = { "go.mod", "go.work", ".git" },
-})
-
+-- Server configs: cmd/filetypes/root_markers come from nvim-lspconfig.
+-- rust_analyzer is managed by rustaceanvim.
 vim.lsp.config("lua_ls", {
-	cmd = { "lua-language-server" },
-	filetypes = { "lua" },
-	root_markers = { ".luarc.json", ".luarc.jsonc", ".git" },
 	settings = {
 		Lua = {
 			runtime = { version = "LuaJIT" },
-			workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+			workspace = { library = { vim.env.VIMRUNTIME } },
 		},
 	},
-})
-
-vim.lsp.config("nil_ls", {
-	cmd = { "nil" },
-	filetypes = { "nix" },
-	root_markers = { "flake.nix", ".git" },
-})
-
-vim.lsp.config("ts_ls", {
-	cmd = { "typescript-language-server", "--stdio" },
-	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-	root_markers = { "tsconfig.json", "package.json", ".git" },
 })
 
 vim.lsp.enable({ "gopls", "lua_ls", "nil_ls", "ts_ls" })
