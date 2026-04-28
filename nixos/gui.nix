@@ -26,7 +26,6 @@
       signal-desktop
       spotify
       syncthing
-      tokyonight-gtk-theme
       walker
       wiremix
       wl-clipboard
@@ -113,6 +112,7 @@
     pam.services = {
       hyprlock = { };
       login.enableGnomeKeyring = true;
+      gdm-password.enableGnomeKeyring = true;
     };
     rtkit.enable = true;
     polkit.enable = true;

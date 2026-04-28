@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./gtk.nix
     ./hyprland.nix
     ./hypridle.nix
     ./hyprlock.nix
