@@ -34,11 +34,11 @@
       with pkgs;
       [
         cargo
-        claude-code
         clippy
         dua
         duf
         fd
+        gh
         gopls
         lazydocker
         lua-language-server
@@ -84,7 +84,6 @@
       enable = true;
       flake = "$HOME/Documents/nix";
     };
-    obsidian.enable = true;
     ripgrep.enable = true;
   };
 

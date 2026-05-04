@@ -23,13 +23,11 @@
       papers
       pcsclite
       pkg-config
-      signal-desktop
       spotify
       syncthing
       walker
       wiremix
       wl-clipboard
-
     ];
     sessionVariables.NIXOS_OZONE_WL = "1";
     variables = {
