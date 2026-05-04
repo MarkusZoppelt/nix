@@ -1,11 +1,11 @@
-{ ... }:
+{ name', email, ... }:
 
 {
   programs.git = {
     enable = true;
     settings = {
-      user.name = "Markus Zoppelt";
-      user.email = "markus@zoppelt.net";
+      user.name = name';
+      user.email = email;
       branch.autosetuprebase = "always";
       color.ui = true;
       core.editor = "nvim";

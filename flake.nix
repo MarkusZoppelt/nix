@@ -29,7 +29,9 @@
     }:
     let
       user = "mz";
-      specialArgs = { inherit user; };
+      name' = "Markus Zoppelt";
+      email = "markus@zoppelt.net";
+      specialArgs = { inherit user name' email; };
       mkUnstable =
         system:
         import nixpkgs-unstable {
@@ -54,6 +56,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = {
                 pkgs-unstable = mkUnstable "x86_64-linux";
+                inherit name' email;
               };
               home-manager.users."${user}" = {
                 imports = [
@@ -88,6 +91,7 @@
               home-manager.useUserPackages = false;
               home-manager.extraSpecialArgs = {
                 pkgs-unstable = mkUnstable "aarch64-darwin";
+                inherit name' email;
               };
               home-manager.users."${user}" = {
                 imports = [ ./home.nix ];

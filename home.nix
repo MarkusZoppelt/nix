@@ -69,6 +69,7 @@
     ./programs/ghostty.nix
     ./programs/git.nix
     ./programs/go.nix
+    ./programs/jujutsu.nix
     ./programs/lazygit.nix
     ./programs/neovim.nix
     ./programs/ssh.nix
