@@ -17,6 +17,8 @@
       };
       aliases = {
         n = [ "new" ];
+        l = [ "log" "--no-pager" "--limit" "10"];
+        s = [ "st" "--no-pager" ];
       };
     };
   };
