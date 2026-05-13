@@ -1,12 +1,12 @@
-{ pkgs-unstable, ... }:
+{ pkgs, ... }:
 {
   programs.neovim = {
     enable = true;
-    package = pkgs-unstable.neovim-unwrapped;
+    package = pkgs.neovim-unwrapped;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    plugins = with pkgs-unstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       fidget-nvim
       nvim-lspconfig
       (nvim-treesitter.withPlugins (p: [
@@ -24,7 +24,7 @@
       telescope-nvim
       tokyonight-nvim
     ];
-    extraLuaConfig = ''
+    initLua = ''
       ${builtins.readFile ./nvim/options.lua}
       ${builtins.readFile ./nvim/keymaps.lua}
       ${builtins.readFile ./nvim/lsp.lua}

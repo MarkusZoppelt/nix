@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./gtk.nix
@@ -13,5 +13,14 @@
 
   services.hyprpolkitagent.enable = true;
 
-  xdg.portal.config.common.default = "*";
+  xdg.portal = {
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.hyprland = {
+      default = [
+        "hyprland"
+        "gtk"
+      ];
+      "org.freedesktop.impl.portal.Settings" = [ "gtk" ];
+    };
+  };
 }

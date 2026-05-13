@@ -7,7 +7,7 @@
     includes = lib.optionals pkgs.stdenv.isDarwin [
       "~/.orbstack/ssh/config"
     ];
-    matchBlocks = {
+    settings = {
       "100.* *.ts.net alyx gordon" = {
         forwardAgent = true;
       };

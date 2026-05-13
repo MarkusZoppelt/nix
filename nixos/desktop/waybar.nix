@@ -14,7 +14,6 @@
           "battery"
           "network"
           "cpu"
-          "custom/gpu"
           "memory"
           "tray"
           "custom/lock"
@@ -77,19 +76,8 @@
           on-click = "~/.local/bin/power-menu";
           format = "󰐥";
         };
-        "custom/gpu" = {
-          exec = "$HOME/.config/waybar/scripts/gpu.sh";
-          return-type = "json";
-          interval = 2;
-          format = "{}";
-        };
       };
     };
     style = builtins.readFile ../waybar/style.css;
-  };
-
-  xdg.configFile."waybar/scripts" = {
-    source = ../waybar/scripts;
-    recursive = true;
   };
 }

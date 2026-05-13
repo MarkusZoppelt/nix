@@ -7,42 +7,40 @@
     size = 24;
   };
 
+  home.sessionVariables = {
+    XCURSOR_SIZE = "24";
+    HYPRCURSOR_SIZE = "24";
+    # NVIDIA
+    LIBVA_DRIVER_NAME = "nvidia";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __GL_GSYNC_ALLOWED = "1";
+    NVD_BACKEND = "direct";
+    # Force all apps to use Wayland
+    NIXOS_OZONE_WL = "1";
+    GDK_BACKEND = "wayland";
+    QT_QPA_PLATFORM = "wayland";
+    QT_STYLE_OVERRIDE = "kvantum";
+    SDL_VIDEODRIVER = "wayland";
+    CLUTTER_BACKEND = "wayland";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    OZONE_PLATFORM = "wayland";
+    CHROMIUM_FLAGS = "--enable-features=UseOzonePlatform --ozone-platform=wayland --gtk-version=4";
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
-    package = null; # installed via NixOS module (programs.hyprland.enable)
+    package = null; # installed via NixOS module
+    # FIXME(26.05): HM's Lua renderer still broken (misescapes $variables,
+    # mistranslates exec-once). Keep pinned until fixed upstream.
+    configType = "hyprlang";
     settings = {
       monitor = "DP-1, 3840x2160@144, auto, 2";
 
       "$terminal" = "ghostty";
       "$fileManager" = "nautilus";
-      "$menu" = "walker -m applications";
+      "$menu" = "walker";
       "$browser" = "chromium --new-window";
       "$webapp" = "$browser --app";
-
-      exec-once = [
-        "walker --gapplication-service"
-      ];
-
-      env = [
-        "XCURSOR_SIZE,24"
-        "HYPRCURSOR_SIZE,24"
-        # NVIDIA
-        "LIBVA_DRIVER_NAME,nvidia"
-        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
-        "__GL_GSYNC_ALLOWED,1"
-        "NVD_BACKEND,direct"
-        # Force all apps to use Wayland
-        "NIXOS_OZONE_WL,1"
-        "GDK_BACKEND,wayland"
-        "QT_QPA_PLATFORM,wayland"
-        "QT_STYLE_OVERRIDE,kvantum"
-        "SDL_VIDEODRIVER,wayland"
-        "CLUTTER_BACKEND,wayland"
-        "MOZ_ENABLE_WAYLAND,1"
-        "ELECTRON_OZONE_PLATFORM_HINT,wayland"
-        "OZONE_PLATFORM,wayland"
-        "CHROMIUM_FLAGS,--enable-features=UseOzonePlatform --ozone-platform=wayland --gtk-version=4"
-      ];
 
       xwayland = {
         force_zero_scaling = true;
@@ -61,7 +59,6 @@
 
       decoration = {
         rounding = 10;
-        rounding_power = 2;
         active_opacity = 1.0;
         inactive_opacity = 1.0;
         shadow = {
@@ -74,7 +71,6 @@
           enabled = true;
           size = 3;
           passes = 1;
-          vibrancy = 0.1696;
         };
       };
 
@@ -108,7 +104,6 @@
       };
 
       dwindle = {
-        pseudotile = true;
         preserve_split = true;
       };
 
@@ -117,7 +112,6 @@
       };
 
       misc = {
-        force_default_wallpaper = 1;
         disable_hyprland_logo = true;
       };
 
@@ -144,11 +138,11 @@
         "$mainMod, B, exec, $browser"
         "$mainMod, C, killactive,"
         "$mainMod, E, exec, $fileManager"
-        "$mainMod SHIFT, E, exec, walker -m emojis"
+        "$mainMod SHIFT, E, exec, walker -m unicode"
         "$mainMod, V, togglefloating,"
         "$mainMod, R, exec, $menu"
         "$mainMod, P, pseudo,"
-        "$mainMod, J, togglesplit,"
+        "$mainMod, J, layoutmsg, togglesplit"
         "$mainMod, F, fullscreen"
         "$mainMod, L, exec, hyprlock"
         # Screenshots
@@ -209,12 +203,6 @@
       bindm = [
         "$mainMod, mouse:272, movewindow"
         "$mainMod, mouse:273, resizewindow"
-      ];
-
-      windowrule = [
-        "suppressevent maximize, class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-        "immediate, class:^(gamescope)$"
       ];
     };
   };

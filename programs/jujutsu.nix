@@ -9,14 +9,32 @@
       };
       ui = {
         default-command = "log";
-        pager = [ "hunk" "pager" ];
+        pager = [
+          "hunk"
+          "pager"
+        ];
         diff-formatter = ":git";
       };
       aliases = {
         n = [ "new" ];
-        l = [ "log" "--no-pager" "--limit" "10"];
-        s = [ "st" "--no-pager" ];
-        tug = ["bookmark" "move" "--from" "heads(::@- & bookmarks())" "--to" "@-"];
+        l = [
+          "log"
+          "--no-pager"
+          "--limit"
+          "10"
+        ];
+        s = [
+          "st"
+          "--no-pager"
+        ];
+        tug = [
+          "bookmark"
+          "move"
+          "--from"
+          "heads(::@- & bookmarks())"
+          "--to"
+          "@-"
+        ];
       };
     };
   };

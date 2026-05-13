@@ -13,6 +13,7 @@
       _1password-gui
       (chromium.override { enableWideVine = true; })
       gnome-connections
+      gnome-session
       hyprpaper
       hyprpolkitagent
       hyprshot
@@ -29,7 +30,11 @@
       wiremix
       wl-clipboard
     ];
-    sessionVariables.NIXOS_OZONE_WL = "1";
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      # GDM 50's greeter kiosk session needs to find gnome-session files.
+      XDG_DATA_DIRS = [ "${pkgs.gdm}/share" ];
+    };
     variables = {
       TERMINAL = "ghostty";
     };
@@ -43,19 +48,7 @@
     hyprland.enable = true;
     waybar.enable = true;
     hyprlock.enable = true;
-    dconf = {
-      enable = true;
-      profiles.user.databases = [
-        {
-          settings = {
-            "org/gnome/desktop/interface" = {
-              gtk-theme = "Tokyonight-Dark";
-              color-scheme = "prefer-dark";
-            };
-          };
-        }
-      ];
-    };
+    dconf.enable = true;
   };
 
   services = {
@@ -97,14 +90,7 @@
     udisks2.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-hyprland
-      xdg-desktop-portal-gtk
-    ];
-    config.common.default = "*";
-  };
+  xdg.portal.enable = true;
 
   security = {
     pam.services = {

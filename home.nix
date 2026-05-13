@@ -1,12 +1,11 @@
 {
   pkgs,
-  pkgs-unstable,
   lib,
   ...
 }:
 {
   home = {
-    stateVersion = "24.11";
+    stateVersion = "26.05";
 
     sessionVariables = {
       LANG = "en_US.UTF-8";
@@ -47,7 +46,7 @@
         lua-language-server
         luarocks
         nil
-        nodePackages.typescript-language-server
+        typescript-language-server
         nodejs
         pnpm
         restic

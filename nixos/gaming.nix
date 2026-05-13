@@ -15,7 +15,6 @@ with lib;
     programs = {
       steam = {
         enable = true;
-        gamescopeSession.enable = true;
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = false;
       };
@@ -25,21 +24,6 @@ with lib;
         capSysNice = true;
       };
     };
-
-    # Steam on Linux+NVIDIA hardcodes --disable-gpu in steamwebhelper, causing
-    # some stutter in Big Picture mode. -cef-force-gpu overrides this with
-    # --ignore-gpu-blocklist and applies to every steam invocation.
-    # https://github.com/ValveSoftware/steam-for-linux/issues/11255
-    environment.systemPackages = [
-      (pkgs.symlinkJoin {
-        name = "steam-cef-force-gpu";
-        paths = [ config.programs.steam.package ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/steam --add-flags "-cef-force-gpu"
-        '';
-      })
-    ];
 
     # uhid: DualSense (DS5) gamepad emulation
     boot.kernelModules = [ "uhid" ];
