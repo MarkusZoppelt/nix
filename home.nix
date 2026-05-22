@@ -13,6 +13,7 @@
       LC_CTYPE = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
       NPM_CONFIG_PREFIX = "$HOME/.npm";
+      PNPM_HOME = "$HOME/.local/share/pnpm";
       RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     };
 
@@ -20,6 +21,8 @@
       "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.npm/bin"
+      "$HOME/.local/share/pnpm"
+      "$HOME/.local/share/pnpm/bin"
       "$HOME/Documents/go/bin"
       "$HOME/Documents/nix/bin"
     ];
@@ -46,6 +49,7 @@
         nil
         nodePackages.typescript-language-server
         nodejs
+        pnpm
         restic
         rust-analyzer
         rustc
