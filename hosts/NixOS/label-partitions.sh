@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#! nix-shell -i bash -p gum util-linux e2fsprogs dosfstools gptfdisk cryptsetup
+#! nix-shell -i bash -p gum util-linux e2fsprogs dosfstools gptfdisk cryptsetup btrfs-progs
 
 set -euo pipefail
 
@@ -84,10 +84,10 @@ gum spin --spinner dot --title "Labeling root filesystem..." -- \
   bash -c "sudo swapoff '$SWAP_DEV' && sudo swaplabel -L nixos-swap '$SWAP_DEV' && sudo swapon '$SWAP_DEV'"
 
 [ -n "$DATA1_DEV" ] && gum spin --spinner dot --title "Labeling data1 filesystem..." -- \
-  sudo e2label "$DATA1_DEV" data1
+  sudo btrfs filesystem label "$DATA1_DEV" data1
 
 [ -n "$DATA2_DEV" ] && gum spin --spinner dot --title "Labeling data2 filesystem..." -- \
-  sudo e2label "$DATA2_DEV" data2
+  sudo btrfs filesystem label "$DATA2_DEV" data2
 
 # Label LUKS containers
 [[ $ROOT_DEV == /dev/mapper/* ]] && label_luks "$ROOT_DEV" "nixos-crypt-root"
@@ -106,8 +106,8 @@ FAILED=0
 verify "Root filesystem: nixos-root" "[ \"\$(sudo e2label '$ROOT_DEV')\" = 'nixos-root' ]" || FAILED=1
 verify "Boot partition: nixos-boot" "[ \"\$(sudo fatlabel '$BOOT_DEV')\" = 'nixos-boot' ]" || FAILED=1
 [ -n "$SWAP_DEV" ] && { verify "Swap device: nixos-swap" "sudo swaplabel '$SWAP_DEV' | grep -q 'LABEL: nixos-swap'" || FAILED=1; }
-[ -n "$DATA1_DEV" ] && { verify "Data1 filesystem: data1" "[ \"\$(sudo e2label '$DATA1_DEV')\" = 'data1' ]" || FAILED=1; }
-[ -n "$DATA2_DEV" ] && { verify "Data2 filesystem: data2" "[ \"\$(sudo e2label '$DATA2_DEV')\" = 'data2' ]" || FAILED=1; }
+[ -n "$DATA1_DEV" ] && { verify "Data1 filesystem: data1" "[ \"\$(sudo btrfs filesystem label '$DATA1_DEV')\" = 'data1' ]" || FAILED=1; }
+[ -n "$DATA2_DEV" ] && { verify "Data2 filesystem: data2" "[ \"\$(sudo btrfs filesystem label '$DATA2_DEV')\" = 'data2' ]" || FAILED=1; }
 
 # Verify LUKS partition labels (check if they exist, regardless of current mount state)
 if [ -d /dev/disk/by-partlabel ]; then
