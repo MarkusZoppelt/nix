@@ -13,7 +13,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnsupportedSystem = false;
 
   networking = {
     networkmanager.enable = true;
@@ -39,7 +38,6 @@
     isNormalUser = true;
     description = "${user}";
     extraGroups = [
-      "docker"
       "wheel"
       "disk"
       "networkmanager"
@@ -48,9 +46,6 @@
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
-  ### VIRTUALIZATION ###
-  virtualisation.docker.enable = true;
-
   ### SERVICES ###
   services = {
     openssh = {
@@ -58,9 +53,9 @@
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
       };
     };
-    earlyoom.enable = true;
     fwupd.enable = true;
     tailscale.enable = true;
   };

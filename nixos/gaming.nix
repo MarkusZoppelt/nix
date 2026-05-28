@@ -23,10 +23,6 @@ with lib;
           localNetworkGameTransfers.openFirewall = false;
         };
         gamemode.enable = true;
-        gamescope = {
-          enable = true;
-          capSysNice = true;
-        };
       };
 
       # uhid: DualSense (DS5) gamepad emulation

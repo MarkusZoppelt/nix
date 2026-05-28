@@ -12,57 +12,34 @@
       LC_CTYPE = "en_US.UTF-8";
       LC_ALL = "en_US.UTF-8";
       NPM_CONFIG_PREFIX = "$HOME/.npm";
-      PNPM_HOME = "$HOME/.local/share/pnpm";
-      RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
     };
 
     sessionPath = [
-      "$HOME/.cargo/bin"
       "$HOME/.local/bin"
       "$HOME/.npm/bin"
-      "$HOME/.local/share/pnpm"
-      "$HOME/.local/share/pnpm/bin"
       "$HOME/Documents/go/bin"
       "$HOME/Documents/nix/bin"
     ];
 
     shellAliases = {
       ls = "ls -F --color=always";
-      ll = "ls -lh";
+      ll = "ls -l --color=always";
       lg = "lazygit";
     };
 
-    packages =
-      with pkgs;
-      [
-        cargo
-        clippy
-        dua
-        duf
-        fd
-        gh
-        gopls
-        lazydocker
-        lua-language-server
-        luarocks
-        nil
-        typescript-language-server
-        nodejs
-        pnpm
-        restic
-        rust-analyzer
-        rustc
-        rustfmt
-        tree
-        unzip
-        uv
-        wget
-        zip
-      ]
-      ++ lib.optionals pkgs.stdenv.isLinux [
-        _1password-cli
-        clang
-      ];
+    packages = with pkgs; [
+      _1password-cli
+      gh
+      gopls
+      lazydocker
+      lua-language-server
+      nil
+      nodejs
+      opencode
+      restic
+      typescript-language-server
+      uv
+    ];
   };
 
   imports = [

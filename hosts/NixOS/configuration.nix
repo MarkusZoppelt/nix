@@ -28,7 +28,6 @@
 
   boot = {
     loader = {
-      systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
 
@@ -50,13 +49,6 @@
   };
 
   networking.hostName = "Gordon";
-
-  ### USER CONFIGURATION ###
-  users.users.${user} = {
-    packages = with pkgs; [
-      (btop.override { cudaSupport = true; })
-    ];
-  };
 
   ### GAMING ###
   gaming.enable = true;
@@ -81,10 +73,6 @@
   };
 
   programs.nix-ld.enable = true;
-  programs.nix-ld.libraries = with pkgs; [
-    # Add any missing dynamic libraries for unpackaged programs
-    # here, NOT in environment.systemPackages
-  ];
 
   system.stateVersion = "26.05";
 }

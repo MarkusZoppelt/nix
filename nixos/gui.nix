@@ -1,7 +1,5 @@
 { pkgs, ... }:
 {
-  boot.loader.efi.canTouchEfiVariables = true;
-
   systemd.services.NetworkManager-wait-online.enable = false;
 
   hardware.graphics.enable = true;
@@ -12,21 +10,11 @@
     systemPackages = with pkgs; [
       _1password-gui
       (chromium.override { enableWideVine = true; })
-      gnome-connections
       gnome-session
-      hyprpaper
-      hyprpolkitagent
       hyprshot
-      loupe
-      mako
-      mpv
-      nautilus
-      papers
       pcsclite
       pkg-config
       spotify
-      syncthing
-      walker
       wiremix
       wl-clipboard
     ];

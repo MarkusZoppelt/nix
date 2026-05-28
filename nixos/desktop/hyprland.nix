@@ -16,15 +16,12 @@
     __GL_GSYNC_ALLOWED = "1";
     NVD_BACKEND = "direct";
     # Force all apps to use Wayland
-    NIXOS_OZONE_WL = "1";
     GDK_BACKEND = "wayland";
     QT_QPA_PLATFORM = "wayland";
-    QT_STYLE_OVERRIDE = "kvantum";
     SDL_VIDEODRIVER = "wayland";
     CLUTTER_BACKEND = "wayland";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     OZONE_PLATFORM = "wayland";
-    CHROMIUM_FLAGS = "--enable-features=UseOzonePlatform --ozone-platform=wayland --gtk-version=4";
   };
 
   wayland.windowManager.hyprland = {
@@ -37,7 +34,6 @@
       monitor = "DP-1, 3840x2160@144, auto, 2";
 
       "$terminal" = "ghostty";
-      "$fileManager" = "nautilus";
       "$menu" = "walker";
       "$browser" = "chromium --new-window";
       "$webapp" = "$browser --app";
@@ -137,7 +133,6 @@
         "$mainMod, Q, exec, $terminal"
         "$mainMod, B, exec, $browser"
         "$mainMod, C, killactive,"
-        "$mainMod, E, exec, $fileManager"
         "$mainMod SHIFT, E, exec, walker -m unicode"
         "$mainMod, V, togglefloating,"
         "$mainMod, R, exec, $menu"
