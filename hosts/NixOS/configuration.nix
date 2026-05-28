@@ -7,10 +7,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../nixos/gui.nix
-    ../../nixos/gaming.nix
     ../../nixos/secure-boot.nix
     ../../nixos/tpm-luks.nix
+    ../../nixos/gui.nix
+    ../../nixos/gaming.nix
+    ../../nixos/virtualization.nix
   ];
 
   secureboot.enable = true;
@@ -59,6 +60,7 @@
 
   ### GAMING ###
   gaming.enable = true;
+  gaming.sunshine.enable = false;
 
   ### VIRTUALIZATION ###
   virtualization.vm.enable = false;
