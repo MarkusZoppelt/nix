@@ -12,9 +12,9 @@
       (chromium.override { enableWideVine = true; })
       gnome-session
       hyprshot
+      ncspot
       pcsclite
       pkg-config
-      spotify
       wiremix
       wl-clipboard
     ];
