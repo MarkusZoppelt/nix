@@ -23,8 +23,7 @@
     onActivation = {
       autoUpdate = true;
       upgrade = true;
-      # re-enable once https://github.com/nix-darwin/nix-darwin/issues/1787 is fixed
-      # cleanup = "zap";
+      cleanup = "zap";
     };
 
     brews = [
