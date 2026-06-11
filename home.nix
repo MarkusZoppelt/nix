@@ -38,7 +38,6 @@
       opencode
       restic
       typescript-language-server
-      uv
     ];
   };
 
