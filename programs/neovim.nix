@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.neovim = {
     enable = true;
@@ -24,15 +24,15 @@
       telescope-nvim
       tokyonight-nvim
     ];
-    initLua = ''
-      ${builtins.readFile ./nvim/options.lua}
-      ${builtins.readFile ./nvim/keymaps.lua}
-      ${builtins.readFile ./nvim/lsp.lua}
-      ${builtins.readFile ./nvim/theme.lua}
-      ${builtins.readFile ./nvim/plugins/fidget.lua}
-      ${builtins.readFile ./nvim/plugins/rustaceanvim.lua}
-      ${builtins.readFile ./nvim/plugins/telescope.lua}
-      ${builtins.readFile ./nvim/plugins/treesitter.lua}
-    '';
+    initLua = lib.concatMapStrings builtins.readFile [
+      ./nvim/options.lua
+      ./nvim/keymaps.lua
+      ./nvim/lsp.lua
+      ./nvim/theme.lua
+      ./nvim/plugins/fidget.lua
+      ./nvim/plugins/rustaceanvim.lua
+      ./nvim/plugins/telescope.lua
+      ./nvim/plugins/treesitter.lua
+    ];
   };
 }
