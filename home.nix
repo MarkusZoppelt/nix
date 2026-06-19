@@ -49,6 +49,7 @@
     ./programs/go.nix
     ./programs/jujutsu.nix
     ./programs/lazygit.nix
+    ./programs/ncspot.nix
     ./programs/neovim.nix
     ./programs/ssh.nix
     ./programs/starship.nix

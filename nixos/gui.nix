@@ -12,7 +12,6 @@
       (chromium.override { enableWideVine = true; })
       gnome-session
       hyprshot
-      ncspot
       wiremix
       wl-clipboard
     ];
