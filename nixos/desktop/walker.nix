@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ colors, lib, ... }:
+let
+  defineColors = import ../../lib/css.nix { inherit lib colors; };
+in
 {
   services.elephant = {
     enable = true;
@@ -33,7 +36,7 @@
     };
     theme = {
       name = "tokyonight";
-      style = builtins.readFile ../walker/themes/tokyonight.css;
+      style = defineColors + "\n" + builtins.readFile ../walker/themes/tokyonight.css;
     };
   };
 }

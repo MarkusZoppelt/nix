@@ -1,11 +1,11 @@
-{ ... }:
+{ colors, ... }:
 {
   services.mako = {
     enable = true;
     settings = {
-      background-color = "#1a1b26ee";
-      text-color = "#c0caf5";
-      border-color = "#7aa2f7";
+      background-color = "${colors.bg}ee";
+      text-color = colors.fg;
+      border-color = colors.blue;
       border-size = 1;
       border-radius = 8;
       width = 400;

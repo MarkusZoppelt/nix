@@ -29,7 +29,15 @@
       user = "mz";
       name' = "Markus Zoppelt";
       email = "markus@zoppelt.net";
-      specialArgs = { inherit user name' email; };
+      colors = import ./lib/colors.nix;
+      specialArgs = {
+        inherit
+          user
+          name'
+          email
+          colors
+          ;
+      };
     in
     {
       nixosConfigurations = {
@@ -46,7 +54,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = {
-                inherit name' email;
+                inherit name' email colors;
               };
               home-manager.users."${user}" = {
                 imports = [
@@ -80,7 +88,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = false;
               home-manager.extraSpecialArgs = {
-                inherit name' email;
+                inherit name' email colors;
               };
               home-manager.users."${user}" = {
                 imports = [ ./home.nix ];

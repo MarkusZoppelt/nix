@@ -1,4 +1,7 @@
-{ ... }:
+{ colors, lib, ... }:
+let
+  defineColors = import ../../lib/css.nix { inherit lib colors; };
+in
 {
   programs.waybar = {
     enable = true;
@@ -78,6 +81,6 @@
         };
       };
     };
-    style = builtins.readFile ../waybar/style.css;
+    style = defineColors + "\n" + builtins.readFile ../waybar/style.css;
   };
 }
