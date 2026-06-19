@@ -40,7 +40,6 @@
           modules = [
             lanzaboote.nixosModules.lanzaboote
             ./nixos/common.nix
-            ./nixos/virtualization.nix
             ./hosts/NixOS/configuration.nix
             home-manager.nixosModules.home-manager
             {
@@ -92,6 +91,7 @@
       };
 
       checks.aarch64-darwin.mac = self.darwinConfigurations.Darwin.system;
+      checks.x86_64-linux.nixos = self.nixosConfigurations.NixOS.config.system.build.toplevel;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
     };

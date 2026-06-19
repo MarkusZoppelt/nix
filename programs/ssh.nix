@@ -11,8 +11,6 @@
       "100.* *.ts.net alyx gordon" = {
         forwardAgent = true;
       };
-      "*" = { };
     };
-
   };
 }

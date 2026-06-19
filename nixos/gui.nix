@@ -13,8 +13,6 @@
       gnome-session
       hyprshot
       ncspot
-      pcsclite
-      pkg-config
       wiremix
       wl-clipboard
     ];
