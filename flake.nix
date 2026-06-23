@@ -41,7 +41,7 @@
     in
     {
       nixosConfigurations = {
-        NixOS = nixpkgs.lib.nixosSystem {
+        Gordon = nixpkgs.lib.nixosSystem {
           inherit specialArgs;
 
           system = "x86_64-linux";
@@ -99,7 +99,7 @@
       };
 
       checks.aarch64-darwin.mac = self.darwinConfigurations.Darwin.system;
-      checks.x86_64-linux.nixos = self.nixosConfigurations.NixOS.config.system.build.toplevel;
+      checks.x86_64-linux.gordon = self.nixosConfigurations.Gordon.config.system.build.toplevel;
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
     };
