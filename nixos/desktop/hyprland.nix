@@ -33,7 +33,7 @@
     settings = {
       monitor = "DP-1, 3840x2160@144, auto, 2";
 
-      "$terminal" = "ghostty";
+      "$terminal" = "ghostty +new-window";
       "$menu" = "walker";
       "$browser" = "chromium --new-window";
       "$webapp" = "$browser --app";
