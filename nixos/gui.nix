@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   systemd.services.NetworkManager-wait-online.enable = false;
 
@@ -63,7 +63,6 @@
     pipewire = {
       enable = true;
       alsa.enable = true;
-      alsa.support32Bit = true;
       pulse.enable = true;
     };
     playerctld.enable = true;
