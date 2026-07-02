@@ -34,7 +34,7 @@
       lua-language-server
       nil
       nodejs
-      opencode
+      llm-agents.opencode
       restic
       typescript-language-server
     ];

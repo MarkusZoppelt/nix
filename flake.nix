@@ -15,6 +15,7 @@
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
 
   outputs =
@@ -24,6 +25,7 @@
       darwin,
       home-manager,
       lanzaboote,
+      llm-agents,
     }:
     let
       user = "mz";
@@ -47,8 +49,10 @@
           system = "x86_64-linux";
           modules = [
             lanzaboote.nixosModules.lanzaboote
+            ./lib/nix-settings.nix
             ./nixos/common.nix
             ./hosts/NixOS/configuration.nix
+            { nixpkgs.overlays = [ llm-agents.overlays.default ]; }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -73,6 +77,7 @@
 
           system = "aarch64-darwin";
           modules = [
+            ./lib/nix-settings.nix
             ./darwin.nix
             {
               nixpkgs.overlays = [
@@ -81,6 +86,7 @@
                     doCheck = false;
                   });
                 })
+                llm-agents.overlays.default
               ];
             }
             home-manager.darwinModules.home-manager

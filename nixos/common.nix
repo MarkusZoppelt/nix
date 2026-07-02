@@ -2,7 +2,6 @@
 {
   ### GENERAL CONFIGURATION ###
   nix = {
-    settings.experimental-features = "nix-command flakes";
     # Automatic garbage collection
     gc = {
       automatic = true;
