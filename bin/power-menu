@@ -5,6 +5,7 @@ show_power_menu() {
   local menu_options="\u200B Lock
 \u200D Relaunch
 \u2060󰜉 Restart
+\u2061 Sleep
 󰐥\u2063 Shutdown" # These first characters are invisible sort keys
 
   local selection=$(echo -e "$menu_options" | walker --dmenu -p "Power Options")
@@ -13,6 +14,7 @@ show_power_menu() {
   *Lock*) hyprlock ;;
   *Relaunch*) hyprctl dispatch exit ;;
   *Restart*) systemctl reboot ;;
+  *Sleep*) systemctl suspend ;;
   *Shutdown*) systemctl poweroff ;;
   esac
 }

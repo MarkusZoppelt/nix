@@ -37,6 +37,7 @@
       "$menu" = "walker";
       "$browser" = "chromium --new-window";
       "$webapp" = "$browser --app";
+      "$powermenu" = "$HOME/.local/bin/power-menu";
 
       xwayland = {
         force_zero_scaling = true;
@@ -140,6 +141,7 @@
         "$mainMod, J, layoutmsg, togglesplit"
         "$mainMod, F, fullscreen"
         "$mainMod, L, exec, hyprlock"
+        "$mainMod SHIFT, L, exec, $powermenu"
         # Screenshots
         ", PRINT, exec, hyprshot -m region"
         "SHIFT, PRINT, exec, hyprshot -m window"

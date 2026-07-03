@@ -7,6 +7,11 @@
   home = {
     stateVersion = "26.05";
 
+    file.".local/bin/power-menu" = {
+      source = ./bin/power-menu;
+      executable = true;
+    };
+
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
