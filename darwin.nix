@@ -27,10 +27,6 @@
 
     brews = [
       {
-        name = "ollama";
-        restart_service = "changed";
-      }
-      {
         name = "syncthing";
         restart_service = "changed";
       }
