@@ -64,6 +64,7 @@
 
   programs = {
     fd.enable = true;
+    hunk.enable = true;
     jq.enable = true;
     nh = {
       enable = true;

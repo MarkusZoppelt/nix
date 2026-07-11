@@ -16,6 +16,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    hunk = {
+      url = "github:modem-dev/hunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -26,6 +30,7 @@
       home-manager,
       lanzaboote,
       llm-agents,
+      hunk,
     }:
     let
       user = "mz";
@@ -64,6 +69,7 @@
                 imports = [
                   ./home.nix
                   ./nixos/desktop
+                  hunk.homeManagerModules.default
                 ];
               };
             }
@@ -97,7 +103,10 @@
                 inherit name' email colors;
               };
               home-manager.users."${user}" = {
-                imports = [ ./home.nix ];
+                imports = [
+                  ./home.nix
+                  hunk.homeManagerModules.default
+                ];
               };
             }
           ];
