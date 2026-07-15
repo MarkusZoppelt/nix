@@ -33,10 +33,10 @@
 
     packages = with pkgs; [
       _1password-cli
+      dust
       gh
       gopls
       lazydocker
-      lua-language-server
       nil
       nodejs
       llm-agents.opencode

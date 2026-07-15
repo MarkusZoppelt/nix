@@ -57,7 +57,7 @@
             ./lib/nix-settings.nix
             ./nixos/common.nix
             ./hosts/NixOS/configuration.nix
-            { nixpkgs.overlays = [ llm-agents.overlays.default ]; }
+            { nixpkgs.overlays = [ llm-agents.overlays.shared-nixpkgs ]; }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -92,7 +92,7 @@
                     doCheck = false;
                   });
                 })
-                llm-agents.overlays.default
+                llm-agents.overlays.shared-nixpkgs
               ];
             }
             home-manager.darwinModules.home-manager

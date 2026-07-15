@@ -42,16 +42,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Server configs: cmd/filetypes/root_markers come from nvim-lspconfig.
 -- rust_analyzer is managed by rustaceanvim.
-vim.lsp.config("lua_ls", {
-	settings = {
-		Lua = {
-			runtime = { version = "LuaJIT" },
-			workspace = { library = { vim.env.VIMRUNTIME } },
-		},
-	},
-})
-
-vim.lsp.enable({ "gopls", "lua_ls", "nil_ls", "ts_ls" })
+vim.lsp.enable({ "gopls", "nil_ls", "ts_ls" })
 
 -- Add border to the completion documentation popup (not covered by winborder/pumborder)
 vim.api.nvim_create_autocmd("CompleteChanged", {
