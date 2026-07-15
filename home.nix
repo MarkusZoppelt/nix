@@ -54,6 +54,7 @@
     ./programs/git.nix
     ./programs/go.nix
     ./programs/jujutsu.nix
+    ./programs/jjui.nix
     ./programs/lazygit.nix
     ./programs/ncspot.nix
     ./programs/neovim.nix
@@ -66,6 +67,7 @@
   programs = {
     fd.enable = true;
     hunk.enable = true;
+    jjui.enable = true;
     jq.enable = true;
     nh = {
       enable = true;
