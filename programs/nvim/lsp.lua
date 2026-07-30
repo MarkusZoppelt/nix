@@ -57,8 +57,9 @@ vim.api.nvim_create_autocmd("CompleteChanged", {
 
 vim.diagnostic.config({
 	severity_sort = true,
-	virtual_text = { current_line = false },
-	virtual_lines = { current_line = true },
+    -- Use single-line virtual_text and <space>df for the full message
+	virtual_text = true;
+	virtual_lines = false;
 	float = {
 		border = "rounded",
 		source = true,
