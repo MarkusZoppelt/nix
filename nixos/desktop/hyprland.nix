@@ -31,7 +31,7 @@
     # mistranslates exec-once). Keep pinned until fixed upstream.
     configType = "hyprlang";
     settings = {
-      monitor = "DP-1, 3840x2160@144, auto, 2";
+      monitor = "DP-1, 3840x2160@144, auto, 1.5";
 
       "$terminal" = "ghostty +new-window";
       "$menu" = "walker";
