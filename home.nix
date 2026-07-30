@@ -36,10 +36,11 @@
       dust
       gh
       gopls
+      herdr
       lazydocker
+      llm-agents.opencode
       nil
       nodejs
-      llm-agents.opencode
       restic
       typescript-language-server
     ];
