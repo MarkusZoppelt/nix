@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
-    herdr.url = "github:herdrdev/herdr";
-    hunk = {
-      url = "github:modem-dev/hunk";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -31,8 +26,6 @@
       home-manager,
       lanzaboote,
       llm-agents,
-      hunk,
-      herdr,
     }:
     let
       user = "mz";
@@ -62,7 +55,6 @@
             {
               nixpkgs.overlays = [
                 llm-agents.overlays.shared-nixpkgs
-                herdr.overlays.default
               ];
             }
             home-manager.nixosModules.home-manager
@@ -76,7 +68,6 @@
                 imports = [
                   ./home.nix
                   ./nixos/desktop
-                  hunk.homeManagerModules.default
                 ];
               };
             }
@@ -100,7 +91,6 @@
                   });
                 })
                 llm-agents.overlays.shared-nixpkgs
-                herdr.overlays.default
               ];
             }
             home-manager.darwinModules.home-manager
@@ -113,7 +103,6 @@
               home-manager.users."${user}" = {
                 imports = [
                   ./home.nix
-                  hunk.homeManagerModules.default
                 ];
               };
             }

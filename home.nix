@@ -36,9 +36,11 @@
       dust
       gh
       gopls
-      herdr
       lazydocker
+      llm-agents.herdr
+      llm-agents.hunk
       llm-agents.opencode
+      llm-agents.opencode2
       nil
       nodejs
       restic
@@ -66,7 +68,6 @@
 
   programs = {
     fd.enable = true;
-    hunk.enable = true;
     jjui.enable = true;
     jq.enable = true;
     nh = {
