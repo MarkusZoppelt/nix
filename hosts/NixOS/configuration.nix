@@ -52,7 +52,7 @@
 
   ### GAMING ###
   gaming.enable = true;
-  gaming.sunshine.enable = false;
+  gaming.sunshine.enable = true;
 
   ### VIRTUALIZATION ###
   virtualization.vm.enable = false;
