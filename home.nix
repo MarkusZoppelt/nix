@@ -7,11 +7,6 @@
   home = {
     stateVersion = "26.05";
 
-    file.".local/bin/power-menu" = {
-      source = ./bin/power-menu;
-      executable = true;
-    };
-
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
@@ -33,6 +28,8 @@
 
     packages = with pkgs; [
       _1password-cli
+      (writeScriptBin "agent-usage" (builtins.readFile ./bin/agent-usage))
+      duf
       dust
       gh
       gopls
@@ -44,6 +41,7 @@
       nil
       nodejs
       restic
+      sqlite
       typescript-language-server
     ];
   };

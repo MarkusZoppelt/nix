@@ -31,7 +31,6 @@
       openFirewall = true;
     };
     hyprland.enable = true;
-    waybar.enable = true;
     hyprlock.enable = true;
     dconf.enable = true;
   };
@@ -68,6 +67,7 @@
     playerctld.enable = true;
 
     power-profiles-daemon.enable = true;
+    upower.enable = true;
 
     # for mounting stuff
     gvfs.enable = true;

@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+db="${XDG_DATA_HOME:-$HOME/.local/share}/opencode/opencode.db"
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+echo null >"$tmp/go.json"
+echo null >"$tmp/xai.json"
+echo null >"$tmp/xai-sub.json"
+echo '{"data":[]}' >"$tmp/sessions.json"
+
+key() {
+  sqlite3 -readonly "$db" "select coalesce(json_extract(value, '$.$2'), '') from credential where integration_id='$1' limit 1;"
+}
+
+get() {
+  local out=$1
+  shift
+  curl -fsS --max-time 20 "$@" >"$out" || echo null >"$out"
+}
+
+if go=$(key opencode-go key) && [[ -n $go ]]; then
+  get "$tmp/go.json" -H "Authorization: Bearer $go" https://opencode.ai/zen/go/v1/usage
+fi
+
+if xai=$(key xai access) && [[ -n $xai ]]; then
+  hdr=(-H "Authorization: Bearer $xai" -H "Accept: application/json" -H "User-Agent: gordon-agents/1.0")
+  get "$tmp/xai.json" "${hdr[@]}" \
+    -H "x-grok-client-surface: grok-build" \
+    -H "x-grok-client-version: 1.0.0" \
+    -H "x-xai-token-auth: xai-grok-cli" \
+    "https://cli-chat-proxy.grok.com/v1/billing?format=credits"
+  get "$tmp/xai-sub.json" "${hdr[@]}" https://grok.com/rest/subscriptions
+fi
+
+opencode2 api get /api/session >"$tmp/sessions.json" || true
+
+jq -n --slurpfile go "$tmp/go.json" --slurpfile xai "$tmp/xai.json" --slurpfile sub "$tmp/xai-sub.json" --slurpfile sessions "$tmp/sessions.json" --arg today "$(date +%F)" '
+  def win(title; w):
+    if w == null then empty
+    else {title: title, percent: ((w.percent // 0) / 100), resetsAt: (w.resetsAt // "")} end;
+  def toks: ((.tokens.input // 0) + (.tokens.output // 0) + (.tokens.reasoning // 0) + (.tokens.cache.read // 0) + (.tokens.cache.write // 0));
+  def day: ((.time.updated // .time.created // 0) / 1000 | strflocaltime("%Y-%m-%d"));
+  def week: [range(0; 7) | (now - (. * 86400) | strflocaltime("%Y-%m-%d"))];
+  (reduce ($sessions[0].data // [])[] as $s ({};
+    .[$s.model.providerID // "unknown"] |= (. // {today: 0, days: {}, models: {}})
+    | .[$s.model.providerID // "unknown"] |= (
+        ($s | toks) as $t | ($s | day) as $d
+        | .days[$d] += $t
+        | .models[$s.model.id // "?"] += $t
+        | if $d == $today then .today += $t else . end
+      )
+  )) as $usage
+  | def attach(p):
+      ($usage[p.id] // {}) as $u | p + {
+        todayTokens: ($u.today // 0),
+        recentDays: (week | reverse | map({date: ., tokens: ($u.days[.] // 0)})),
+        models: ($u.models // {} | to_entries | sort_by(-.value) | .[:4] | map({name: .key, tokens: .value}))
+      };
+  def go:
+    $go[0].usage as $u | if $u == null then empty else attach({
+      id: "opencode-go", name: "OpenCode Go", tierLabel: "Go",
+      limits: [win("Session"; $u.rolling), win("Weekly"; $u.weekly), win("Monthly"; $u.monthly)]
+    }) end;
+  def grok:
+    $xai[0].config as $c | if $c == null then empty else
+      ($sub[0].subscriptions // [] | map(select(.status == "SUBSCRIPTION_STATUS_ACTIVE"))[0]) as $a
+      | attach({
+          id: "xai", name: "Grok",
+          tierLabel: (
+            if ($a.tier // "") | test("HEAVY") then "Heavy"
+            elif ($a.tier // "") | test("LITE") then "Lite"
+            elif ($a.tier // "") | test("PRO") then "Pro"
+            else "SuperGrok" end
+          ),
+          limits: [{title: "Weekly", percent: (($c.creditUsagePercent // 0) / 100), resetsAt: ($c.currentPeriod.end // $c.billingPeriodEnd // "")}]
+        })
+    end;
+  {providers: [go, grok]}
+'

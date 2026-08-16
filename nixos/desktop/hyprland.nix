@@ -34,10 +34,10 @@
       monitor = "DP-1, 3840x2160@144, auto, 1.5";
 
       "$terminal" = "ghostty +new-window";
-      "$menu" = "walker";
+      "$menu" = "qs ipc call launcher toggle";
       "$browser" = "chromium --new-window";
       "$webapp" = "$browser --app";
-      "$powermenu" = "$HOME/.local/bin/power-menu";
+      "$powermenu" = "qs ipc call launcher power";
 
       xwayland = {
         force_zero_scaling = true;
@@ -112,6 +112,10 @@
         disable_hyprland_logo = true;
       };
 
+      layerrule = [
+        "blur on, ignore_alpha 0, match:namespace bar"
+      ];
+
       input = {
         kb_layout = "us";
         kb_variant = "";
@@ -134,7 +138,6 @@
         "$mainMod, Q, exec, $terminal"
         "$mainMod, B, exec, $browser"
         "$mainMod, C, killactive,"
-        "$mainMod SHIFT, E, exec, walker -m unicode"
         "$mainMod, V, togglefloating,"
         "$mainMod, R, exec, $menu"
         "$mainMod, P, pseudo,"

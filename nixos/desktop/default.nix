@@ -6,9 +6,7 @@
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpaper.nix
-    ./mako.nix
-    ./waybar.nix
-    ./walker.nix
+    ./quickshell.nix
   ];
 
   services.hyprpolkitagent.enable = true;
