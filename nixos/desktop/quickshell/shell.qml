@@ -15,4 +15,11 @@ Scope {
             Launcher.openPower();
         }
     }
+
+    IpcHandler {
+        target: "shell"
+        function reload(): void {
+            Quickshell.reload(false);
+        }
+    }
 }
