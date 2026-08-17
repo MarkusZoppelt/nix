@@ -22,7 +22,13 @@ with lib;
           remotePlay.openFirewall = true;
           localNetworkGameTransfers.openFirewall = false;
         };
-        gamemode.enable = true;
+        gamemode = {
+          enable = true;
+          settings = {
+            general.renice = 10;
+            cpu.desiredgov = "performance";
+          };
+        };
       };
 
       # uhid: DualSense (DS5) gamepad emulation

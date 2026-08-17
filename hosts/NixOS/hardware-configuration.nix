@@ -69,7 +69,10 @@
   fileSystems."/run/media/mz/Games" = {
     device = "/dev/disk/by-label/Games";
     fsType = "ext4";
-    options = [ "nofail" ];
+    options = [
+      "nofail"
+      "noatime"
+    ];
   };
 
   fileSystems."/run/media/mz/data1" = {

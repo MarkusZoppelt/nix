@@ -64,15 +64,30 @@
   services.smartd.enable = true;
   environment.systemPackages = with pkgs; [ smartmontools ];
 
+  hardware.cpu.amd.updateMicrocode = true;
+
   ### NVIDIA / GRAPHICS ###
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
+    nvidiaPersistenced = true;
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     moduleParams.nvidia.NVreg_EnableResizableBar = 1;
+  };
+
+  systemd.services.nvidia-power-limit = {
+    description = "NVIDIA power limit to VBIOS maximum";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "nvidia-persistenced.service" ];
+    wants = [ "nvidia-persistenced.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${config.hardware.nvidia.package.bin}/bin/nvidia-smi -pl 350";
+    };
   };
 
   programs.nix-ld.enable = true;
