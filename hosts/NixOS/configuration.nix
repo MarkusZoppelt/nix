@@ -43,9 +43,11 @@
       "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
-      # Required for NVIDIA open kernel module + proper KMS/DRM
       "nvidia_drm.fbdev=1"
+      "pcie_aspm=off"
     ];
+
+    kernel.sysctl."kernel.sysrq" = 1;
   };
 
   networking.hostName = "Gordon";
@@ -70,6 +72,7 @@
     open = true;
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
+    moduleParams.nvidia.NVreg_EnableResizableBar = 1;
   };
 
   programs.nix-ld.enable = true;
