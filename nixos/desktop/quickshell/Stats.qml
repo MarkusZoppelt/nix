@@ -64,16 +64,16 @@ Singleton {
                 const lines = text.trim().split("\n");
                 const cpu = (lines[0] || "").trim().split(/\s+/).slice(1).map(Number);
                 if (cpu.length) {
-                    const idle = cpu[3];
-                    const total = cpu.reduce((a, b) => a + b, 0);
+                    const idle = (cpu[3] || 0) + (cpu[4] || 0);
+                    const total = cpu.slice(0, 8).reduce((a, b) => a + (Number(b) || 0), 0);
                     const di = idle - root.lastIdle;
                     const dt = total - root.lastTotal;
-                    root.lastIdle = idle;
-                    root.lastTotal = total;
-                    if (dt > 0) {
-                        root.cpuN = 1 - di / dt;
+                    if (root.lastTotal > 0 && dt > 0) {
+                        root.cpuN = Math.max(0, Math.min(1, 1 - di / dt));
                         root.cpuPct = Math.round(root.cpuN * 100) + "%";
                     }
+                    root.lastIdle = idle;
+                    root.lastTotal = total;
                 }
                 for (const line of lines.slice(1)) {
                     const [k, ...rest] = line.split(/\s+/);
