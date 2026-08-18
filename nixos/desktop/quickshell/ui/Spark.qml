@@ -4,7 +4,7 @@ import ".."
 Canvas {
     id: root
     property var points: []
-    property color stroke: Theme.blue
+    property var stroke
     implicitWidth: 52
     implicitHeight: 16
     onPointsChanged: requestPaint()
@@ -20,7 +20,7 @@ Canvas {
             return;
         const w = width;
         const h = height;
-        ctx.strokeStyle = root.stroke;
+        ctx.strokeStyle = root.stroke || Theme.blue;
         ctx.lineWidth = 1.4;
         ctx.lineJoin = "round";
         ctx.lineCap = "round";

@@ -5,14 +5,16 @@ Item {
     id: root
     property alias text: label.text
     property alias color: label.color
-    property alias elide: label.elide
     property real maxWidth: -1
     property bool marquee: false
     property string tip
+    property alias lead: leadItem.data
+    readonly property real leadW: leadItem.implicitWidth
+    readonly property real textX: 5 + (leadW ? leadW + 4 : 0)
     signal clicked(int button)
     signal wheeled(int dy)
 
-    implicitWidth: maxWidth > 0 ? Math.min(label.fullWidth + 10, maxWidth) : label.fullWidth + 10
+    implicitWidth: maxWidth > 0 ? Math.min(leadW + label.fullWidth + 10, maxWidth) : leadW + label.fullWidth + 10
     implicitHeight: Theme.barHeight - 8
     clip: true
 
@@ -22,12 +24,23 @@ Item {
         color: mouse.containsMouse ? Theme.bgHighlight : "transparent"
     }
 
+    Item {
+        id: leadItem
+        anchors.left: parent.left
+        anchors.leftMargin: implicitWidth ? 5 : 0
+        anchors.verticalCenter: parent.verticalCenter
+        implicitWidth: children.length ? children[0].implicitWidth : 0
+        implicitHeight: children.length ? children[0].implicitHeight : 0
+        width: implicitWidth
+        height: implicitHeight
+    }
+
     Text {
         id: label
         readonly property real fullWidth: implicitWidth
         anchors.verticalCenter: parent.verticalCenter
-        x: 5
-        width: root.maxWidth > 0 ? Math.min(fullWidth, root.maxWidth - 10) : fullWidth
+        x: root.textX
+        width: root.maxWidth > 0 ? Math.min(fullWidth, root.maxWidth - 10 - root.leadW) : fullWidth
         elide: root.maxWidth > 0 && !scroll.running ? Text.ElideRight : Text.ElideNone
         color: Theme.fg
         font.family: Theme.font
@@ -43,8 +56,8 @@ Item {
         NumberAnimation {
             target: label
             property: "x"
-            from: 5
-            to: Math.min(5, root.width - 5 - label.fullWidth)
+            from: root.textX
+            to: Math.min(root.textX, root.width - 5 - label.fullWidth)
             duration: Math.max(1600, (label.fullWidth - root.width + 10) * 30)
             easing.type: Easing.Linear
         }
@@ -73,9 +86,9 @@ Item {
         }
         onExited: {
             scroll.stop();
-            label.x = 5;
+            label.x = root.textX;
             if (root.maxWidth > 0)
-                label.width = Math.min(label.fullWidth, root.maxWidth - 10);
+                label.width = Math.min(label.fullWidth, root.maxWidth - 10 - root.leadW);
             Tooltip.hide();
         }
     }

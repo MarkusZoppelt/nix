@@ -65,6 +65,8 @@ Scope {
                 Blue {}
                 Battery {}
                 Network {}
+                Tailnet {}
+                Syncthing {}
                 Sysinfo {}
                 Agents {}
                 Tray {}

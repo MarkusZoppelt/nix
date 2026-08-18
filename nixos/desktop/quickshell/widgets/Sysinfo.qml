@@ -1,4 +1,5 @@
 import QtQuick
+import Quickshell
 import Quickshell.Services.UPower
 import ".."
 import "../ui"
@@ -7,34 +8,42 @@ Chip {
     id: root
     text: "󰻠 " + Stats.cpuPct + "  󰍛 " + Stats.memUsed
     tip: Stats.tip
-    onClicked: panel.toggle(root)
+    onClicked: button => {
+        if (button === Qt.RightButton)
+            Quickshell.execDetached(["ghostty", "+new-window", "-e", "btop"]);
+        else
+            panel.toggle(root);
+    }
+
+    Connections {
+        target: panel
+        function onOpenChanged() {
+            Stats.hot = panel.open;
+        }
+    }
 
     PanelCard {
         id: panel
-        paneWidth: 420
+        paneWidth: 760
 
         Heading {
             title: Stats.host || "System"
             subtitle: [Stats.kernel, "up " + Stats.uptime, Stats.profileName].filter(s => s && s !== "up —").join(" · ")
         }
 
-        Row {
-            width: parent.width
-            spacing: 10
-
-            Spark {
-                width: (parent.width - 10) / 2
-                implicitHeight: 28
-                points: Stats.cpuHist
-                stroke: Theme.blue
-            }
-
-            Spark {
-                width: (parent.width - 10) / 2
-                implicitHeight: 28
-                points: Stats.memHist
-                stroke: Theme.magenta
-            }
+        Pills {
+            current: Stats.profileName
+            items: [{
+                    id: "Power Saver",
+                    name: "Saver"
+                }, {
+                    id: "Balanced",
+                    name: "Balanced"
+                }, {
+                    id: "Performance",
+                    name: "Perf"
+                }].filter(p => p.id !== "Performance" || PowerProfiles.hasPerformanceProfile)
+            onPicked: id => Stats.setProfile(id)
         }
 
         Section {
@@ -66,22 +75,67 @@ Chip {
             }
         }
 
-        Section {
-            title: "PROFILE"
+        Row {
+            visible: Stats.cpuTop.length > 0 || Stats.memTop.length > 0
+            width: parent.width
+            spacing: 10
 
-            Pills {
-                current: Stats.profileName
-                items: [{
-                        id: "Power Saver",
-                        name: "Saver"
-                    }, {
-                        id: "Balanced",
-                        name: "Balanced"
-                    }, {
-                        id: "Performance",
-                        name: "Perf"
-                    }].filter(p => p.id !== "Performance" || PowerProfiles.hasPerformanceProfile)
-                onPicked: id => Stats.setProfile(id)
+            Well {
+                width: (parent.width - 10) / 2
+                ink: Theme.blue
+
+                Spark {
+                    width: parent.width
+                    implicitHeight: 28
+                    points: Stats.cpuHist
+                    stroke: Theme.blue
+                }
+
+                Section {
+                    title: "TOP CPU"
+                    ink: Theme.blue
+                    spacing: 6
+
+                    Repeater {
+                        model: Stats.cpuTop
+
+                        StatRow {
+                            required property var modelData
+                            label: modelData.name
+                            value: modelData.value
+                            ink: Theme.blue
+                        }
+                    }
+                }
+            }
+
+            Well {
+                width: (parent.width - 10) / 2
+                ink: Theme.magenta
+
+                Spark {
+                    width: parent.width
+                    implicitHeight: 28
+                    points: Stats.memHist
+                    stroke: Theme.magenta
+                }
+
+                Section {
+                    title: "TOP RAM"
+                    ink: Theme.magenta
+                    spacing: 6
+
+                    Repeater {
+                        model: Stats.memTop
+
+                        StatRow {
+                            required property var modelData
+                            label: modelData.name
+                            value: modelData.value
+                            ink: Theme.magenta
+                        }
+                    }
+                }
             }
         }
 
@@ -92,25 +146,12 @@ Chip {
             Repeater {
                 model: Stats.disks
 
-                Column {
+                StatRow {
                     required property var modelData
-                    width: parent ? parent.width : 392
-                    spacing: 4
-
-                    StatRow {
-                        label: modelData.mount
-                        value: Math.round(modelData.usage * 100) + "%"
-                        ratio: modelData.usage
-                    }
-
-                    Text {
-                        width: parent.width
-                        text: Stats.bytes(modelData.used) + " used · " + Stats.bytes(modelData.free) + " free · " + Stats.bytes(modelData.total) + " · " + modelData.fstype
-                        color: Theme.comment
-                        font.family: Theme.font
-                        font.pixelSize: 12
-                        elide: Text.ElideRight
-                    }
+                    label: modelData.mount
+                    value: Math.round(modelData.usage * 100) + "%"
+                    ratio: modelData.usage
+                    detail: Fmt.bytes(modelData.used) + " used · " + Fmt.bytes(modelData.free) + " free · " + Fmt.bytes(modelData.total) + " · " + modelData.fstype
                 }
             }
         }

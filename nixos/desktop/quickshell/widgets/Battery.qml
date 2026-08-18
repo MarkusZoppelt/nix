@@ -15,15 +15,6 @@ Chip {
     tip: UPower.displayDevice.model || "battery"
     onClicked: panel.toggle(root)
 
-    function eta(sec) {
-        if (!(sec > 0))
-            return "";
-        const m = Math.round(sec / 60);
-        if (m < 60)
-            return m + "m";
-        return Math.floor(m / 60) + "h " + (m % 60) + "m";
-    }
-
     PanelCard {
         id: panel
         paneWidth: 320
@@ -40,8 +31,8 @@ Chip {
         }
 
         Text {
-            visible: eta(UPower.displayDevice.timeToEmpty || UPower.displayDevice.timeToFull) !== ""
-            text: (UPower.displayDevice.state === UPowerDeviceState.Charging ? "full in " : "empty in ") + eta(UPower.displayDevice.timeToEmpty || UPower.displayDevice.timeToFull)
+            visible: Fmt.eta(UPower.displayDevice.timeToEmpty || UPower.displayDevice.timeToFull) !== ""
+            text: (UPower.displayDevice.state === UPowerDeviceState.Charging ? "full in " : "empty in ") + Fmt.eta(UPower.displayDevice.timeToEmpty || UPower.displayDevice.timeToFull)
             color: Theme.comment
             font.family: Theme.font
             font.pixelSize: 13

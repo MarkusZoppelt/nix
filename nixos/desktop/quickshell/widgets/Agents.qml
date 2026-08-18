@@ -46,24 +46,12 @@ Chip {
             Repeater {
                 model: AgentUsage.limits
 
-                Column {
+                StatRow {
                     required property var modelData
-                    width: parent ? parent.width : 352
-                    spacing: 4
-
-                    StatRow {
-                        label: modelData.title
-                        value: Math.round((modelData.percent || 0) * 100) + "%"
-                        ratio: modelData.percent || 0
-                    }
-
-                    Text {
-                        visible: text !== ""
-                        text: AgentUsage.resetText(modelData.resetsAt)
-                        color: Theme.comment
-                        font.family: Theme.font
-                        font.pixelSize: 12
-                    }
+                    label: modelData.title
+                    value: Math.round((modelData.percent || 0) * 100) + "%"
+                    ratio: modelData.percent || 0
+                    detail: Fmt.wait(modelData.resetsAt, AgentUsage.nowMs)
                 }
             }
         }
@@ -80,7 +68,7 @@ Chip {
                     readonly property bool isToday: modelData.date === Qt.formatDate(new Date(AgentUsage.nowMs), "yyyy-MM-dd")
                     readonly property real peak: Math.max(1, ...AgentUsage.days.map(d => Number(d.tokens || 0)))
                     label: isToday ? "Today" : ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][new Date(modelData.date + "T00:00:00").getDay()]
-                    value: AgentUsage.fmt(modelData.tokens || 0)
+                    value: Fmt.count(modelData.tokens || 0)
                     ratio: Number(modelData.tokens || 0) / peak
                 }
             }
@@ -96,7 +84,7 @@ Chip {
                 StatRow {
                     required property var modelData
                     label: modelData.name
-                    value: AgentUsage.fmt(modelData.tokens)
+                    value: Fmt.count(modelData.tokens)
                     ratio: modelData.tokens / Math.max(1, AgentUsage.models[0].tokens)
                 }
             }

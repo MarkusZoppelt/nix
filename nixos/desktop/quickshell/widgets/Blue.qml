@@ -22,6 +22,14 @@ Chip {
             panel.toggle(root);
     }
 
+    Connections {
+        target: panel
+        function onOpenChanged() {
+            if (Bluetooth.defaultAdapter)
+                Bluetooth.defaultAdapter.discovering = panel.open;
+        }
+    }
+
     PanelCard {
         id: panel
         paneWidth: 360
@@ -32,17 +40,11 @@ Chip {
         }
 
         Pills {
-            current: Bluetooth.defaultAdapter?.enabled ? "on" : "off"
-            items: [{
-                    id: "on",
-                    name: "On"
-                }, {
-                    id: "off",
-                    name: "Off"
-                }]
-            onPicked: id => {
+            binary: true
+            on: !!Bluetooth.defaultAdapter?.enabled
+            onToggled: v => {
                 if (Bluetooth.defaultAdapter)
-                    Bluetooth.defaultAdapter.enabled = id === "on";
+                    Bluetooth.defaultAdapter.enabled = v;
             }
         }
 
@@ -53,53 +55,13 @@ Chip {
             Repeater {
                 model: Bluetooth.devices
 
-                Rectangle {
+                Choice {
                     required property var modelData
-                    width: parent ? parent.width : 332
-                    implicitHeight: 40
-                    radius: 6
-                    color: modelData.connected ? Qt.alpha(Theme.blue, 0.22) : (hover.containsMouse ? Theme.bgHighlight : "transparent")
-                    border.width: 1
-                    border.color: modelData.connected ? Theme.blue : Theme.black
-
-                    Column {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: 10
-                        anchors.rightMargin: 10
-                        spacing: 1
-
-                        Text {
-                            width: parent.width
-                            elide: Text.ElideRight
-                            text: modelData.name || modelData.deviceName || "device"
-                            color: Theme.fg
-                            font.family: Theme.font
-                            font.pixelSize: 14
-                        }
-
-                        Text {
-                            width: parent.width
-                            text: (modelData.connected ? "connected" : modelData.paired ? "paired" : "seen") + (modelData.batteryAvailable ? " · " + Math.round(modelData.battery * 100) + "%" : "")
-                            color: Theme.comment
-                            font.family: Theme.font
-                            font.pixelSize: 12
-                        }
-                    }
-
-                    MouseArea {
-                        id: hover
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            if (modelData.connected)
-                                modelData.disconnect();
-                            else
-                                modelData.connect();
-                        }
-                    }
+                    title: modelData.name || modelData.deviceName || "device"
+                    subtitle: (modelData.connected ? "connected" : modelData.paired ? "paired" : "seen") + (modelData.batteryAvailable ? " · " + Math.round(modelData.battery * 100) + "%" : "")
+                    current: modelData.connected
+                    accent: Theme.blue
+                    onClicked: modelData.connected ? modelData.disconnect() : modelData.connect()
                 }
             }
         }

@@ -5,7 +5,7 @@ import "../ui"
 Chip {
     id: root
     visible: !!Audio.player
-    color: Theme.magenta
+    color: Theme.fgDark
     maxWidth: 216
     marquee: true
     text: {
@@ -24,13 +24,6 @@ Chip {
             p.next();
         else
             panel.toggle(root);
-    }
-
-    Timer {
-        interval: 1000
-        running: !!Audio.player?.isPlaying
-        repeat: true
-        onTriggered: Audio.player?.positionChanged()
     }
 
     PanelCard {
@@ -85,13 +78,7 @@ Chip {
                 implicitHeight: 14
 
                 Text {
-                    text: {
-                        const p = Audio.player;
-                        if (!p)
-                            return "";
-                        const s = Math.floor(p.position);
-                        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
-                    }
+                    text: Audio.player ? Fmt.clock(Audio.player.position) : ""
                     color: Theme.comment
                     font.family: Theme.font
                     font.pixelSize: 12
@@ -99,13 +86,7 @@ Chip {
 
                 Text {
                     anchors.right: parent.right
-                    text: {
-                        const p = Audio.player;
-                        if (!p)
-                            return "";
-                        const s = Math.floor(p.length);
-                        return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
-                    }
+                    text: Audio.player ? Fmt.clock(Audio.player.length) : ""
                     color: Theme.comment
                     font.family: Theme.font
                     font.pixelSize: 12

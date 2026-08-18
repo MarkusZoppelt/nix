@@ -1,4 +1,5 @@
 pragma Singleton
+import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
@@ -29,6 +30,13 @@ Singleton {
 
     function setSource(n) {
         Pipewire.preferredDefaultAudioSource = n;
+    }
+
+    Timer {
+        interval: 1000
+        running: root.playing
+        repeat: true
+        onTriggered: root.player?.positionChanged()
     }
 
     PwObjectTracker {

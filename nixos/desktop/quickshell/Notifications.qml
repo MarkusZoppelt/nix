@@ -90,7 +90,7 @@ Scope {
                         }
 
                         Timer {
-                            interval: modelData.expireTimeout > 0 ? modelData.expireTimeout * 1000 : 5000
+                            interval: modelData.expireTimeout > 0 ? modelData.expireTimeout : 5000
                             running: true
                             onTriggered: modelData.expire()
                         }

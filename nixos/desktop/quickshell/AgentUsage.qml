@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "ui"
 
 Singleton {
     id: root
@@ -38,41 +39,12 @@ Singleton {
         }
     }
 
-    function fmt(n) {
-        if (n >= 1e6)
-            return (n / 1e6).toFixed(1) + "M";
-        if (n >= 1e3)
-            return (n / 1e3).toFixed(1) + "K";
-        return String(Math.round(n || 0));
-    }
-
-    function resetText(iso) {
-        const ms = Date.parse(iso) - nowMs;
-        if (!(ms > 0))
-            return "";
-        const m = Math.floor(ms / 60000);
-        const h = Math.floor(m / 60);
-        const d = Math.floor(h / 24);
-        if (d > 0)
-            return "Resets in " + d + "d " + (h % 24) + "h";
-        if (h > 0)
-            return "Resets in " + h + "h " + (m % 60) + "m";
-        return "Resets in " + Math.max(1, m) + "m";
-    }
-
-    Process {
+    Poll {
         id: usageProc
-        running: true
+        interval: 900000
         command: ["agent-usage"]
         stdout: StdioCollector {
             onStreamFinished: root.apply(text)
         }
-    }
-
-    Timer {
-        interval: 900000
-        running: true
-        repeat: true
-        onTriggered: usageProc.running = true
     }
 }

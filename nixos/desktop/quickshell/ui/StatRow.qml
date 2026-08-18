@@ -2,8 +2,11 @@ import QtQuick
 import ".."
 
 Column {
-    property string label
-    property string value
+    id: root
+    property string label: ""
+    property string value: ""
+    property string detail: ""
+    property var ink
     property real ratio: -1
     width: parent ? parent.width : 360
     spacing: 4
@@ -25,7 +28,7 @@ Column {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: value
-            color: ratio >= 0.9 ? Theme.red : Theme.fg
+            color: root.ink || (ratio >= 0.9 ? Theme.red : Theme.fg)
             font.family: Theme.font
             font.pixelSize: 13
         }
@@ -35,5 +38,15 @@ Column {
         visible: ratio >= 0
         width: parent.width
         value: ratio
+    }
+
+    Text {
+        visible: root.detail !== ""
+        width: parent.width
+        text: root.detail
+        color: Theme.comment
+        font.family: Theme.font
+        font.pixelSize: 12
+        elide: Text.ElideRight
     }
 }

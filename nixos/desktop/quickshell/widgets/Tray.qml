@@ -14,12 +14,19 @@ Row {
             implicitHeight: Theme.barHeight - 8
             acceptedButtons: Qt.LeftButton | Qt.RightButton
             cursorShape: Qt.PointingHandCursor
+            hoverEnabled: true
             onClicked: event => {
                 if (modelData.hasMenu)
                     TrayMenu.open(modelData, this);
                 else if (event.button === Qt.LeftButton)
                     modelData.activate();
             }
+            onEntered: {
+                const t = [modelData.tooltipTitle, modelData.tooltipDescription].filter(Boolean).join("\n");
+                if (t)
+                    Tooltip.show(this, t);
+            }
+            onExited: Tooltip.hide()
 
             Item {
                 anchors.centerIn: parent

@@ -24,16 +24,18 @@ Item {
         dragged(Math.max(8, Math.min(maxX, nx)), Math.max(8, Math.min(maxY, ny)));
     }
 
+    property real ox: 0
+    property real oy: 0
+
     function grab(event) {
-        grip.ox = event.x;
-        grip.oy = event.y;
+        ox = event.x;
+        oy = event.y;
         if (dragX < 0)
             clamp(x, y);
     }
 
     function move(event) {
-        if (grip.pressed)
-            clamp(x + event.x - grip.ox, y + event.y - grip.oy);
+        clamp(x + event.x - ox, y + event.y - oy);
     }
 
     Component.onCompleted: {
@@ -59,13 +61,14 @@ Item {
 
     MouseArea {
         id: grip
-        property real ox
-        property real oy
         anchors.fill: card
         anchors.margins: -18
         cursorShape: pressed ? Qt.ClosedHandCursor : Qt.OpenHandCursor
         onPressed: event => root.grab(event)
-        onPositionChanged: event => root.move(event)
+        onPositionChanged: event => {
+            if (pressed)
+                root.move(event);
+        }
     }
 
     Rectangle {
@@ -102,18 +105,10 @@ Item {
 
         MouseArea {
             anchors.fill: parent
-            cursorShape: pressed ? Qt.ClosedHandCursor : Qt.ArrowCursor
-            property real ox
-            property real oy
-            onPressed: event => {
-                ox = event.x;
-                oy = event.y;
-                if (root.dragX < 0)
-                    root.clamp(root.x, root.y);
-            }
+            onPressed: event => root.grab(event)
             onPositionChanged: event => {
                 if (pressed)
-                    root.clamp(root.x + event.x - ox, root.y + event.y - oy);
+                    root.move(event);
             }
         }
 

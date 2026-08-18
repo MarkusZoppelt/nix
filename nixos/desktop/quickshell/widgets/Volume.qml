@@ -41,40 +41,27 @@ Chip {
             StatRow {
                 label: Audio.sink?.audio?.muted ? "Muted" : "Volume"
                 value: Audio.sink?.audio ? Math.round(Audio.sink.audio.volume * 100) + "%" : "—"
-                ratio: Audio.sink?.audio && !Audio.sink.audio.muted ? Audio.sink.audio.volume : 0
+            }
+
+            Fader {
+                visible: !!Audio.sink?.audio
+                value: Audio.sink?.audio?.volume || 0
+                muted: !!Audio.sink?.audio?.muted
+                onMoved: n => {
+                    if (Audio.sink?.audio)
+                        Audio.sink.audio.volume = n;
+                }
             }
 
             Repeater {
                 model: Audio.sinks
 
-                Rectangle {
+                Choice {
                     required property var modelData
-                    width: parent ? parent.width : 352
-                    implicitHeight: 32
-                    radius: 6
-                    color: modelData === Audio.sink ? Qt.alpha(Theme.cyan, 0.22) : (hover.containsMouse ? Theme.bgHighlight : "transparent")
-                    border.width: 1
-                    border.color: modelData === Audio.sink ? Theme.cyan : Theme.black
-
-                    Text {
-                        anchors.fill: parent
-                        anchors.leftMargin: 10
-                        anchors.rightMargin: 10
-                        verticalAlignment: Text.AlignVCenter
-                        elide: Text.ElideRight
-                        text: Audio.label(modelData)
-                        color: Theme.fg
-                        font.family: Theme.font
-                        font.pixelSize: 13
-                    }
-
-                    MouseArea {
-                        id: hover
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: Audio.setSink(modelData)
-                    }
+                    title: Audio.label(modelData)
+                    current: modelData === Audio.sink
+                    accent: Theme.cyan
+                    onClicked: Audio.setSink(modelData)
                 }
             }
         }
@@ -87,40 +74,27 @@ Chip {
                 visible: !!Audio.source?.audio
                 label: Audio.source?.audio?.muted ? "Muted" : "Mic"
                 value: Audio.source?.audio ? Math.round(Audio.source.audio.volume * 100) + "%" : "—"
-                ratio: Audio.source?.audio && !Audio.source.audio.muted ? Audio.source.audio.volume : 0
+            }
+
+            Fader {
+                visible: !!Audio.source?.audio
+                value: Audio.source?.audio?.volume || 0
+                muted: !!Audio.source?.audio?.muted
+                onMoved: n => {
+                    if (Audio.source?.audio)
+                        Audio.source.audio.volume = n;
+                }
             }
 
             Repeater {
                 model: Audio.sources
 
-                Rectangle {
+                Choice {
                     required property var modelData
-                    width: parent ? parent.width : 352
-                    implicitHeight: 32
-                    radius: 6
-                    color: modelData === Audio.source ? Qt.alpha(Theme.cyan, 0.22) : (hover.containsMouse ? Theme.bgHighlight : "transparent")
-                    border.width: 1
-                    border.color: modelData === Audio.source ? Theme.cyan : Theme.black
-
-                    Text {
-                        anchors.fill: parent
-                        anchors.leftMargin: 10
-                        anchors.rightMargin: 10
-                        verticalAlignment: Text.AlignVCenter
-                        elide: Text.ElideRight
-                        text: Audio.label(modelData)
-                        color: Theme.fg
-                        font.family: Theme.font
-                        font.pixelSize: 13
-                    }
-
-                    MouseArea {
-                        id: hover
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: Audio.setSource(modelData)
-                    }
+                    title: Audio.label(modelData)
+                    current: modelData === Audio.source
+                    accent: Theme.cyan
+                    onClicked: Audio.setSource(modelData)
                 }
             }
         }
@@ -132,11 +106,24 @@ Chip {
             Repeater {
                 model: Audio.streams
 
-                StatRow {
+                Column {
                     required property var modelData
-                    label: Audio.label(modelData)
-                    value: modelData.audio?.muted ? "mute" : Math.round((modelData.audio?.volume || 0) * 100) + "%"
-                    ratio: modelData.audio && !modelData.audio.muted ? modelData.audio.volume : 0
+                    width: parent ? parent.width : 352
+                    spacing: 4
+
+                    StatRow {
+                        label: Audio.label(modelData)
+                        value: modelData.audio?.muted ? "mute" : Math.round((modelData.audio?.volume || 0) * 100) + "%"
+                    }
+
+                    Fader {
+                        value: modelData.audio?.volume || 0
+                        muted: !!modelData.audio?.muted
+                        onMoved: n => {
+                            if (modelData.audio)
+                                modelData.audio.volume = n;
+                        }
+                    }
                 }
             }
         }
