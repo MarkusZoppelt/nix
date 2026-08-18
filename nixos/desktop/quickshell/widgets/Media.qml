@@ -55,6 +55,12 @@ Chip {
                 cache: false
             }
 
+            Eq {
+                values: Audio.eq
+                anchors.fill: parent
+                anchors.margins: 8
+            }
+
             Rectangle {
                 anchors.fill: parent
                 color: "transparent"

@@ -15,6 +15,7 @@ let
         pad = 12;
         barHeight = 45;
         iconSize = 14;
+        cava = "${./quickshell/cava.cfg}";
       }
     )
   );
@@ -25,6 +26,8 @@ let
   '';
 in
 {
+  home.packages = [ pkgs.cava ];
+
   qt.enable = true;
 
   programs.quickshell = {

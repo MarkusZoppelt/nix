@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import "ui"
 import "widgets"
 
 Scope {
@@ -18,6 +19,17 @@ Scope {
                 top: true
                 left: true
                 right: true
+            }
+
+            Eq {
+                values: Audio.eq
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.leftMargin: Theme.pad
+                anchors.rightMargin: Theme.pad
+                implicitHeight: 16
+                z: 0
             }
 
             Rectangle {
