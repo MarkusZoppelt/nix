@@ -23,7 +23,6 @@
     shellAliases = {
       ls = "ls -F --color=always";
       ll = "ls -l --color=always";
-      lg = "lazygit";
     };
 
     packages = with pkgs; [
@@ -55,7 +54,6 @@
     ./programs/go.nix
     ./programs/jujutsu.nix
     ./programs/jjui.nix
-    ./programs/lazygit.nix
     ./programs/ncspot.nix
     ./programs/neovim.nix
     ./programs/ssh.nix
