@@ -5,12 +5,8 @@ import "../ui"
 
 Chip {
     id: root
-    color: AgentUsage.alarming ? Theme.red : Theme.magenta
-    text: {
-        const w = AgentUsage.headline;
-        return w ? "󱚣 " + Math.round(w.percent * 100) + "%" : "󱚣";
-    }
-    tip: AgentUsage.hint
+    color: Theme.magenta
+    text: "󱚣"
     onClicked: button => {
         if (button === Qt.RightButton)
             Quickshell.execDetached(["ghostty", "+new-window", "-e", "opencode2"]);
