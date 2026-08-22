@@ -13,6 +13,7 @@ Tokyo Night bar + overlay shell. QML lives here; Nix copies it into `~/.config/q
 - Palette is Tokyo Night. Prefer `Theme.fg` / `Theme.fgDark` / `Theme.comment` for text. Accent colors (`blue`, `magenta`, `cyan`, `green`) are for marks, meters, and wells — not body copy.
 - Never `property color x: Theme.fg`. QML evaluates that once at create time and it freezes to black if Theme is not ready. Use `property alias color: label.color` and set `label.color: Theme.fg`, or `property var ink` and bind `color: ink || Theme.fg`.
 - Bar glyphs are ~15px, monochrome, vertically centered with Chip text. Official marks (Tailscale 3×3, Syncthing ring+hub) stay one-color.
+- Ranked process lists use `Rank`. Dial clusters use `Gauge`. Do not add history sparks.
 - Panels are `PanelCard`. Inset groups use `Well`. Lists use `Choice` only when they are actions; read-only rows are `StatRow`.
 - One popup at a time (`Popups`). Panels grow to content up to remaining screen height.
 
@@ -24,6 +25,7 @@ Tokyo Night bar + overlay shell. QML lives here; Nix copies it into `~/.config/q
 - After a successful rebuild, apply from the existing herdr split: `nh os switch --diff=always && qs ipc call shell reload`.
 - Poll expensive commands only while the panel is open (`Stats.hot`, `Net.scan`). Keep secrets out of argv; talk to local APIs from QML (XHR), not helper scripts.
 - Shared formatters live in `Fmt`. Shared on/off chrome is `Pills { binary: true }`.
+- Launch `Terminal=true` desktop entries with `ghostty +new-window -e`. `DesktopEntry.execute()` ignores that flag.
 
 ## Adding a widget
 

@@ -22,7 +22,6 @@ Singleton {
     }
 
     function toggle() {
-        console.warn("Sync.toggle", up ? "stop" : "start");
         Quickshell.execDetached(["systemctl", "--user", up ? "stop" : "start", "syncthing.service"]);
         Qt.callLater(refresh);
     }

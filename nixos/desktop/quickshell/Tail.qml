@@ -30,7 +30,6 @@ Singleton {
     }
 
     function toggle() {
-        console.warn("Tail.toggle", up ? "down" : "up");
         Quickshell.execDetached(["tailscale", up ? "down" : "up"]);
         Qt.callLater(refresh);
     }

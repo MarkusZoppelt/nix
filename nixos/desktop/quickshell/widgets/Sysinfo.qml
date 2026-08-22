@@ -68,7 +68,7 @@ Chip {
             }
 
             StatRow {
-                visible: Stats.gpu !== ""
+                visible: Stats.nvidia
                 label: "GPU"
                 value: Stats.gpu
                 ratio: Stats.gpuN
@@ -80,62 +80,74 @@ Chip {
             width: parent.width
             spacing: 10
 
-            Well {
+            Rank {
                 width: (parent.width - 10) / 2
+                title: "TOP CPU"
                 ink: Theme.blue
+                rows: Stats.cpuTop
+            }
 
-                Spark {
-                    width: parent.width
-                    implicitHeight: 28
-                    points: Stats.cpuHist
-                    stroke: Theme.blue
+            Rank {
+                width: (parent.width - 10) / 2
+                title: "TOP RAM"
+                ink: Theme.magenta
+                rows: Stats.memTop
+            }
+        }
+
+        Well {
+            visible: Stats.nvidia
+            ink: Theme.green
+
+            Row {
+                width: parent.width
+                spacing: 0
+
+                Gauge {
+                    width: parent.width / 5
+                    value: Stats.gpuN
+                    label: "COMPUTE"
+                    ink: Theme.green
                 }
 
-                Section {
-                    title: "TOP CPU"
-                    ink: Theme.blue
-                    spacing: 6
+                Gauge {
+                    width: parent.width / 5
+                    value: Stats.pwrN
+                    label: "POWER"
+                    readout: Math.round(Stats.pwrN * 100) + "%"
+                    detail: Stats.gpuPwr
+                    ink: Theme.green
+                }
 
-                    Repeater {
-                        model: Stats.cpuTop
+                Gauge {
+                    width: parent.width / 5
+                    value: Stats.vramN
+                    label: "VRAM"
+                    readout: Math.round(Stats.vramN * 100) + "%"
+                    detail: Stats.gpuVram
+                    ink: Theme.green
+                }
 
-                        StatRow {
-                            required property var modelData
-                            label: modelData.name
-                            value: modelData.value
-                            ink: Theme.blue
-                        }
-                    }
+                Gauge {
+                    width: parent.width / 5
+                    value: Stats.encN
+                    label: "ENCODER"
+                    ink: Theme.green
+                }
+
+                Gauge {
+                    width: parent.width / 5
+                    value: Stats.decN
+                    label: "DECODER"
+                    ink: Theme.green
                 }
             }
 
-            Well {
-                width: (parent.width - 10) / 2
-                ink: Theme.magenta
-
-                Spark {
-                    width: parent.width
-                    implicitHeight: 28
-                    points: Stats.memHist
-                    stroke: Theme.magenta
-                }
-
-                Section {
-                    title: "TOP RAM"
-                    ink: Theme.magenta
-                    spacing: 6
-
-                    Repeater {
-                        model: Stats.memTop
-
-                        StatRow {
-                            required property var modelData
-                            label: modelData.name
-                            value: modelData.value
-                            ink: Theme.magenta
-                        }
-                    }
-                }
+            Rank {
+                title: "VRAM"
+                ink: Theme.green
+                rows: Stats.vramTop
+                slots: 4
             }
         }
 

@@ -21,21 +21,23 @@ Singleton {
     property string host: ""
     property string kernel: ""
     property string cores: ""
+    property bool nvidia: false
     property string gpu: ""
     property real gpuN: 0
+    property real encN: 0
+    property real decN: 0
+    property real vramN: 0
+    property real pwrN: 0
+    property string gpuPwr: ""
+    property string gpuVram: ""
     property var disks: []
-    property var cpuHist: []
-    property var memHist: []
     property var cpuTop: []
     property var memTop: []
+    property var vramTop: []
     property real lastIdle: 0
     property real lastTotal: 0
     readonly property string profileName: PowerProfiles.profile === PowerProfile.PowerSaver ? "Power Saver" : PowerProfiles.profile === PowerProfile.Performance ? "Performance" : "Balanced"
     readonly property string tip: [host, "CPU " + cpuPct + (cores ? " · " + cores + " cores" : ""), "load " + load, "RAM " + memUsed + " / " + memTotal, "swap " + swapUsed + " / " + swapTotal, gpu ? "GPU " + gpu : "", "up " + uptime, kernel].filter(s => s).join("\n")
-
-    function push(hist, n) {
-        return hist.concat([Math.max(0, Math.min(1, Number(n) || 0))]).slice(-36);
-    }
 
     function setProfile(name) {
         const map = {
@@ -77,9 +79,13 @@ Singleton {
                 }));
     }
 
+    function num(v) {
+        return v === "-" || v === undefined ? 0 : Number(v) || 0;
+    }
+
     Poll {
         interval: 2000
-        command: ["sh", "-c", "grep 'cpu ' /proc/stat; awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} /SwapTotal/{st=$2} /SwapFree/{sf=$2} END{printf \"MEM %.1f %.1f %.1f %.1f\\n\", (t-a)/1048576, t/1048576, (st-sf)/1048576, st/1048576}' /proc/meminfo; echo LOAD $(cut -d' ' -f1-3 /proc/loadavg); awk '{d=int($1/86400);h=int(($1%86400)/3600);m=int(($1%3600)/60); printf \"UP \"; if(d) print d\"d \"h\"h\"; else if(h) print h\"h \"m\"m\"; else print m\"m\"}' /proc/uptime; echo HOST $(hostname); echo KERNEL $(uname -r); echo CORES $(nproc); echo GPU $(nvidia-smi --query-gpu=utilization.gpu,memory.used,memory.total,temperature.gpu --format=csv,noheader,nounits 2>/dev/null | head -1 | tr -d ' ')"]
+        command: ["sh", "-c", "grep 'cpu ' /proc/stat; awk '/MemTotal/{t=$2} /MemAvailable/{a=$2} /SwapTotal/{st=$2} /SwapFree/{sf=$2} END{printf \"MEM %.1f %.1f %.1f %.1f\\n\", (t-a)/1048576, t/1048576, (st-sf)/1048576, st/1048576}' /proc/meminfo; echo LOAD $(cut -d' ' -f1-3 /proc/loadavg); awk '{d=int($1/86400);h=int(($1%86400)/3600);m=int(($1%3600)/60); printf \"UP \"; if(d) print d\"d \"h\"h\"; else if(h) print h\"h \"m\"m\"; else print m\"m\"}' /proc/uptime; echo HOST $(hostname); echo KERNEL $(uname -r); echo CORES $(nproc)"]
         stdout: StdioCollector {
             onStreamFinished: {
                 const lines = text.trim().split("\n");
@@ -116,16 +122,36 @@ Singleton {
                         root.kernel = v;
                     else if (k === "CORES")
                         root.cores = v;
-                    else if (k === "GPU" && v) {
-                        const p = v.split(",");
-                        if (p.length >= 4) {
-                            root.gpuN = Number(p[0]) / 100;
-                            root.gpu = p[0] + "% · " + p[1] + "/" + p[2] + " MiB · " + p[3] + "°C";
-                        }
-                    }
                 }
-                root.cpuHist = root.push(root.cpuHist, root.cpuN);
-                root.memHist = root.push(root.memHist, root.memN);
+            }
+        }
+    }
+
+    Process {
+        running: true
+        command: ["nvidia-smi", "-L"]
+        stdout: StdioCollector {
+            onStreamFinished: root.nvidia = /GPU /.test(text)
+        }
+    }
+
+    Poll {
+        active: root.nvidia
+        interval: 2000
+        command: ["nvidia-smi", "--query-gpu=utilization.gpu,utilization.encoder,utilization.decoder,memory.used,memory.total,temperature.gpu,power.draw,power.limit", "--format=csv,noheader,nounits"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                const p = text.trim().split(",").map(s => s.trim());
+                if (p.length < 8)
+                    return;
+                root.gpuN = root.num(p[0]) / 100;
+                root.encN = root.num(p[1]) / 100;
+                root.decN = root.num(p[2]) / 100;
+                root.vramN = root.num(p[4]) > 0 ? root.num(p[3]) / root.num(p[4]) : 0;
+                root.pwrN = root.num(p[7]) > 0 ? root.num(p[6]) / root.num(p[7]) : 0;
+                root.gpuPwr = Math.round(root.num(p[6])) + " / " + Math.round(root.num(p[7])) + " W";
+                root.gpuVram = p[3] + " / " + p[4] + " MiB";
+                root.gpu = p[0] + "% · enc " + p[1] + "% · dec " + p[2] + "% · " + p[3] + "/" + p[4] + " MiB · " + p[5] + "°C";
             }
         }
     }
@@ -147,6 +173,24 @@ Singleton {
                 const n = Number(root.cores) || 1;
                 root.cpuTop = root.top(rows, "cpu", r => (r.cpu / n).toFixed(1) + "%");
                 root.memTop = root.top(rows, "rss", r => Fmt.bytes(r.rss * 1024));
+            }
+        }
+    }
+
+    Poll {
+        active: root.hot && root.nvidia
+        interval: 2000
+        command: ["sh", "-c", "nvidia-smi pmon -c 1 -s um | awk '$1 ~ /^#/ || NF < 11 { next } { n=$12; f=\"/proc/\" $2 \"/comm\"; if ((getline c < f) > 0) n=c; close(f); print n, $10 }'"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                root.vramTop = text.trim().split("\n").map(line => {
+                    const p = line.trim().split(/\s+/);
+                    const fb = root.num(p[1]);
+                    return p[0] && fb > 0 ? {
+                        name: p[0],
+                        value: fb + "M"
+                    } : null;
+                }).filter(Boolean).sort((a, b) => parseInt(b.value) - parseInt(a.value)).slice(0, 4);
             }
         }
     }
