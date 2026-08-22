@@ -145,6 +145,7 @@
         "$mainMod, F, fullscreen"
         "$mainMod, L, exec, hyprlock"
         "$mainMod SHIFT, L, exec, $powermenu"
+        "ALT, SPACE, exec, handy --toggle-transcription"
         # Screenshots
         ", PRINT, exec, hyprshot -m region"
         "SHIFT, PRINT, exec, hyprshot -m window"

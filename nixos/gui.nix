@@ -14,6 +14,7 @@
       hyprshot
       wiremix
       wl-clipboard
+      wtype
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -30,6 +31,7 @@
       enable = true;
       openFirewall = true;
     };
+    handy.enable = true;
     hyprland.enable = true;
     hyprlock.enable = true;
     dconf.enable = true;

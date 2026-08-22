@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ./gtk.nix
@@ -10,6 +10,9 @@
   ];
 
   services.hyprpolkitagent.enable = true;
+  services.handy.enable = true;
+  systemd.user.services.handy.Service.ExecStart =
+    lib.mkForce "${config.services.handy.package}/bin/handy --start-hidden";
 
   xdg.portal = {
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
