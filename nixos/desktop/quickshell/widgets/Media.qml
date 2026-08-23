@@ -4,14 +4,9 @@ import "../ui"
 
 Chip {
     id: root
-    visible: !!Audio.player
+    visible: Audio.playing
     color: Theme.fgDark
-    maxWidth: 216
-    marquee: true
-    text: {
-        const p = Audio.player;
-        return p ? (p.isPlaying ? "󰐊 " : "󰏤 ") + (p.trackTitle || p.identity || "ncspot") : "";
-    }
+    text: "󰐊"
     tip: {
         const p = Audio.player;
         return p ? ((p.trackArtist || "") + (p.trackArtist && p.trackTitle ? " — " : "") + (p.trackTitle || p.identity || "ncspot")) : "";
