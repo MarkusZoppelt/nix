@@ -10,15 +10,7 @@
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
-      NPM_CONFIG_PREFIX = "$HOME/.npm";
     };
-
-    sessionPath = [
-      "$HOME/.local/bin"
-      "$HOME/.npm/bin"
-      "$HOME/Documents/go/bin"
-      "$HOME/Documents/nix/bin"
-    ];
 
     shellAliases = {
       ls = "ls -F --color=always";

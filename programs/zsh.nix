@@ -28,7 +28,7 @@
         '';
       in
       ''
-        ${builtins.readFile ./zshrc}
+        zstyle ':completion:*' menu select=1
       ''
       + linuxInit
       + darwinInit;
