@@ -9,7 +9,7 @@ Chip {
     tip: Stats.tip
     onClicked: button => {
         if (button === Qt.RightButton)
-            Run.detached(["ghostty", "+new-window", "-e", "btop"]);
+            Run.term("btop");
         else
             panel.toggle(root);
     }
@@ -28,6 +28,13 @@ Chip {
         Heading {
             title: Stats.host || "System"
             subtitle: [Stats.kernel, "up " + Stats.uptime, Stats.profileName].filter(s => s && s !== "up —").join(" · ")
+        }
+
+        Btn {
+            width: parent.width
+            text: "Open btop"
+            glyph: "󰆍"
+            onClicked: Run.term("btop")
         }
 
         Pills {

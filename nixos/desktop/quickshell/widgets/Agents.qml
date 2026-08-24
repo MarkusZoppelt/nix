@@ -8,7 +8,7 @@ Chip {
     text: "󱚣"
     onClicked: button => {
         if (button === Qt.RightButton)
-            Run.detached(["ghostty", "+new-window", "-e", "opencode2"]);
+            Run.term("opencode2");
         else {
             AgentUsage.refresh();
             panel.toggle(root);
@@ -22,6 +22,13 @@ Chip {
         Heading {
             title: AgentUsage.selected ? AgentUsage.selected.name : "Agents"
             subtitle: AgentUsage.selected ? (AgentUsage.selected.tierLabel || "") : "No subscriptions"
+        }
+
+        Btn {
+            width: parent.width
+            text: "OpenCode"
+            kind: "primary"
+            onClicked: Run.term("opencode2")
         }
 
         Pills {

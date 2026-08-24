@@ -39,8 +39,8 @@ Chip {
             subtitle: Bluetooth.defaultAdapter?.enabled ? (Bluetooth.defaultAdapter.discovering ? "scanning" : "on") : "off"
         }
 
-        Pills {
-            binary: true
+        Switch {
+            label: "Bluetooth"
             on: !!Bluetooth.defaultAdapter?.enabled
             onToggled: v => {
                 if (Bluetooth.defaultAdapter)

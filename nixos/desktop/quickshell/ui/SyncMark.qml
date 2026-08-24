@@ -37,19 +37,40 @@ Item {
 
     Shape {
         anchors.fill: parent
-        Repeater {
-            model: root.nodes
-            ShapePath {
-                required property var modelData
-                strokeWidth: 1.3
-                strokeColor: root.stroke || Theme.fg
-                fillColor: "transparent"
-                startX: root.cx
-                startY: root.cy
-                PathLine {
-                    x: modelData.x
-                    y: modelData.y
-                }
+
+        ShapePath {
+            strokeWidth: 1.3
+            strokeColor: root.stroke || Theme.fg
+            fillColor: "transparent"
+            startX: root.cx
+            startY: root.cy
+            PathLine {
+                x: root.nodes[0].x
+                y: root.nodes[0].y
+            }
+        }
+
+        ShapePath {
+            strokeWidth: 1.3
+            strokeColor: root.stroke || Theme.fg
+            fillColor: "transparent"
+            startX: root.cx
+            startY: root.cy
+            PathLine {
+                x: root.nodes[1].x
+                y: root.nodes[1].y
+            }
+        }
+
+        ShapePath {
+            strokeWidth: 1.3
+            strokeColor: root.stroke || Theme.fg
+            fillColor: "transparent"
+            startX: root.cx
+            startY: root.cy
+            PathLine {
+                x: root.nodes[2].x
+                y: root.nodes[2].y
             }
         }
     }

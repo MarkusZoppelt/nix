@@ -93,53 +93,26 @@ Chip {
             width: parent.width
             spacing: 8
 
-            Repeater {
-                model: [{
-                        id: "prev",
-                        name: "󰒮"
-                    }, {
-                        id: "play",
-                        name: Audio.player?.isPlaying ? "󰏤" : "󰐊"
-                    }, {
-                        id: "next",
-                        name: "󰒭"
-                    }]
+            Btn {
+                width: (parent.width - 16) / 3
+                glyph: "󰒮"
+                enabled: !!Audio.player?.canGoPrevious
+                onClicked: Audio.player.previous()
+            }
 
-                Rectangle {
-                    required property var modelData
-                    width: (parent.width - 16) / 3
-                    implicitHeight: 36
-                    radius: 6
-                    color: hover.containsMouse ? Qt.alpha(Theme.magenta, 0.25) : Theme.bgHighlight
-                    border.width: 1
-                    border.color: Theme.black
+            Btn {
+                width: (parent.width - 16) / 3
+                glyph: Audio.player?.isPlaying ? "󰏤" : "󰐊"
+                kind: "primary"
+                enabled: !!Audio.player?.canTogglePlaying
+                onClicked: Audio.player.togglePlaying()
+            }
 
-                    Text {
-                        anchors.centerIn: parent
-                        text: modelData.name
-                        color: Theme.fg
-                        font.family: Theme.font
-                        font.pixelSize: 18
-                    }
-
-                    MouseArea {
-                        id: hover
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            const p = Audio.player;
-                            if (!p)
-                                return;
-                            if (modelData.id === "prev" && p.canGoPrevious)
-                                p.previous();
-                            else if (modelData.id === "next" && p.canGoNext)
-                                p.next();
-                            else if (modelData.id === "play" && p.canTogglePlaying)
-                                p.togglePlaying();
-                        }
-                    }
-                }
+            Btn {
+                width: (parent.width - 16) / 3
+                glyph: "󰒭"
+                enabled: !!Audio.player?.canGoNext
+                onClicked: Audio.player.next()
             }
         }
     }

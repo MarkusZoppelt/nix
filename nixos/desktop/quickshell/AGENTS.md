@@ -24,19 +24,16 @@ Tokyo Night bar + overlay shell. QML lives here; Nix copies it into `~/.config/q
 - After a failed reload, IPC dies (`Not ready to accept queries yet`). Restart with `systemctl --user reset-failed quickshell.service && systemctl --user restart quickshell.service`.
 - After a successful rebuild, apply from the existing herdr split: `nh os switch --diff=always && qs ipc call shell reload`.
 - Poll expensive commands only while the panel is open (`Stats.hot`, `Net.scan`). Keep secrets out of argv; talk to local APIs from QML (XHR), not helper scripts.
-- Shared formatters live in `Fmt`. Shared on/off chrome is `Pills { binary: true }`.
-- Launch apps with `Run.detached` so they leave the quickshell cgroup. It rejects `-`/`.` argv0, requires an absolute cwd, and always passes `--`. `Terminal=true` desktop entries use `ghostty +new-window -e`.
+- Shared formatters live in `Fmt`. On/off rows use `Switch`. Buttons use `Btn`. Context menus use `Menu`.
+- Launch apps with `Run.detached`. Terminal apps: `Run.term`. Session verbs: `Session.run`.
 - Untrusted strings use `Text.PlainText`. Image URLs go through `Fmt.imageUrl`. Folder clicks go through `Theme.openDir`.
 
 ## Adding a widget
 
-1. State singleton at repo root if it needs polling or IPC.
-2. Chip in `widgets/`, using `PanelCard` + `Heading` + existing `ui/` bits.
-3. Mount it in `Bar.qml`.
-4. Stage the new files, switch, reload.
+Load `.agents/skills/qs-widget/SKILL.md`. Core chips stay in `widgets/` and are mounted in `Bar.qml`.
 
 ## Do not
 
-- Copy Omarchy panels wholesale. Steal behavior, keep this chrome.
-- Generate widgets from Nix. Only `Theme.qml` is generated.
+- Generate widget QML from Nix. Only `Theme.qml` is generated.
+- Add a plugin loader or scan `$HOME` for QML.
 - Put Linux-only packages in `home.nix`; add them in `quickshell.nix`.

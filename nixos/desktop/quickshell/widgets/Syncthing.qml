@@ -25,8 +25,8 @@ Chip {
             subtitle: Sync.summary
         }
 
-        Pills {
-            binary: true
+        Switch {
+            label: "Running"
             on: Sync.up
             onToggled: v => {
                 if (v !== Sync.up)
@@ -70,11 +70,10 @@ Chip {
             }
         }
 
-        Choice {
-            title: "Open Web UI"
-            subtitle: "127.0.0.1:8384"
+        Btn {
+            width: parent.width
+            text: "Open web UI"
             glyph: "󰖟"
-            accent: Theme.blue1
             onClicked: Sync.openUi()
         }
     }

@@ -20,27 +20,27 @@ Singleton {
         {
             name: "Lock",
             hint: "hyprlock",
-            run: () => Run.detached(["hyprlock"])
+            run: () => Session.run("lock")
         },
         {
             name: "Relaunch",
             hint: "exit Hyprland",
-            run: () => Hyprland.dispatch("exit")
+            run: () => Session.run("relaunch")
         },
         {
             name: "Sleep",
             hint: "suspend",
-            run: () => Quickshell.execDetached(["systemctl", "suspend"])
+            run: () => Session.run("sleep")
         },
         {
             name: "Restart",
             hint: "reboot",
-            run: () => Quickshell.execDetached(["systemctl", "reboot"])
+            run: () => Session.run("restart")
         },
         {
             name: "Shutdown",
             hint: "poweroff",
-            run: () => Quickshell.execDetached(["systemctl", "poweroff"])
+            run: () => Session.run("shutdown")
         }
     ]
 
@@ -72,8 +72,10 @@ Singleton {
                     keywords: app.keywords,
                     icon: app.icon,
                     run: () => {
-                        const cmd = app.runInTerminal ? ["ghostty", "+new-window", "-e"].concat(app.command) : app.command;
-                        Run.detached(cmd, app.workingDirectory);
+                        if (app.runInTerminal)
+                            Run.term(app.command);
+                        else
+                            Run.detached(app.command, app.workingDirectory);
                     }
                 }));
         return (q ? apps.concat(powerItems) : apps).filter(e => hit(e, q)).sort((a, b) => rank(a, b, q));

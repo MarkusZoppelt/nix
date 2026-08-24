@@ -37,9 +37,9 @@ Chip {
             subtitle: Net.active?.connected ? (Net.rx + " ↓  " + Net.tx + " ↑") : (Networking.wifiEnabled ? "wifi idle" : "wifi off")
         }
 
-        Pills {
+        Switch {
             visible: !!Net.wifi
-            binary: true
+            label: "Wi-Fi"
             on: Networking.wifiEnabled
             onToggled: v => Networking.wifiEnabled = v
         }

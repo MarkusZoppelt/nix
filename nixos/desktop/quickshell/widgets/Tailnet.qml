@@ -24,8 +24,8 @@ Chip {
             subtitle: [Tail.dns, Tail.up ? "connected" : (Tail.state || "offline"), Tail.exitNode ? "via " + Tail.exitNode.n : ""].filter(Boolean).join(" · ")
         }
 
-        Pills {
-            binary: true
+        Switch {
+            label: "Connected"
             on: Tail.up
             onToggled: v => {
                 if (v !== Tail.up)
@@ -52,9 +52,10 @@ Chip {
             visible: Tail.up
             title: "EXIT NODE"
 
-            Pills {
-                binary: true
+            Switch {
+                label: "Use exit node"
                 on: !!Tail.exit
+                ink: Theme.orange
                 onToggled: v => {
                     if (v !== !!Tail.exit)
                         Tail.toggleExit();

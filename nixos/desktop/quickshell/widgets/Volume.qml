@@ -35,6 +35,16 @@ Chip {
             subtitle: Audio.label(Audio.sink)
         }
 
+        Switch {
+            label: "Mute output"
+            on: !!Audio.sink?.audio?.muted
+            ink: Theme.cyan
+            onToggled: v => {
+                if (Audio.sink?.audio)
+                    Audio.sink.audio.muted = v;
+            }
+        }
+
         Section {
             title: "OUTPUT"
 
