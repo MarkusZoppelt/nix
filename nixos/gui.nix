@@ -27,10 +27,7 @@
   };
 
   programs = {
-    ausweisapp = {
-      enable = true;
-      openFirewall = true;
-    };
+    ausweisapp.enable = true;
     handy.enable = true;
     hyprland.enable = true;
     hyprlock.enable = true;

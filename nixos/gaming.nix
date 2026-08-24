@@ -17,11 +17,7 @@ with lib;
   config = mkMerge [
     (mkIf config.gaming.enable {
       programs = {
-        steam = {
-          enable = true;
-          remotePlay.openFirewall = true;
-          localNetworkGameTransfers.openFirewall = false;
-        };
+        steam.enable = true;
         gamemode = {
           enable = true;
           settings = {
@@ -93,9 +89,6 @@ with lib;
             };
           in
           {
-            env = {
-              PATH = "$(PATH):$(HOME)/.local/bin";
-            };
             apps = [
               {
                 name = "Desktop";

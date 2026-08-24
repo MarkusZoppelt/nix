@@ -17,11 +17,7 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      # Trust Tailscale interface completely
       trustedInterfaces = [ "tailscale0" ];
-      # Deny all other incoming connections by default
-      allowedTCPPorts = [ ];
-      allowedUDPPorts = [ ];
     };
   };
 
@@ -38,7 +34,6 @@
     description = "${user}";
     extraGroups = [
       "wheel"
-      "disk"
       "networkmanager"
     ];
   };

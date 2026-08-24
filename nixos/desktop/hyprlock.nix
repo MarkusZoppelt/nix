@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 {
   programs.hyprlock = {
     enable = true;
@@ -22,7 +22,7 @@
       background = [
         {
           monitor = "";
-          path = "screenshot";
+          path = "${config.home.homeDirectory}/.config/hypr/tokyonight.png";
           blur_passes = 3;
         }
       ];
