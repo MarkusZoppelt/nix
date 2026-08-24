@@ -31,9 +31,7 @@ Singleton {
     }
 
     function openPath(path) {
-        if (!path || path[0] !== "/" || path.includes("://") || path.includes("\0") || path.endsWith(".desktop"))
-            return;
-        Run.detached(["xdg-open", path]);
+        Run.detached([Theme.openDir, path]);
     }
 
     function labelState(f) {

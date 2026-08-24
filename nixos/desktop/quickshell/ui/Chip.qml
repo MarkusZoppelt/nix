@@ -45,6 +45,7 @@ Item {
         color: Theme.fg
         font.family: Theme.font
         font.pixelSize: 15
+        textFormat: Text.PlainText
     }
 
     SequentialAnimation {

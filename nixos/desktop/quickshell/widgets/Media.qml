@@ -38,7 +38,7 @@ Chip {
             Image {
                 anchors.fill: parent
                 fillMode: Image.PreserveAspectCrop
-                source: Audio.player?.trackArtUrl || ""
+                source: Fmt.imageUrl(Audio.player?.trackArtUrl, true)
                 asynchronous: true
                 cache: false
             }

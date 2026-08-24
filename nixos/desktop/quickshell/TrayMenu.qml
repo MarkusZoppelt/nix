@@ -72,6 +72,7 @@ Singleton {
                             anchors.rightMargin: 10
                             verticalAlignment: Text.AlignVCenter
                             text: modelData.text
+                            textFormat: Text.PlainText
                             color: modelData.enabled ? Theme.fg : Theme.comment
                             font.family: Theme.font
                             font.pixelSize: 14

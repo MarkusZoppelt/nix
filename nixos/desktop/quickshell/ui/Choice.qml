@@ -44,6 +44,7 @@ Rectangle {
             width: parent.width
             elide: Text.ElideRight
             text: root.title
+            textFormat: Text.PlainText
             color: Theme.fg
             font.family: Theme.font
             font.pixelSize: 14
@@ -54,6 +55,7 @@ Rectangle {
             width: parent.width
             elide: Text.ElideRight
             text: root.subtitle
+            textFormat: Text.PlainText
             color: Theme.comment
             font.family: Theme.font
             font.pixelSize: 11

@@ -40,6 +40,7 @@ Singleton {
                 id: label
                 anchors.centerIn: parent
                 text: root.text
+                textFormat: Text.PlainText
                 color: Theme.fg
                 font.family: Theme.font
                 font.pixelSize: 13

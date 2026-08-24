@@ -19,6 +19,7 @@ Column {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             text: label
+            textFormat: Text.PlainText
             color: Theme.fg
             font.family: Theme.font
             font.pixelSize: 14
@@ -28,6 +29,7 @@ Column {
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: value
+            textFormat: Text.PlainText
             color: root.ink || (ratio >= 0.9 ? Theme.red : Theme.fg)
             font.family: Theme.font
             font.pixelSize: 13
@@ -44,6 +46,7 @@ Column {
         visible: root.detail !== ""
         width: parent.width
         text: root.detail
+        textFormat: Text.PlainText
         color: Theme.comment
         font.family: Theme.font
         font.pixelSize: 12

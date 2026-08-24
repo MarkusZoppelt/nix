@@ -47,6 +47,21 @@ Singleton {
         return Math.floor(m / 60) + "h " + (m % 60) + "m";
     }
 
+    function imageUrl(u, remote) {
+        const s = String(u || "");
+        if (!s || /\.desktop(\b|$)/i.test(s) || s.includes("\0"))
+            return "";
+        if (/^(image:|qrc:)/i.test(s))
+            return s;
+        if (/^file:\/\//i.test(s) || s[0] === "/")
+            return s;
+        if (!s.includes(":") && !s.includes("/"))
+            return s;
+        if (remote && /^https?:\/\//i.test(s))
+            return s;
+        return "";
+    }
+
     function wait(iso, now) {
         const ms = Date.parse(iso) - (now || Date.now());
         if (!(ms > 0))

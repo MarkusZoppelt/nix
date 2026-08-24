@@ -25,7 +25,8 @@ Tokyo Night bar + overlay shell. QML lives here; Nix copies it into `~/.config/q
 - After a successful rebuild, apply from the existing herdr split: `nh os switch --diff=always && qs ipc call shell reload`.
 - Poll expensive commands only while the panel is open (`Stats.hot`, `Net.scan`). Keep secrets out of argv; talk to local APIs from QML (XHR), not helper scripts.
 - Shared formatters live in `Fmt`. Shared on/off chrome is `Pills { binary: true }`.
-- Launch apps with `Run.detached` so they leave the quickshell cgroup. `Terminal=true` desktop entries use `ghostty +new-window -e`. `DesktopEntry.execute()` ignores that flag.
+- Launch apps with `Run.detached` so they leave the quickshell cgroup. It rejects `-`/`.` argv0, requires an absolute cwd, and always passes `--`. `Terminal=true` desktop entries use `ghostty +new-window -e`.
+- Untrusted strings use `Text.PlainText`. Image URLs go through `Fmt.imageUrl`. Folder clicks go through `Theme.openDir`.
 
 ## Adding a widget
 

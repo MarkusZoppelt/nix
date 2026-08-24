@@ -42,7 +42,7 @@ Row {
                     smooth: true
                     mipmap: true
                     cache: false
-                    source: modelData.icon
+                    source: Fmt.imageUrl(modelData.icon)
                 }
             }
         }

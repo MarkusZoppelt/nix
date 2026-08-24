@@ -53,7 +53,7 @@ Item {
             sourceSize.width: 24
             sourceSize.height: 24
             fillMode: Image.PreserveAspectFit
-            source: root.modelData.icon ? Quickshell.iconPath(root.modelData.icon, true) : ""
+            source: root.modelData.icon ? Fmt.imageUrl(Quickshell.iconPath(root.modelData.icon, true)) : ""
         }
     }
 
@@ -69,6 +69,7 @@ Item {
             width: parent.width
             elide: Text.ElideRight
             text: root.modelData.name
+            textFormat: Text.PlainText
             color: root.active ? Theme.fg : Theme.fgDark
             font.family: Theme.font
             font.pixelSize: 16
@@ -79,6 +80,7 @@ Item {
             elide: Text.ElideRight
             visible: !!root.modelData.hint
             text: root.modelData.hint
+            textFormat: Text.PlainText
             color: Theme.comment
             font.family: Theme.font
             font.pixelSize: 11

@@ -9,6 +9,7 @@ Column {
 
     Text {
         id: head
+        textFormat: Text.PlainText
         color: Theme.fg
         font.family: Theme.font
         font.pixelSize: 18
@@ -16,6 +17,7 @@ Column {
 
     Text {
         id: sub
+        textFormat: Text.PlainText
         visible: text !== ""
         color: Theme.comment
         font.family: Theme.font

@@ -35,6 +35,7 @@ Row {
             Text {
                 anchors.centerIn: parent
                 text: modelData.name
+                textFormat: Text.PlainText
                 color: Theme.fg
                 font.family: Theme.font
                 font.pixelSize: 13
