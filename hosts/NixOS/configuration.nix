@@ -40,14 +40,13 @@
     initrd.verbose = false;
     kernelParams = [
       "quiet"
-      "boot.shell_on_fail"
       "udev.log_priority=3"
       "rd.systemd.show_status=auto"
       "nvidia_drm.fbdev=1"
       "pcie_aspm=off"
     ];
 
-    kernel.sysctl."kernel.sysrq" = 1;
+    kernel.sysctl."kernel.sysrq" = 176;
   };
 
   networking.hostName = "Gordon";
