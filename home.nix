@@ -19,7 +19,7 @@
 
     packages = with pkgs; [
       _1password-cli
-      (writeScriptBin "agent-usage" (builtins.readFile ./bin/agent-usage))
+      (import ./lib/agent-usage.nix { inherit pkgs; })
       duf
       dust
       gh

@@ -18,18 +18,27 @@ cred() {
     2>/dev/null || true
 }
 
+curl_bearer() {
+  local token=$1 url=$2 out=$3
+  shift 3
+  local cfg=$tmp/curl.cfg
+  {
+    printf 'header = "Authorization: Bearer %s"\n' "${token//$'\n'/}"
+    printf '%s\n' "$@"
+  } >"$cfg"
+  curl -fsS --max-time 20 -K "$cfg" "$url" >"$out" || echo null >"$out"
+}
+
 if [[ -f $db ]]; then
+  chmod 600 "$db" 2>/dev/null || true
+
   if go=$(cred opencode-go key) && [[ -n $go ]]; then
-    curl -fsS --max-time 20 -H "Authorization: Bearer $go" \
-      https://opencode.ai/zen/go/v1/usage >"$tmp/go.json" || echo null >"$tmp/go.json"
+    curl_bearer "$go" https://opencode.ai/zen/go/v1/usage "$tmp/go.json"
   fi
 
   if xai=$(cred xai access) && [[ -n $xai ]]; then
-    curl -fsS --max-time 20 \
-      -H "Authorization: Bearer $xai" \
-      -H "Accept: application/json" \
-      "https://cli-chat-proxy.grok.com/v1/billing?format=credits" \
-      >"$tmp/xai.json" || echo null >"$tmp/xai.json"
+    curl_bearer "$xai" "https://cli-chat-proxy.grok.com/v1/billing?format=credits" "$tmp/xai.json" \
+      'header = "Accept: application/json"'
   fi
 
   sqlite3 -readonly -json "$db" "
