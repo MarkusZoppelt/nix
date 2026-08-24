@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell
 import Quickshell.Services.UPower
 import ".."
 import "../ui"
@@ -10,7 +9,7 @@ Chip {
     tip: Stats.tip
     onClicked: button => {
         if (button === Qt.RightButton)
-            Quickshell.execDetached(["ghostty", "+new-window", "-e", "btop"]);
+            Run.detached(["ghostty", "+new-window", "-e", "btop"]);
         else
             panel.toggle(root);
     }

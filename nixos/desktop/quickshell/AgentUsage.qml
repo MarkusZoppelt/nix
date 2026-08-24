@@ -29,7 +29,7 @@ Singleton {
 
     Process {
         id: usageProc
-        command: ["agent-usage"]
+        command: [Theme.agentUsage]
         stdout: StdioCollector {
             onStreamFinished: root.apply(text)
         }

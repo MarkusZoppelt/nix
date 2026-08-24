@@ -70,6 +70,7 @@ Scope {
                                 font.family: Theme.font
                                 font.pixelSize: 16
                                 wrapMode: Text.Wrap
+                                textFormat: Text.PlainText
                             }
 
                             Text {

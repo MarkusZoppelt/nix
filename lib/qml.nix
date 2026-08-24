@@ -1,8 +1,7 @@
 # Turn an attrset into a Quickshell Theme.qml singleton.
 { lib }:
 let
-  capitalize =
-    s: lib.toUpper (lib.substring 0 1 s) + lib.substring 1 (lib.stringLength s) s;
+  capitalize = s: lib.toUpper (lib.substring 0 1 s) + lib.substring 1 (lib.stringLength s) s;
   camelCase =
     name:
     let
@@ -12,9 +11,9 @@ let
   emit =
     name: value:
     if builtins.isString value && lib.hasPrefix "#" value then
-      "  readonly property color ${name}: \"${value}\""
+      "  readonly property color ${name}: \"${lib.escape [ "\\" "\"" ] value}\""
     else if builtins.isString value then
-      "  readonly property string ${name}: \"${value}\""
+      "  readonly property string ${name}: \"${lib.escape [ "\\" "\"" ] value}\""
     else if builtins.isInt value then
       "  readonly property int ${name}: ${toString value}"
     else if builtins.isFloat value then

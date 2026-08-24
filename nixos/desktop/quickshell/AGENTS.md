@@ -21,11 +21,11 @@ Tokyo Night bar + overlay shell. QML lives here; Nix copies it into `~/.config/q
 
 - Import `QtQuick` anywhere you use `Timer`, `Behavior`, or `NumberAnimation`. `Process` cannot host a `Timer` — wrap both in `ui/Poll.qml`.
 - New files must be `git add`ed before `nh os switch`. Flakes ignore untracked paths, so QML will reference a type that is not in the store.
-- After a failed reload, IPC dies (`Not ready to accept queries yet`). Restart with `systemctl --user reset-failed quickshell.service && systemctl --user restart quickshell.service`. Do not restart if Steam is a child of the old cgroup.
+- After a failed reload, IPC dies (`Not ready to accept queries yet`). Restart with `systemctl --user reset-failed quickshell.service && systemctl --user restart quickshell.service`.
 - After a successful rebuild, apply from the existing herdr split: `nh os switch --diff=always && qs ipc call shell reload`.
 - Poll expensive commands only while the panel is open (`Stats.hot`, `Net.scan`). Keep secrets out of argv; talk to local APIs from QML (XHR), not helper scripts.
 - Shared formatters live in `Fmt`. Shared on/off chrome is `Pills { binary: true }`.
-- Launch `Terminal=true` desktop entries with `ghostty +new-window -e`. `DesktopEntry.execute()` ignores that flag.
+- Launch apps with `Run.detached` so they leave the quickshell cgroup. `Terminal=true` desktop entries use `ghostty +new-window -e`. `DesktopEntry.execute()` ignores that flag.
 
 ## Adding a widget
 

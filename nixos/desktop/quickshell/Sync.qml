@@ -27,12 +27,13 @@ Singleton {
     }
 
     function openUi() {
-        Quickshell.execDetached(["xdg-open", "http://127.0.0.1:8384"]);
+        Run.detached(["xdg-open", "http://127.0.0.1:8384"]);
     }
 
     function openPath(path) {
-        if (path)
-            Quickshell.execDetached(["xdg-open", path]);
+        if (!path || path[0] !== "/" || path.includes("://") || path.includes("\0") || path.endsWith(".desktop"))
+            return;
+        Run.detached(["xdg-open", path]);
     }
 
     function labelState(f) {

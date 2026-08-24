@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell
 import ".."
 import "../ui"
 
@@ -9,7 +8,7 @@ Chip {
     text: "󱚣"
     onClicked: button => {
         if (button === Qt.RightButton)
-            Quickshell.execDetached(["ghostty", "+new-window", "-e", "opencode2"]);
+            Run.detached(["ghostty", "+new-window", "-e", "opencode2"]);
         else {
             AgentUsage.refresh();
             panel.toggle(root);

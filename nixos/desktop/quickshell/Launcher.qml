@@ -20,7 +20,7 @@ Singleton {
         {
             name: "Lock",
             hint: "hyprlock",
-            run: () => Quickshell.execDetached(["hyprlock"])
+            run: () => Run.detached(["hyprlock"])
         },
         {
             name: "Relaunch",
@@ -73,10 +73,7 @@ Singleton {
                     icon: app.icon,
                     run: () => {
                         const cmd = app.runInTerminal ? ["ghostty", "+new-window", "-e"].concat(app.command) : app.command;
-                        Quickshell.execDetached({
-                            command: cmd,
-                            workingDirectory: app.workingDirectory
-                        });
+                        Run.detached(cmd, app.workingDirectory);
                     }
                 }));
         return (q ? apps.concat(powerItems) : apps).filter(e => hit(e, q)).sort((a, b) => rank(a, b, q));

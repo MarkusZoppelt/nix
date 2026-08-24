@@ -16,6 +16,8 @@ let
         barHeight = 45;
         iconSize = 14;
         cava = "${./quickshell/cava.cfg}";
+        agentUsage = lib.getExe (import ../../lib/agent-usage.nix { inherit pkgs; });
+        systemdRun = lib.getExe' pkgs.systemd "systemd-run";
       }
     )
   );
