@@ -12,6 +12,7 @@
       (chromium.override { enableWideVine = true; })
       gnome-session
       hyprshot
+      mumble
       wiremix
       wl-clipboard
       wtype
@@ -28,10 +29,10 @@
 
   programs = {
     ausweisapp.enable = true;
+    dconf.enable = true;
     handy.enable = true;
     hyprland.enable = true;
     hyprlock.enable = true;
-    dconf.enable = true;
   };
 
   services = {
