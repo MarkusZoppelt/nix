@@ -9,7 +9,10 @@
   environment = {
     systemPackages = with pkgs; [
       _1password-gui
-      (chromium.override { enableWideVine = true; })
+      (chromium.override {
+        enableWideVine = true;
+        commandLineArgs = "--disable-gpu-memory-buffer-video-frames";
+      })
       gnome-session
       hyprshot
       mumble
