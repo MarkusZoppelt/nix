@@ -35,6 +35,7 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "input"
     ];
   };
   programs.zsh.enable = true;

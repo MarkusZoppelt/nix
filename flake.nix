@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
-    handy.url = "github:cjpais/Handy";
+    hex.url = "github:anomalyco/hex";
   };
 
   outputs =
@@ -27,7 +27,7 @@
       home-manager,
       lanzaboote,
       llm-agents,
-      handy,
+      hex,
     }:
     let
       user = "mz";
@@ -51,7 +51,7 @@
           system = "x86_64-linux";
           modules = [
             lanzaboote.nixosModules.lanzaboote
-            handy.nixosModules.default
+            hex.nixosModules.hex
             ./lib/nix-settings.nix
             ./nixos/common.nix
             ./hosts/NixOS/configuration.nix
@@ -71,7 +71,7 @@
                 imports = [
                   ./home.nix
                   ./nixos/desktop
-                  handy.homeManagerModules.default
+                  hex.homeManagerModules.hex
                 ];
               };
             }

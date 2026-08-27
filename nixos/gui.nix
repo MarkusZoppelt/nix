@@ -33,7 +33,7 @@
   programs = {
     ausweisapp.enable = true;
     dconf.enable = true;
-    handy.enable = true;
+    hex.enable = true;
     hyprland.enable = true;
     hyprlock.enable = true;
   };
