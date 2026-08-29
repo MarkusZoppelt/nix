@@ -12,11 +12,6 @@
       LC_CTYPE = "en_US.UTF-8";
     };
 
-    shellAliases = {
-      ls = "ls -F --color=always";
-      ll = "ls -l --color=always";
-    };
-
     packages = with pkgs; [
       _1password-cli
       (import ./lib/agent-usage.nix { inherit pkgs; })
@@ -48,9 +43,9 @@
     ./programs/jjui.nix
     ./programs/ncspot.nix
     ./programs/neovim.nix
+    ./programs/nushell.nix
     ./programs/ssh.nix
     ./programs/starship.nix
-    ./programs/zsh.nix
   ];
 
   programs = {

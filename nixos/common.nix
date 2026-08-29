@@ -38,8 +38,8 @@
       "input"
     ];
   };
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+  environment.shells = [ pkgs.nushell ];
+  users.defaultUserShell = pkgs.nushell;
 
   ### SERVICES ###
   services = {
