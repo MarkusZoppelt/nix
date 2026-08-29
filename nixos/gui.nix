@@ -16,6 +16,7 @@
       gnome-session
       hyprshot
       mumble
+      nautilus
       wiremix
       wl-clipboard
       wtype
