@@ -19,7 +19,7 @@
           }
         '';
         darwinInit = pkgs.lib.optionalString pkgs.stdenv.isDarwin ''
-          $env.SSH_AUTH_SOCK = ($env.SSH_AUTH_SOCK? | default $"($env.HOME)/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock")
+          $env.SSH_AUTH_SOCK = $"($env.HOME)/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
         '';
       in
       linuxInit + darwinInit;
