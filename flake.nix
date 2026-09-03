@@ -84,7 +84,7 @@
       };
 
       darwinConfigurations = {
-        Darwin = darwin.lib.darwinSystem {
+        Alyx = darwin.lib.darwinSystem {
           inherit specialArgs;
 
           system = "aarch64-darwin";
@@ -117,7 +117,7 @@
         };
       };
 
-      checks.aarch64-darwin.mac = self.darwinConfigurations.Darwin.system;
+      checks.aarch64-darwin.mac = self.darwinConfigurations.Alyx.system;
       checks.x86_64-linux.gordon = self.nixosConfigurations.Gordon.config.system.build.toplevel;
       formatter = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-linux" ] (
         system: nixpkgs.legacyPackages.${system}.nixfmt-tree

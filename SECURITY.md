@@ -5,7 +5,7 @@
 Generate keys and sign the ESP:
 
     sudo sbctl create-keys
-    sudo nixos-rebuild switch --flake .#NixOS
+    sudo nixos-rebuild switch --flake .#Gordon
     sudo sbctl verify  # all files except kernel bzImage should be signed
 
 Enter BIOS → set Secure Boot to **Setup Mode** (clears factory keys), then:

@@ -7,10 +7,10 @@ Cross-platform Nix configuration for NixOS and macOS (Darwin).
 ### NixOS
 
     ./hosts/NixOS/label-partitions.sh
-    sudo nixos-rebuild switch --flake .#NixOS
+    sudo nixos-rebuild switch --flake .#Gordon
 
 See [SECURITY.md](SECURITY.md) for Secure Boot and TPM2 setup.
 
 ### Darwin (macOS)
 
-    nix run nix-darwin -- switch --flake .#Darwin
+    nix run nix-darwin -- switch --flake .#Alyx

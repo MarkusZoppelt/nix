@@ -145,8 +145,8 @@ if [ $FAILED -eq 0 ]; then
 
   gum style --margin "1" --border rounded --padding "1" \
     "Next steps:" \
-    "  1. sudo nixos-rebuild test --flake .#NixOS" \
-    "  2. sudo nixos-rebuild switch --flake .#NixOS" \
+    "  1. sudo nixos-rebuild test --flake .#Gordon" \
+    "  2. sudo nixos-rebuild switch --flake .#Gordon" \
     "  3. sudo reboot"
 else
   gum style --foreground 196 --border double --padding "1" --margin "1" \
