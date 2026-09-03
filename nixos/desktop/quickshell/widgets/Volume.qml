@@ -118,7 +118,7 @@ Chip {
 
                 Column {
                     required property var modelData
-                    width: parent ? parent.width : 352
+                    width: parent.width
                     spacing: 4
 
                     StatRow {

@@ -23,6 +23,7 @@ Chip {
         target: panel
         function onOpenChanged() {
             Net.scan(panel.open);
+            Net.hot = panel.open;
             if (!panel.open)
                 root.secretNet = null;
         }
@@ -82,7 +83,7 @@ Chip {
 
                 Column {
                     required property var modelData
-                    width: parent ? parent.width : 352
+                    width: parent.width
                     spacing: 6
 
                     Choice {

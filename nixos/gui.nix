@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   systemd.services.NetworkManager-wait-online.enable = false;
 
@@ -34,7 +34,6 @@
   programs = {
     ausweisapp.enable = true;
     dconf.enable = true;
-    hex.enable = true;
     hyprland.enable = true;
     hyprlock.enable = true;
   };
@@ -42,10 +41,7 @@
   services = {
     xserver = {
       enable = true;
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
+      xkb.layout = "us";
       excludePackages = with pkgs; [ xterm ];
     };
 

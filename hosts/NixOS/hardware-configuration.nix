@@ -9,17 +9,37 @@
 #   Swap LUKS container: nixos-crypt-swap (GPT partition label)
 #   Data1 LUKS container: crypt-data1     (GPT partition label)
 #   Data2 LUKS container: crypt-data2     (GPT partition label)
-#   Data1 filesystem:     data1           (btrfs, inside LUKS, mounted at /run/media/mz/data1)
-#   Data2 filesystem:     data2           (btrfs, inside LUKS, mounted at /run/media/mz/data2)
+#   Data1 filesystem:     data1           (btrfs, inside LUKS, mounted at /run/media/<user>/data1)
+#   Data2 filesystem:     data2           (btrfs, inside LUKS, mounted at /run/media/<user>/data2)
 #
 # Run hosts/NixOS/label-partitions.sh to label your partitions automatically.
 {
   config,
   lib,
   modulesPath,
+  user,
   ...
 }:
 
+let
+  luksDevices = [
+    "nixos-crypt-root"
+    "nixos-crypt-swap"
+    "crypt-data1"
+    "crypt-data2"
+  ];
+  btrfsData = {
+    fsType = "btrfs";
+    options = [
+      "nofail"
+      "compress=zstd:3"
+      "noatime"
+      "space_cache=v2"
+      "ssd"
+      "discard=async"
+    ];
+  };
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -34,24 +54,20 @@
     "sd_mod"
     "r8169"
   ];
-  boot.initrd.kernelModules = [ ];
 
   # Auto-detect CPU vendor and load appropriate KVM module
   boot.kernelModules =
     lib.optional config.hardware.cpu.amd.updateMicrocode "kvm-amd"
     ++ lib.optional config.hardware.cpu.intel.updateMicrocode "kvm-intel";
 
-  boot.extraModulePackages = [ ];
-
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos-root";
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."nixos-crypt-root".device = "/dev/disk/by-partlabel/nixos-crypt-root";
-  boot.initrd.luks.devices."nixos-crypt-swap".device = "/dev/disk/by-partlabel/nixos-crypt-swap";
-  boot.initrd.luks.devices."crypt-data1".device = "/dev/disk/by-partlabel/crypt-data1";
-  boot.initrd.luks.devices."crypt-data2".device = "/dev/disk/by-partlabel/crypt-data2";
+  boot.initrd.luks.devices = lib.genAttrs luksDevices (name: {
+    device = "/dev/disk/by-partlabel/${name}";
+  });
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-label/nixos-boot";
@@ -66,7 +82,7 @@
     { device = "/dev/disk/by-label/nixos-swap"; }
   ];
 
-  fileSystems."/run/media/mz/Games" = {
+  fileSystems."/run/media/${user}/Games" = {
     device = "/dev/disk/by-label/Games";
     fsType = "ext4";
     options = [
@@ -75,30 +91,12 @@
     ];
   };
 
-  fileSystems."/run/media/mz/data1" = {
+  fileSystems."/run/media/${user}/data1" = btrfsData // {
     device = "/dev/disk/by-label/data1";
-    fsType = "btrfs";
-    options = [
-      "nofail"
-      "compress=zstd:3"
-      "noatime"
-      "space_cache=v2"
-      "ssd"
-      "discard=async"
-    ];
   };
 
-  fileSystems."/run/media/mz/data2" = {
+  fileSystems."/run/media/${user}/data2" = btrfsData // {
     device = "/dev/disk/by-label/data2";
-    fsType = "btrfs";
-    options = [
-      "nofail"
-      "compress=zstd:3"
-      "noatime"
-      "space_cache=v2"
-      "ssd"
-      "discard=async"
-    ];
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

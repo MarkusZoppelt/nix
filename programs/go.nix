@@ -1,5 +1,4 @@
 { config, ... }:
-
 {
   programs.go = {
     enable = true;

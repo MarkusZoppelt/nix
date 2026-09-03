@@ -1,5 +1,4 @@
 { colors, ... }:
-
 {
   programs.starship = {
     enable = true;
@@ -23,7 +22,7 @@
 
       hostname = {
         ssh_only = true;
-        format = "[@$hostname](bold green) ";
+        format = "[@$hostname](bold fg:${colors.green}) ";
       };
     };
   };

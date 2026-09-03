@@ -34,7 +34,6 @@ Singleton {
             visible: root.open
             color: "transparent"
             implicitHeight: 80
-            exclusiveZone: 0
             exclusionMode: ExclusionMode.Ignore
             WlrLayershell.namespace: "osd"
             WlrLayershell.layer: WlrLayer.Overlay

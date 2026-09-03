@@ -12,35 +12,36 @@
       LC_CTYPE = "en_US.UTF-8";
     };
 
-    packages = with pkgs; [
-      _1password-cli
-      (import ./lib/agent-usage.nix { inherit pkgs; })
-      duf
-      dust
-      gh
-      gopls
-      lazydocker
-      llm-agents.herdr
-      llm-agents.hunk
-      llm-agents.opencode
-      llm-agents.opencode2
-      nil
-      nodejs
-      restic
-      sqlite
-      typescript-language-server
-    ];
+    packages =
+      with pkgs;
+      [
+        _1password-cli
+        duf
+        gh
+        gopls
+        lazydocker
+        llm-agents.herdr
+        llm-agents.hunk
+        llm-agents.opencode2
+        nil
+        nodejs
+        restic
+        sqlite
+        typescript-language-server
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        (import ./lib/agent-usage.nix { inherit pkgs; })
+      ];
   };
 
   imports = [
     ./programs/btop.nix
     ./programs/direnv.nix
-    ./programs/fzf.nix
     ./programs/ghostty.nix
     ./programs/git.nix
     ./programs/go.nix
-    ./programs/jujutsu.nix
     ./programs/jjui.nix
+    ./programs/jujutsu.nix
     ./programs/ncspot.nix
     ./programs/neovim.nix
     ./programs/nushell.nix
@@ -50,7 +51,7 @@
 
   programs = {
     fd.enable = true;
-    jjui.enable = true;
+    fzf.enable = true;
     jq.enable = true;
     nh = {
       enable = true;

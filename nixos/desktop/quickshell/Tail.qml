@@ -30,17 +30,17 @@ Singleton {
     }
 
     function toggle() {
-        Quickshell.execDetached(["tailscale", up ? "down" : "up"]);
+        Run.detached(["tailscale", up ? "down" : "up"]);
         Qt.callLater(refresh);
     }
 
     function copy(value) {
         if (value)
-            Quickshell.execDetached(["wl-copy", value]);
+            Run.detached(["wl-copy", value]);
     }
 
     function setExit(ip) {
-        Quickshell.execDetached(["tailscale", "set", "--exit-node=" + (ip || "")]);
+        Run.detached(["tailscale", "set", "--exit-node=" + (ip || "")]);
         Qt.callLater(refresh);
     }
 

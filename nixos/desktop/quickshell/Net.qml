@@ -13,12 +13,14 @@ Singleton {
     property string rx: "—"
     property string tx: "—"
     property var addrs: []
+    property bool hot: false
 
     readonly property var wifi: pick(DeviceType.Wifi)
     readonly property var wired: pick(DeviceType.Wired)
     readonly property var active: wired?.connected ? wired : (wifi?.connected ? wifi : wired || wifi)
-    readonly property var ssid: (wifi?.networks?.values || []).find(n => n.connected)?.name || ""
-    readonly property real signal: (wifi?.networks?.values || []).find(n => n.connected)?.signalStrength || 0
+    readonly property var link: (wifi?.networks?.values || []).find(n => n.connected) || null
+    readonly property var ssid: link?.name || ""
+    readonly property real signal: link?.signalStrength || 0
     readonly property var nets: (wifi?.networks?.values || []).slice().sort((a, b) => (b.connected - a.connected) || (b.known - a.known) || ((b.signalStrength || 0) - (a.signalStrength || 0)))
 
     function pick(type) {
@@ -50,6 +52,7 @@ Singleton {
     }
 
     Poll {
+        active: root.hot
         interval: 8000
         command: ["sh", "-c", "ip -j -br addr | jq -c '[.[]|select(.ifname!=\"lo\" and (.ifname|startswith(\"tailscale\")|not))|{n:.ifname,st:.operstate,ip:([.addr_info[]|select((.local|test(\":\")|not))|.local][0]//\"\")}]'"]
         stdout: StdioCollector {

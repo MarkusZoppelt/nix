@@ -1,9 +1,4 @@
-{
-  pkgs,
-  name',
-  email,
-  ...
-}:
+{ pkgs, name', email, ... }:
 {
   programs.jujutsu = {
     enable = true;

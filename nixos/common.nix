@@ -1,4 +1,9 @@
-{ pkgs, user, ... }:
+{
+  pkgs,
+  user,
+  name',
+  ...
+}:
 {
   ### GENERAL CONFIGURATION ###
   nix = {
@@ -10,8 +15,6 @@
     };
     optimise.automatic = true;
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   networking = {
     networkmanager.enable = true;
@@ -31,7 +34,7 @@
   ### USER CONFIGURATION ###
   users.users.${user} = {
     isNormalUser = true;
-    description = "${user}";
+    description = name';
     extraGroups = [
       "wheel"
       "networkmanager"

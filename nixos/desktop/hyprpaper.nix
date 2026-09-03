@@ -1,4 +1,7 @@
 { config, ... }:
+let
+  wallpaper = "${config.home.homeDirectory}/.config/hypr/tokyonight.png";
+in
 {
   services.hyprpaper = {
     enable = true;
@@ -7,11 +10,11 @@
       # rendered by hyprpaper, not Hyprland. `misc.disable_splash_rendering`
       # in hyprland.conf is a no-op for hyprpaper sessions.
       splash = false;
-      preload = [ "${config.home.homeDirectory}/.config/hypr/tokyonight.png" ];
+      preload = [ wallpaper ];
       wallpaper = [
         {
           monitor = "DP-1";
-          path = "${config.home.homeDirectory}/.config/hypr/tokyonight.png";
+          path = wallpaper;
           fit_mode = "cover";
         }
       ];

@@ -6,7 +6,6 @@ Item {
     id: root
     property Item at: null
     property real paneWidth: 400
-    property real paneMaxHeight: 0
     property bool open: win.visible
     default property alias body: col.data
     width: 0
@@ -16,7 +15,6 @@ Item {
     readonly property real screenH: (win.screen && win.screen.height) || (Quickshell.screens[0] && Quickshell.screens[0].height) || 1080
     readonly property real roomW: Math.max(240, screenW - 24)
     readonly property real roomH: Math.max(200, screenH - Theme.barHeight - 24)
-    readonly property real maxH: paneMaxHeight > 0 ? Math.min(paneMaxHeight, roomH) : roomH
 
     function close() {
         win.visible = false;
@@ -46,7 +44,7 @@ Item {
         Rectangle {
             id: box
             implicitWidth: Math.min(root.paneWidth, root.roomW)
-            implicitHeight: Math.min(flick.contentHeight + 28, root.maxH)
+            implicitHeight: Math.min(flick.contentHeight + 28, root.roomH)
             color: Theme.bg
             radius: Theme.radius
             border.width: 1

@@ -22,7 +22,7 @@ Singleton {
     }
 
     function toggle() {
-        Quickshell.execDetached(["systemctl", "--user", up ? "stop" : "start", "syncthing.service"]);
+        Run.detached(["systemctl", "--user", up ? "stop" : "start", "syncthing.service"]);
         Qt.callLater(refresh);
     }
 

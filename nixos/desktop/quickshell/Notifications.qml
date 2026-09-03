@@ -8,7 +8,6 @@ Scope {
         id: server
         keepOnReload: true
         bodySupported: true
-        imageSupported: true
         onNotification: n => {
             if (n.appName === "Spotify")
                 return;
@@ -42,7 +41,7 @@ Scope {
 
             Column {
                 id: col
-                width: 400
+                width: parent.width
                 spacing: Theme.pad
 
                 Repeater {

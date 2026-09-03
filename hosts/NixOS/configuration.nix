@@ -55,9 +55,6 @@
   gaming.enable = true;
   gaming.sunshine.enable = true;
 
-  ### VIRTUALIZATION ###
-  virtualization.vm.enable = false;
-
   services.flatpak.enable = true;
   services.fstrim.enable = true;
   services.smartd.enable = true;

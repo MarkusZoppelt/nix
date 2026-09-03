@@ -44,6 +44,7 @@
           colors
           ;
       };
+      llmOverlay = llm-agents.overlays.shared-nixpkgs;
       unstableOverlay = final: prev: {
         unstable = nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
       };
@@ -56,24 +57,21 @@
           system = "x86_64-linux";
           modules = [
             lanzaboote.nixosModules.lanzaboote
-            hex.nixosModules.hex
             ./lib/nix-settings.nix
             ./nixos/common.nix
             ./hosts/NixOS/configuration.nix
             {
               nixpkgs.overlays = [
                 unstableOverlay
-                llm-agents.overlays.shared-nixpkgs
+                llmOverlay
               ];
             }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = {
-                inherit name' email colors;
-              };
-              home-manager.users."${user}" = {
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${user} = {
                 imports = [
                   ./home.nix
                   ./nixos/desktop
@@ -101,17 +99,15 @@
                     doCheck = false;
                   });
                 })
-                llm-agents.overlays.shared-nixpkgs
+                llmOverlay
               ];
             }
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = false;
-              home-manager.extraSpecialArgs = {
-                inherit name' email colors;
-              };
-              home-manager.users."${user}" = {
+              home-manager.extraSpecialArgs = specialArgs;
+              home-manager.users.${user} = {
                 imports = [
                   ./home.nix
                 ];
@@ -123,7 +119,8 @@
 
       checks.aarch64-darwin.mac = self.darwinConfigurations.Darwin.system;
       checks.x86_64-linux.gordon = self.nixosConfigurations.Gordon.config.system.build.toplevel;
-      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-tree;
-      formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt-tree;
+      formatter = nixpkgs.lib.genAttrs [ "aarch64-darwin" "x86_64-linux" ] (
+        system: nixpkgs.legacyPackages.${system}.nixfmt-tree
+      );
     };
 }

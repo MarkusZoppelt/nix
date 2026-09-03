@@ -196,6 +196,7 @@ Singleton {
     }
 
     Poll {
+        active: root.hot
         interval: 30000
         command: ["duf", "--json", "--only", "local"]
         stdout: StdioCollector {
@@ -203,7 +204,6 @@ Singleton {
                 try {
                     root.disks = JSON.parse(text).filter(d => d.device_type === "local" && d.total > 0).map(d => ({
                                 mount: d.mount_point,
-                                device: d.device,
                                 fstype: d.fs_type,
                                 used: d.used,
                                 free: d.free,

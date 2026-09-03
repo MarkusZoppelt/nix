@@ -4,8 +4,6 @@ import ".."
 Item {
     id: root
     property var values: []
-    property bool spectrum: true
-    property var stroke
     readonly property int bars: values ? values.length : 0
     readonly property var ramp: [Theme.blue, Theme.cyan, Theme.green1, Theme.yellow, Theme.orange, Theme.magenta, Theme.red]
     implicitWidth: Math.max(bars * 6, 1)
@@ -14,8 +12,6 @@ Item {
     clip: true
 
     function colorAt(i, a) {
-        if (!spectrum)
-            return Qt.alpha(stroke || Theme.magenta, a);
         const t = bars < 2 ? 0 : i / (bars - 1) * (ramp.length - 1);
         const s = Math.min(Math.floor(t), ramp.length - 2);
         const m = t - s;

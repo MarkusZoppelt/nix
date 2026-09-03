@@ -12,6 +12,7 @@ Item {
     height: 0
 
     function open(anchor) {
+        Tooltip.hide();
         Popups.show(root);
         at = anchor;
         win.visible = true;

@@ -23,5 +23,4 @@ Row {
             onClicked: modelData.activate()
         }
     }
-
 }

@@ -311,7 +311,7 @@ Singleton {
                         anchors.rightMargin: 24
                         anchors.verticalCenter: parent.verticalCenter
                         text: "↑↓ select   ↵ open   esc"
-                        color: Theme.dark5
+                        color: Theme.comment
                         font.family: Theme.font
                         font.pixelSize: 11
                     }

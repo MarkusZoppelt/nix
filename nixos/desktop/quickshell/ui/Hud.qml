@@ -6,7 +6,6 @@ Item {
     property var accent
     property real dragX: -1
     property real dragY: -1
-    property bool pop: true
     default property alias body: inner.data
     signal dragged(real x, real y)
 
@@ -15,8 +14,8 @@ Item {
     height: implicitHeight
     x: dragX >= 0 ? dragX : parent ? Math.round((parent.width - width) / 2) : 0
     y: dragY >= 0 ? dragY : 132
-    opacity: pop ? 0 : 1
-    scale: pop ? 0.94 : 1
+    opacity: 0
+    scale: 0.94
 
     function clamp(nx, ny) {
         const maxX = (parent ? parent.width : width) - width - 8;
@@ -39,10 +38,8 @@ Item {
     }
 
     Component.onCompleted: {
-        if (pop) {
-            opacity = 1;
-            scale = 1;
-        }
+        opacity = 1;
+        scale = 1;
     }
 
     Behavior on opacity {

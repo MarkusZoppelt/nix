@@ -1,5 +1,4 @@
 { name', email, ... }:
-
 {
   programs.git = {
     enable = true;
@@ -16,7 +15,6 @@
         pager = "hunk pager";
       };
       github.user = "MarkusZoppelt";
-      push.default = "simple";
       pull.rebase = true;
       init.defaultBranch = "main";
     };
@@ -28,10 +26,6 @@
       ".DS_Store"
       ".Spotlight-V100"
       ".Trashes"
-      ".vimrc.local"
-      ".vim/.netrwhist"
-      ".vim/spell/"
-      ".vim/colors/"
       ".vscode/"
       "dump.rdb"
       ".opencode/"

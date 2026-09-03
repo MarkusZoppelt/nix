@@ -14,12 +14,16 @@ Singleton {
     }
 
     function open(trayItem, anchor) {
+        Tooltip.hide();
+        Popups.show(root);
         item = trayItem;
         at = anchor;
     }
 
     function close() {
         item = null;
+        at = null;
+        Popups.hide(root);
     }
 
     PopupWindow {
@@ -84,6 +88,7 @@ Singleton {
                             anchors.fill: parent
                             hoverEnabled: true
                             enabled: !modelData.isSeparator && modelData.enabled
+                            cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 modelData.triggered();
                                 root.close();

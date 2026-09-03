@@ -5,15 +5,12 @@
   user,
   ...
 }:
-
-with lib;
-
 {
   options.virtualization.vm = {
-    enable = mkEnableOption "virtual machine support (QEMU/libvirt)";
+    enable = lib.mkEnableOption "virtual machine support (QEMU/libvirt)";
   };
 
-  config = mkIf config.virtualization.vm.enable {
+  config = lib.mkIf config.virtualization.vm.enable {
     virtualisation = {
       libvirtd = {
         enable = true;

@@ -1,13 +1,10 @@
 { pkgs, colors, ... }:
-
 {
   programs.jjui = {
     enable = true;
     package = pkgs.unstable.jjui;
-
     settings = {
       ui.theme = "tokyonight";
-
       preview.show_at_start = true;
 
       # jjui 0.10.6 has no built-in way to swap out the diff viewer, so replace
@@ -35,7 +32,7 @@
   # Tokyo Night theme, adapted from https://github.com/vic/tinted-jjui.
   # jjui 0.10.6 only understands the legacy "scope selected role" selector
   # spelling; the ":selected" suffix form in the current docs is not supported.
-  home.file.".config/jjui/themes/tokyonight.toml".text = ''
+  xdg.configFile."jjui/themes/tokyonight.toml".text = ''
     text     = { fg = "${colors.fg_dark}", bg = "${colors.bg}" }
     dimmed   = { fg = "${colors.comment}" }
     title    = { fg = "${colors.blue1}", bold = true }

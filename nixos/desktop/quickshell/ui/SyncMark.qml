@@ -48,26 +48,18 @@ Item {
                 x: root.nodes[0].x
                 y: root.nodes[0].y
             }
-        }
-
-        ShapePath {
-            strokeWidth: 1.3
-            strokeColor: root.stroke || Theme.fg
-            fillColor: "transparent"
-            startX: root.cx
-            startY: root.cy
+            PathMove {
+                x: root.cx
+                y: root.cy
+            }
             PathLine {
                 x: root.nodes[1].x
                 y: root.nodes[1].y
             }
-        }
-
-        ShapePath {
-            strokeWidth: 1.3
-            strokeColor: root.stroke || Theme.fg
-            fillColor: "transparent"
-            startX: root.cx
-            startY: root.cy
+            PathMove {
+                x: root.cx
+                y: root.cy
+            }
             PathLine {
                 x: root.nodes[2].x
                 y: root.nodes[2].y

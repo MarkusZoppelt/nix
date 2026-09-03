@@ -5,17 +5,14 @@
   user,
   ...
 }:
-
-with lib;
-
 {
   options.gaming = {
-    enable = mkEnableOption "gaming support (Steam, gamemode)";
-    sunshine.enable = mkEnableOption "Sunshine game streaming server";
+    enable = lib.mkEnableOption "gaming support (Steam, gamemode)";
+    sunshine.enable = lib.mkEnableOption "Sunshine game streaming server";
   };
 
-  config = mkMerge [
-    (mkIf config.gaming.enable {
+  config = lib.mkMerge [
+    (lib.mkIf config.gaming.enable {
       programs = {
         steam.enable = true;
         gamemode = {
@@ -32,19 +29,16 @@ with lib;
 
       # Aggressive OOM handling for gaming
       systemd.oomd.enable = true;
-      services.earlyoom.enable = mkForce false;
+      services.earlyoom.enable = lib.mkForce false;
     })
 
-    (mkIf (!config.gaming.enable) {
+    (lib.mkIf (!config.gaming.enable) {
       # Conservative OOM handling when not gaming
       services.earlyoom.enable = true;
     })
 
-    (mkIf (config.gaming.enable && config.gaming.sunshine.enable) {
-      users.users.${user}.extraGroups = [
-        "input"
-        "video"
-      ];
+    (lib.mkIf (config.gaming.enable && config.gaming.sunshine.enable) {
+      users.users.${user}.extraGroups = [ "video" ];
 
       # DS5 (uhid) emulation needs non-root access; uinput already covered by steam rules.
       services.udev.extraRules = ''
@@ -67,7 +61,7 @@ with lib;
         };
         applications =
           let
-            hyprctl = getExe' pkgs.hyprland "hyprctl";
+            hyprctl = lib.getExe' pkgs.hyprland "hyprctl";
             systemctl = "${config.systemd.package}/bin/systemctl";
             # EDID-safe modes on this panel (no 1280x800). Host stays ≥1080p;
             # Moonlight on Deck still requests 1280x800 and Sunshine downscales.

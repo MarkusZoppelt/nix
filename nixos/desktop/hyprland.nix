@@ -104,10 +104,6 @@
         preserve_split = true;
       };
 
-      master = {
-        new_status = "master";
-      };
-
       misc = {
         disable_hyprland_logo = true;
       };
@@ -118,10 +114,7 @@
 
       input = {
         kb_layout = "us";
-        kb_variant = "";
-        kb_model = "";
         kb_options = "compose:caps";
-        kb_rules = "";
         repeat_rate = 60;
         repeat_delay = 300;
         natural_scroll = true;
@@ -190,8 +183,6 @@
         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-        ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
       ];
 
       bindl = [

@@ -2,8 +2,6 @@
 {
   nix.enable = false;
 
-  nixpkgs.config.allowUnfree = true;
-
   system.stateVersion = 5;
   networking.hostName = "Alyx";
 
@@ -15,9 +13,9 @@
     home = "/Users/${user}";
     shell = pkgs.unstable.nushell;
   };
+  system.primaryUser = user;
 
   environment.shells = [ pkgs.unstable.nushell ];
-  programs.zsh.enable = true;
 
   homebrew = {
     enable = true;
@@ -38,8 +36,6 @@
       "orbstack"
     ];
   };
-
-  system.primaryUser = user;
 
   # https://nix-darwin.github.io/nix-darwin/manual/
   system.defaults = {
@@ -68,8 +64,6 @@
 
     # Enable tap to click behaviour
     NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
-
-    # trackpad.Clicking = true;
 
     dock.autohide = true;
     dock.autohide-delay = 0.0;
