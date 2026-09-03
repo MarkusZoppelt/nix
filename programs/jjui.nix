@@ -1,8 +1,9 @@
-{ colors, ... }:
+{ pkgs, colors, ... }:
 
 {
   programs.jjui = {
     enable = true;
+    package = pkgs.unstable.jjui;
 
     settings = {
       ui.theme = "tokyonight";

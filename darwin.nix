@@ -13,10 +13,10 @@
   users.users.${user} = {
     name = user;
     home = "/Users/${user}";
-    shell = pkgs.nushell;
+    shell = pkgs.unstable.nushell;
   };
 
-  environment.shells = [ pkgs.nushell ];
+  environment.shells = [ pkgs.unstable.nushell ];
   programs.zsh.enable = true;
 
   homebrew = {

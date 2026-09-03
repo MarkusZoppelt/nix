@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,6 +24,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       darwin,
       home-manager,
       lanzaboote,
@@ -42,6 +44,9 @@
           colors
           ;
       };
+      unstableOverlay = final: prev: {
+        unstable = nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
+      };
     in
     {
       nixosConfigurations = {
@@ -57,6 +62,7 @@
             ./hosts/NixOS/configuration.nix
             {
               nixpkgs.overlays = [
+                unstableOverlay
                 llm-agents.overlays.shared-nixpkgs
               ];
             }
@@ -89,6 +95,7 @@
             ./darwin.nix
             {
               nixpkgs.overlays = [
+                unstableOverlay
                 (final: prev: {
                   direnv = prev.direnv.overrideAttrs (_: {
                     doCheck = false;

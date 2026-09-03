@@ -1,27 +1,8 @@
 { pkgs, colors, ... }:
-
 {
   programs.ncspot = {
     enable = true;
-    package =
-      let
-        version = "1.4.0";
-        src = pkgs.fetchFromGitHub {
-          owner = "hrkfdn";
-          repo = "ncspot";
-          tag = "v${version}";
-          hash = "sha256-YJbdXLqFPYKnluHCR5svAGIkzbKH3xYPOnA2uQCK5q4=";
-        };
-        cargoHash = "sha256-4RRAFThnp06QFb3U4IjRTRc3B9muyajH592ZNWJrJZY=";
-      in
-      pkgs.ncspot.overrideAttrs (old: {
-        inherit version src cargoHash;
-        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-          inherit src version;
-          inherit (old) pname;
-          hash = cargoHash;
-        };
-      });
+    package = pkgs.unstable.ncspot;
     settings = {
       use_nerdfont = true;
       theme = {

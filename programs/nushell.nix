@@ -2,6 +2,7 @@
 {
   programs.nushell = {
     enable = true;
+    package = pkgs.unstable.nushell;
     environmentVariables = config.home.sessionVariables;
     settings = {
       show_banner = false;

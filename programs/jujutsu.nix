@@ -1,7 +1,13 @@
-{ name', email, ... }:
+{
+  pkgs,
+  name',
+  email,
+  ...
+}:
 {
   programs.jujutsu = {
     enable = true;
+    package = pkgs.unstable.jujutsu;
     settings = {
       user = {
         name = name';

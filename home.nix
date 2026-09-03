@@ -54,6 +54,7 @@
     jq.enable = true;
     nh = {
       enable = true;
+      package = pkgs.unstable.nh;
       flake = "$HOME/Documents/nix";
     };
     ripgrep.enable = true;
