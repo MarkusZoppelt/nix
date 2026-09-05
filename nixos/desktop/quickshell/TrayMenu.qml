@@ -22,7 +22,6 @@ Singleton {
 
     function close() {
         item = null;
-        at = null;
         Popups.hide(root);
     }
 
@@ -91,7 +90,7 @@ Singleton {
                             cursorShape: Qt.PointingHandCursor
                             onClicked: {
                                 modelData.triggered();
-                                root.close();
+                                Qt.callLater(root.close);
                             }
                         }
                     }
