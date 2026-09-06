@@ -20,14 +20,14 @@
         gh
         gopls
         lazydocker
-        llm-agents.herdr
-        llm-agents.hunk
         llm-agents.opencode2
         nil
         nodejs
         restic
         sqlite
         typescript-language-server
+        unstable.herdr
+        unstable.hunk
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         (import ./lib/agent-usage.nix { inherit pkgs; })
