@@ -17,6 +17,8 @@
       hyprshot
       mumble
       nautilus
+      teamspeak6-client
+      tigervnc
       wiremix
       wl-clipboard
       wtype
