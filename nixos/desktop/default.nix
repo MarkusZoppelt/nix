@@ -12,10 +12,6 @@
   dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
   services.hyprpolkitagent.enable = true;
-  programs.hex = {
-    enable = true;
-    autostart = true;
-  };
 
   xdg.portal = {
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

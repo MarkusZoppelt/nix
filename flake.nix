@@ -17,7 +17,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
-    hex.url = "github:anomalyco/hex";
   };
 
   outputs =
@@ -29,7 +28,6 @@
       home-manager,
       lanzaboote,
       llm-agents,
-      hex,
     }:
     let
       user = "mz";
@@ -75,7 +73,6 @@
                 imports = [
                   ./home.nix
                   ./nixos/desktop
-                  hex.homeManagerModules.hex
                 ];
               };
             }
