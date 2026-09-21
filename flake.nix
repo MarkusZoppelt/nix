@@ -76,6 +76,7 @@
           system = "aarch64-darwin";
           modules = [
             ./lib/nix-settings.nix
+            ./lib/harmonia.nix
             ./darwin.nix
             {
               nixpkgs.overlays = [
