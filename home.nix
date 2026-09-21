@@ -1,8 +1,12 @@
 {
   pkgs,
   lib,
+  llm-agents,
   ...
 }:
+let
+  llm = llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   home = {
     stateVersion = "26.05";
@@ -18,16 +22,14 @@
         _1password-cli
         duf
         gh
-        gopls
         lazydocker
-        llm-agents.opencode2
         nil
-        nodejs
         restic
-        sqlite
-        typescript-language-server
-        unstable.herdr
-        unstable.hunk
+      ]
+      ++ [
+        llm.herdr
+        llm.hunk
+        llm.opencode2
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         (import ./lib/agent-usage.nix { inherit pkgs; })
@@ -39,7 +41,6 @@
     ./programs/direnv.nix
     ./programs/ghostty.nix
     ./programs/git.nix
-    ./programs/go.nix
     ./programs/jjui.nix
     ./programs/jujutsu.nix
     ./programs/ncspot.nix
@@ -55,7 +56,6 @@
     jq.enable = true;
     nh = {
       enable = true;
-      package = pkgs.unstable.nh;
       flake = "$HOME/Documents/nix";
     };
     ripgrep.enable = true;

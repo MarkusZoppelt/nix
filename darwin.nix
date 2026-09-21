@@ -11,11 +11,11 @@
   users.users.${user} = {
     name = user;
     home = "/Users/${user}";
-    shell = pkgs.unstable.nushell;
+    shell = pkgs.nushell;
   };
   system.primaryUser = user;
 
-  environment.shells = [ pkgs.unstable.nushell ];
+  environment.shells = [ pkgs.nushell ];
 
   homebrew = {
     enable = true;

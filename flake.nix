@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,7 +22,6 @@
     {
       self,
       nixpkgs,
-      nixpkgs-unstable,
       darwin,
       home-manager,
       lanzaboote,
@@ -40,11 +38,8 @@
           name'
           email
           colors
+          llm-agents
           ;
-      };
-      llmOverlay = llm-agents.overlays.shared-nixpkgs;
-      unstableOverlay = final: prev: {
-        unstable = nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system};
       };
     in
     {
@@ -58,12 +53,6 @@
             ./lib/nix-settings.nix
             ./nixos/common.nix
             ./hosts/NixOS/configuration.nix
-            {
-              nixpkgs.overlays = [
-                unstableOverlay
-                llmOverlay
-              ];
-            }
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -90,13 +79,11 @@
             ./darwin.nix
             {
               nixpkgs.overlays = [
-                unstableOverlay
                 (final: prev: {
                   direnv = prev.direnv.overrideAttrs (_: {
                     doCheck = false;
                   });
                 })
-                llmOverlay
               ];
             }
             home-manager.darwinModules.home-manager

@@ -41,8 +41,8 @@
       "input"
     ];
   };
-  environment.shells = [ pkgs.unstable.nushell ];
-  users.defaultUserShell = pkgs.unstable.nushell;
+  environment.shells = [ pkgs.nushell ];
+  users.defaultUserShell = pkgs.nushell;
 
   ### SERVICES ###
   services = {

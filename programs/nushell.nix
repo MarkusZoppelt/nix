@@ -1,12 +1,7 @@
-{
-  pkgs,
-  config,
-  ...
-}:
+{ config, ... }:
 {
   programs.nushell = {
     enable = true;
-    package = pkgs.unstable.nushell;
     environmentVariables = config.home.sessionVariables;
     # nu never sources /etc/profile, so login shells miss Nix bins and
     # macOS path_helper entries like /usr/local/bin (OrbStack docker).

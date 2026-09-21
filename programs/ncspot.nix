@@ -1,8 +1,7 @@
-{ pkgs, colors, ... }:
+{ colors, ... }:
 {
   programs.ncspot = {
     enable = true;
-    package = pkgs.unstable.ncspot;
     settings = {
       use_nerdfont = true;
       theme = {
