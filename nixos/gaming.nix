@@ -14,7 +14,10 @@
   config = lib.mkMerge [
     (lib.mkIf config.gaming.enable {
       programs = {
-        steam.enable = true;
+        steam = {
+          enable = true;
+          remotePlay.openFirewall = true; # includes SteamVR ports
+        };
         gamemode = {
           enable = true;
           settings = {
