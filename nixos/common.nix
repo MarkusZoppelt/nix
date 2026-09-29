@@ -52,23 +52,6 @@ in
   };
   environment.shells = [ pkgs.nushell ];
   users.defaultUserShell = pkgs.nushell;
-  environment.systemPackages = [
-    (pkgs.writeShellApplication {
-      name = "nix-copy-alyx";
-      text = ''
-        if [ "$#" -eq 0 ]; then
-          set -- /run/current-system
-        fi
-        # Alyx's login shell is nu; ssh runs `nu -c`, which does not load
-        # env.nu, so PATH has no Nix. Absolute path skips that.
-        # ssh-ng checks signatures even for trusted users. mz is trusted on
-        # Alyx, so --no-check-sigs is honored and unsigned local builds copy.
-        exec nix copy --no-check-sigs \
-          --to "ssh-ng://alyx?remote-program=/nix/var/nix/profiles/default/bin/nix-daemon" \
-          "$@"
-      '';
-    })
-  ];
 
   ### SERVICES ###
   services = {
