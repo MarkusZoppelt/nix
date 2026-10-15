@@ -1,54 +1,69 @@
-vim.api.nvim_create_autocmd("LspAttach", {
-	callback = function(event)
-		local client = vim.lsp.get_client_by_id(event.data.client_id)
-		if not client then
-			return
-		end
+vim.lsp.config("*", { workspace_required = true })
 
-		if client:supports_method("textDocument/completion") then
-			vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = false })
-		end
+vim.lsp.config("gopls", {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
+	root_markers = { "go.work", "go.mod", ".git" },
+})
 
-		vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+vim.lsp.config("nil_ls", {
+	cmd = { "nil" },
+	filetypes = { "nix" },
+	root_markers = { "flake.nix", ".git" },
+})
 
-		local opts = { buffer = event.buf, silent = true }
+vim.lsp.config("ts_ls", {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	root_markers = { "package.json", "tsconfig.json", "jsconfig.json", ".git" },
+	init_options = { hostInfo = "neovim" },
+})
 
-		vim.keymap.set(
-			{ "n", "x" },
-			"<F3>",
-			"<cmd>lua vim.lsp.buf.format({async = true})<cr>",
-			vim.tbl_extend("force", opts, { desc = "Format buffer" })
-		)
-		vim.keymap.set(
-			"n",
-			"grr",
-			"<cmd>Telescope lsp_references<cr>",
-			vim.tbl_extend("force", opts, { desc = "LSP references (Telescope)" })
-		)
-		vim.keymap.set(
-			"n",
-			"<space>df",
-			"<cmd>lua vim.diagnostic.open_float()<cr>",
-			vim.tbl_extend("force", opts, { desc = "Diagnostic float" })
-		)
-		vim.keymap.set(
-			"n",
-			"<space>dl",
-			"<cmd>Telescope diagnostics<cr>",
-			vim.tbl_extend("force", opts, { desc = "Diagnostics list (Telescope)" })
-		)
+vim.lsp.config("rust_analyzer", {
+	cmd = { "rust-analyzer" },
+	filetypes = { "rust" },
+	root_markers = { "Cargo.toml", "rust-project.json" },
+	settings = {
+		["rust-analyzer"] = {
+			files = { excludeDirs = { ".direnv", ".git" } },
+		},
+	},
+	-- Read at startup from initializationOptions, not workspace/configuration.
+	before_init = function(params, config)
+		params.initializationOptions = (config.settings or {})["rust-analyzer"]
 	end,
 })
 
--- Server configs: cmd/filetypes/root_markers come from nvim-lspconfig.
--- rust_analyzer is managed by rustaceanvim.
-vim.lsp.enable({ "gopls", "nil_ls", "ts_ls" })
+vim.lsp.enable({ "gopls", "nil_ls", "ts_ls", "rust_analyzer" })
 
--- Add border to the completion documentation popup (not covered by winborder/pumborder)
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		local client = vim.lsp.get_client_by_id(ev.data.client_id)
+		if not client then
+			return
+		end
+		if client:supports_method("textDocument/completion") then
+			vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
+		end
+		if client.name ~= "rust_analyzer" then -- noisy on every binding
+			vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+		end
+		local function map(mode, lhs, rhs, desc)
+			vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true, desc = desc })
+		end
+		map("n", "grr", "<cmd>Telescope lsp_references<cr>", "LSP references")
+		map("n", "<space>df", vim.diagnostic.open_float, "Diagnostic float")
+		map("n", "<space>dl", "<cmd>Telescope diagnostics<cr>", "Diagnostics")
+		map({ "n", "x" }, "<F3>", function()
+			vim.lsp.buf.format({ async = true })
+		end, "Format")
+	end,
+})
+
+-- Docs preview ignores 'winborder'.
 vim.api.nvim_create_autocmd("CompleteChanged", {
 	callback = function()
-		local info = vim.fn.complete_info({ "selected" })
-		local win = info.preview_winid
+		local win = vim.fn.complete_info({ "selected" }).preview_winid
 		if win and vim.api.nvim_win_is_valid(win) then
 			vim.api.nvim_win_set_config(win, { border = "rounded" })
 		end
@@ -57,11 +72,6 @@ vim.api.nvim_create_autocmd("CompleteChanged", {
 
 vim.diagnostic.config({
 	severity_sort = true,
-    -- Use single-line virtual_text and <space>df for the full message
-	virtual_text = true;
-	virtual_lines = false;
-	float = {
-		border = "rounded",
-		source = true,
-	},
+	virtual_text = true,
+	float = { border = "rounded", source = true },
 })
