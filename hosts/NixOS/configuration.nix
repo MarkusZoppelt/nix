@@ -11,7 +11,6 @@
     ../../nixos/tpm-luks.nix
     ../../nixos/gui.nix
     ../../nixos/gaming.nix
-    ../../nixos/virtualization.nix
   ];
 
   secureboot.enable = true;
