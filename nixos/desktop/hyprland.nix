@@ -114,8 +114,7 @@
       };
 
       windowrule = [
-        "match:class ^(steam_app_[0-9]+)$, content game"
-        "match:fullscreen true, no_blur on, no_shadow on, no_anim on, border_size 0, rounding 0"
+        "match:fullscreen true, content game, no_blur on, no_shadow on, no_anim on, border_size 0, rounding 0"
       ];
 
       layerrule = [

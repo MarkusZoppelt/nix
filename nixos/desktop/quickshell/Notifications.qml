@@ -25,8 +25,9 @@ Scope {
             aboveWindows: true
             focusable: false
             exclusionMode: ExclusionMode.Ignore
+            visible: server.trackedNotifications.values.length > 0
             implicitWidth: 400
-            implicitHeight: Math.max(col.implicitHeight, 1)
+            implicitHeight: col.implicitHeight
             WlrLayershell.namespace: "notifications"
             WlrLayershell.layer: WlrLayer.Overlay
             WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
