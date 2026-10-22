@@ -27,6 +27,7 @@ in
         restic
       ]
       ++ [
+        llm.claude-code
         llm.hunk
         llm.opencode2
       ]
