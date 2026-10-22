@@ -27,7 +27,6 @@ in
         restic
       ]
       ++ [
-        llm.herdr
         llm.hunk
         llm.opencode2
       ]
