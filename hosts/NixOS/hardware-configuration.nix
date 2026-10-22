@@ -22,6 +22,7 @@
 }:
 
 let
+  # Same names as tpmLuks.devices. nixos/tpm-luks.nix asserts that.
   luksDevices = [
     "nixos-crypt-root"
     "nixos-crypt-swap"
