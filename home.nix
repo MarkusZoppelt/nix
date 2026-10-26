@@ -1,4 +1,6 @@
 {
+  config,
+  direnv-instant,
   pkgs,
   lib,
   llm-agents,
@@ -41,6 +43,7 @@ in
   };
 
   imports = [
+    direnv-instant.homeModules.direnv-instant
     ./programs/btop.nix
     ./programs/direnv.nix
     ./programs/ghostty.nix
@@ -55,12 +58,15 @@ in
   ];
 
   programs = {
+    direnv-instant.enable = true;
     fd.enable = true;
     fzf.enable = true;
     jq.enable = true;
     nh = {
       enable = true;
-      flake = "$HOME/Documents/nix";
+      # Nushell session variables are JSON, so "$HOME/..." is not expanded
+      # and nh looks for a relative path that does not exist.
+      flake = "${config.home.homeDirectory}/Documents/nix";
     };
     ripgrep.enable = true;
   };

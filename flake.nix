@@ -16,6 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    direnv-instant.url = "github:Mic92/direnv-instant";
   };
 
   outputs =
@@ -26,6 +27,7 @@
       home-manager,
       lanzaboote,
       llm-agents,
+      direnv-instant,
     }:
     let
       user = "mz";
@@ -39,6 +41,7 @@
           email
           colors
           llm-agents
+          direnv-instant
           ;
       };
     in
