@@ -11,9 +11,13 @@ in
   home = {
     stateVersion = "26.05";
 
+    sessionPath = [
+      "$HOME/.local/bin"
+    ];
     sessionVariables = {
       LANG = "en_US.UTF-8";
       LC_CTYPE = "en_US.UTF-8";
+      EDITOR = "nvim";
     };
 
     packages =
