@@ -1,5 +1,12 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
+  # External commands otherwise complete as files only. The generated
+  # integration also rewrites PATH and defines get-env/set-env/unset-env.
+  programs.carapace = {
+    enable = true;
+    enableNushellIntegration = false;
+  };
+
   programs.nushell = {
     enable = true;
     environmentVariables = config.home.sessionVariables;
@@ -38,6 +45,31 @@
       highlight_resolved_externals = true;
       history.max_size = 9999999;
     };
+    # 0.112 passes a span list positionally. Newer nu passes a record when
+    # the closure parameter is named place (nushell #18791).
+    extraConfig = ''
+      let carapace_completer = {|place|
+        let spans = if ($place | describe) =~ "record" { $place.command } else { $place }
+        if ($spans | is-empty) or ($spans.0 | is-empty) {
+          null
+        } else {
+          let expanded = scope aliases | where name == $spans.0 | get --optional 0.expansion
+          let spans = if $expanded != null {
+            $spans | skip 1 | prepend ($expanded | split row " ")
+          } else {
+            $spans
+          }
+          try {
+            with-env { CARAPACE_LENIENT: "1" } {
+              ^${lib.getExe config.programs.carapace.package} $spans.0 nushell ...$spans | from json
+            }
+          } catch {
+            null
+          }
+        }
+      }
+      $env.config.completions.external.completer = $carapace_completer
+    '';
     shellAliases = {
       ll = "ls -l";
     };
