@@ -17,6 +17,8 @@
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
     direnv-instant.url = "github:Mic92/direnv-instant";
+    # Needs the package token in /etc/nix/netrc until Rex's first public release
+    rex.url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz";
   };
 
   outputs =
@@ -28,6 +30,7 @@
       lanzaboote,
       llm-agents,
       direnv-instant,
+      rex,
     }:
     let
       user = "mz";
@@ -65,7 +68,13 @@
                 imports = [
                   ./home.nix
                   ./nixos/desktop
+                  rex.homeManagerModules.default
                 ];
+                programs.rex.enable = true;
+                services.rex = {
+                  enable = true;
+                  tailscale.enable = true;
+                };
               };
             }
           ];
