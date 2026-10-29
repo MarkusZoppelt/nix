@@ -27,10 +27,10 @@ in
       [
         _1password-cli
         duf
-        gh
         lazydocker
         nil
         restic
+        tea
       ]
       ++ [
         llm.claude-code
@@ -61,6 +61,15 @@ in
     direnv-instant.enable = true;
     fd.enable = true;
     fzf.enable = true;
+    # gh doubles as git's credential helper for github.com, so HTTPS
+    # pushes/pulls work over remote sessions without 1Password.
+    gh = {
+      enable = true;
+      settings = {
+        git_protocol = "https";
+        aliases.co = "pr checkout";
+      };
+    };
     jq.enable = true;
     nh = {
       enable = true;
