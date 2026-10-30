@@ -3,11 +3,14 @@ set -euo pipefail
 umask 077
 
 db="${XDG_DATA_HOME:-$HOME/.local/share}/opencode/opencode.db"
+claude_dir="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 tmp=$(mktemp -d)
 trap 'rm -rf "$tmp"' EXIT
 echo null >"$tmp/go.json"
 echo null >"$tmp/xai.json"
+echo null >"$tmp/claude.json"
 echo '[]' >"$tmp/sessions.json"
+echo '[]' >"$tmp/claude-sessions.json"
 
 exec 9>"${XDG_RUNTIME_DIR:-/tmp}/agent-usage.lock"
 flock 9
@@ -54,10 +57,47 @@ if [[ -f $db ]]; then
   [[ -s $tmp/sessions.json ]] || echo '[]' >"$tmp/sessions.json"
 fi
 
-jq -n --slurpfile go "$tmp/go.json" --slurpfile xai "$tmp/xai.json" --slurpfile sessions "$tmp/sessions.json" --arg today "$(date +%F)" '
+claude_tier=
+if [[ -f $claude_dir/.credentials.json ]]; then
+  claude=$(jq -r '.claudeAiOauth.accessToken // ""' "$claude_dir/.credentials.json" 2>/dev/null || true)
+  claude_tier=$(jq -r '.claudeAiOauth | [.subscriptionType // "", .rateLimitTier // ""] | join(" ")' \
+    "$claude_dir/.credentials.json" 2>/dev/null || true)
+  if [[ -n $claude ]]; then
+    curl_bearer "$claude" https://api.anthropic.com/api/oauth/usage "$tmp/claude.json" \
+      'header = "anthropic-beta: oauth-2025-04-20"'
+  fi
+fi
+
+if [[ -d $claude_dir/projects ]]; then
+  # Assistant messages repeat once per content block; dedupe by message id.
+  find "$claude_dir/projects" -name '*.jsonl' -exec cat {} + 2>/dev/null \
+    | jq -nR '
+        reduce (inputs | fromjson? | select(.type == "assistant" and .message.usage != null)) as $m ({};
+          .[$m.message.id // $m.uuid] = {
+            provider: "anthropic",
+            model: ($m.message.model // "?"),
+            day: ($m.timestamp | sub("\\.[0-9]+"; "") | fromdateiso8601 | strflocaltime("%Y-%m-%d")),
+            tokens: ($m.message.usage | (.input_tokens // 0) + (.output_tokens // 0)
+              + (.cache_read_input_tokens // 0) + (.cache_creation_input_tokens // 0))
+          })
+        | [.[] | select(.model != "<synthetic>")]
+      ' >"$tmp/claude-sessions.json" 2>/dev/null || true
+  [[ -s $tmp/claude-sessions.json ]] || echo '[]' >"$tmp/claude-sessions.json"
+fi
+
+jq -n --slurpfile go "$tmp/go.json" --slurpfile xai "$tmp/xai.json" --slurpfile claude "$tmp/claude.json" \
+  --slurpfile sessions "$tmp/sessions.json" --slurpfile claudeSessions "$tmp/claude-sessions.json" \
+  --arg today "$(date +%F)" --arg claudeTier "$claude_tier" '
   def win(title; w):
     if w == null then empty
     else {title: title, percent: ((w.percent // 0) / 100), resetsAt: (w.resetsAt // "")} end;
+  def cwin(title; w):
+    if w == null then empty
+    else {title: title, percent: ((w.utilization // 0) / 100), resetsAt: (w.resets_at // "")} end;
+  def claude_tier:
+    ($claudeTier | split(" ")) as [$sub, $rate]
+    | ($sub // "" | if . == "" then "Claude" else (.[:1] | ascii_upcase) + .[1:] end)
+      + ($rate // "" | (capture("_(?<x>[0-9]+x)$").x // "") | if . == "" then "" else " " + . end);
   def week: [range(0; 7) | (now - (. * 86400) | strflocaltime("%Y-%m-%d"))];
   def grok_limits(c):
     (c.currentPeriod.end // c.billingPeriodEnd // "") as $end
@@ -66,7 +106,7 @@ jq -n --slurpfile go "$tmp/go.json" --slurpfile xai "$tmp/xai.json" --slurpfile 
       elif (c.onDemandCap.val // 0) > 0 then
         [{title: "On-demand", percent: ((c.onDemandUsed.val // 0) / c.onDemandCap.val), resetsAt: $end}]
       else [] end;
-  (reduce ($sessions[0] // [])[] as $r ({};
+  (reduce (($sessions[0] // []) + ($claudeSessions[0] // []))[] as $r ({};
     .[$r.provider] |= (. // {today: 0, days: {}, models: {}})
     | .[$r.provider] |= (
         .days[$r.day] += $r.tokens
@@ -92,5 +132,14 @@ jq -n --slurpfile go "$tmp/go.json" --slurpfile xai "$tmp/xai.json" --slurpfile 
         id: "xai", name: "Grok", tierLabel: "Grok",
         limits: (if $c == null then [] else grok_limits($c) end)
       }) end;
-  {providers: [go, grok]}
+  def claude:
+    $claude[0] as $c
+    | if $c == null and ($usage.anthropic | not) then empty else attach({
+        id: "anthropic", name: "Claude", tierLabel: claude_tier,
+        limits: (if $c == null then [] else [
+          cwin("Session"; $c.five_hour), cwin("Weekly"; $c.seven_day),
+          cwin("Weekly Opus"; $c.seven_day_opus), cwin("Weekly Sonnet"; $c.seven_day_sonnet)
+        ] end)
+      }) end;
+  {providers: [claude, go, grok]}
 ' || echo '{"providers":[]}'
