@@ -26,6 +26,10 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
       inputs.home-manager.follows = "home-manager";
     };
+    hokum = {
+      url = "github:anomalyco/hokum";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
@@ -40,6 +44,7 @@
       direnv-instant,
       rex,
       hex,
+      hokum,
     }:
     let
       user = "mz";
@@ -68,6 +73,23 @@
             ./lib/nix-settings.nix
             ./nixos/common.nix
             ./hosts/NixOS/configuration.nix
+            (
+              { pkgs, ... }:
+              let
+                hokumPkg = hokum.packages.${pkgs.stdenv.hostPlatform.system}.default;
+              in
+              {
+                # Notification daemon, replaces Quickshell's
+                environment.systemPackages = [ hokumPkg ];
+                services.dbus.packages = [ hokumPkg ];
+                systemd.packages = [ hokumPkg ];
+                systemd.user.services.hokum = {
+                  wantedBy = [ "graphical-session.target" ];
+                  # GDM greeter also reaches graphical-session.target
+                  unitConfig.ConditionUser = user;
+                };
+              }
+            )
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

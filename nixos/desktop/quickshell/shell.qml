@@ -4,7 +4,6 @@ import Quickshell.Io
 
 Scope {
     Bar {}
-    Notifications {}
 
     IpcHandler {
         target: "launcher"

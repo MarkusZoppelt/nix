@@ -171,6 +171,26 @@
         "type": "github"
       }
     },
+    "hokum": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793309495,
+        "narHash": "sha256-HWakQFeqHROzeuDVTVI8bPWc/Dx/iya1HG7Vow3oOSs=",
+        "owner": "anomalyco",
+        "repo": "hokum",
+        "rev": "4f620ff7c41e04baf2c8653960b58d8af9d40611",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "repo": "hokum",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -357,6 +377,7 @@
         "darwin": "darwin",
         "direnv-instant": "direnv-instant",
         "hex": "hex",
+        "hokum": "hokum",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
