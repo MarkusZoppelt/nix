@@ -148,6 +148,29 @@
         "type": "github"
       }
     },
+    "hex": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793442358,
+        "narHash": "sha256-/zyEoeoo1Jgyq00yCc037F1PEAdD3QdHAXTHj94sqxI=",
+        "owner": "anomalyco",
+        "repo": "hex",
+        "rev": "ccbf4a37fdfe86f12ca7c1d3375961995c7c0ffc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "repo": "hex",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -226,6 +249,22 @@
       },
       "original": {
         "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1793341285,
+        "narHash": "sha256-Y1CiZ4SoBUjLQyQM/pY+rS2dXD3CHLPstF0lmOc73D4=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1c89083e451e891152365b799595cf7790a43325",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -317,10 +356,12 @@
       "inputs": {
         "darwin": "darwin",
         "direnv-instant": "direnv-instant",
+        "hex": "hex",
         "home-manager": "home-manager",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
         "nixpkgs": "nixpkgs_3",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "rex": "rex"
       }
     },

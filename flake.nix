@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,18 +20,26 @@
     direnv-instant.url = "github:Mic92/direnv-instant";
     # Needs the package token in /etc/nix/netrc until Rex's first public release
     rex.url = "https://pkgs.superlogical.com/rex/nix/preview.tar.gz";
+    hex = {
+      url = "github:anomalyco/hex";
+      # Needs a newer rustc than 26.05 ships
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      nixpkgs-unstable,
       home-manager,
       darwin,
       lanzaboote,
       llm-agents,
       direnv-instant,
       rex,
+      hex,
     }:
     let
       user = "mz";
@@ -69,11 +78,17 @@
                   ./home.nix
                   ./nixos/desktop
                   rex.homeManagerModules.default
+                  hex.homeManagerModules.default
                 ];
                 programs.rex.enable = true;
                 services.rex = {
                   enable = true;
                   tailscale.enable = true;
+                };
+                programs.hex = {
+                  enable = true;
+                  autostart = true;
+                  systemdTarget = "hyprland-session.target";
                 };
               };
             }

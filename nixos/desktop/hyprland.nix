@@ -152,6 +152,8 @@
         ", PRINT, exec, hyprshot -m region"
         "SHIFT, PRINT, exec, hyprshot -m window"
         "CTRL, PRINT, exec, hyprshot -m output"
+        # Hex: hold to dictate (Hyprland ignores the key set in Hex)
+        ", F9, exec, hex dictation start"
         # Move focus
         "$mainMod, left, movefocus, l"
         "$mainMod, right, movefocus, r"
@@ -199,6 +201,10 @@
         ", XF86AudioPause, exec, playerctl play-pause"
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioPrev, exec, playerctl previous"
+      ];
+
+      bindr = [
+        ", F9, exec, hex dictation stop"
       ];
 
       bindm = [
