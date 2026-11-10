@@ -71,12 +71,7 @@ in
       };
     };
     jq.enable = true;
-    nh = {
-      enable = true;
-      # Nushell session variables are JSON, so "$HOME/..." is not expanded
-      # and nh looks for a relative path that does not exist.
-      flake = "${config.home.homeDirectory}/Documents/nix";
-    };
+    nh.enable = true;
     ripgrep.enable = true;
   };
 }
