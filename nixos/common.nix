@@ -49,6 +49,8 @@ in
       "networkmanager"
       "input"
     ];
+    # Keep user services such as the Rex server running without a login.
+    linger = true;
   };
   environment.shells = [ pkgs.nushell ];
   users.defaultUserShell = pkgs.nushell;
