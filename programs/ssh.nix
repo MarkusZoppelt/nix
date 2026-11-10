@@ -22,9 +22,7 @@ in
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    includes = [
-      "~/.ssh/config.d/*"
-    ] ++ lib.optionals pkgs.stdenv.isDarwin [
+    includes = lib.optionals pkgs.stdenv.isDarwin [
       "~/.orbstack/ssh/config"
     ];
     settings = {
