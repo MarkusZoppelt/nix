@@ -17,26 +17,6 @@
 
   environment.shells = [ pkgs.nushell ];
 
-  homebrew = {
-    enable = true;
-    onActivation = {
-      autoUpdate = true;
-      upgrade = true;
-      cleanup = "zap";
-    };
-
-    brews = [
-      {
-        name = "syncthing";
-        restart_service = "changed";
-      }
-    ];
-
-    casks = [
-      "orbstack"
-    ];
-  };
-
   # https://nix-darwin.github.io/nix-darwin/manual/
   system.defaults = {
     CustomUserPreferences = {
