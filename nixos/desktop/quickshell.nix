@@ -17,7 +17,6 @@ let
         iconSize = 15;
         cava = "${./quickshell/cava.cfg}";
         agentUsage = lib.getExe (import ../../lib/agent-usage.nix { inherit pkgs; });
-        openDir = lib.getExe (import ../../lib/qs-open-dir.nix { inherit pkgs; });
         systemdRun = lib.getExe' pkgs.systemd "systemd-run";
       }
     )

@@ -74,5 +74,4 @@ Linux-only packages go in `quickshell.nix`, not `home.nix`.
 
 - No runtime `import` of `$HOME` QML.
 - `Run.detached` rejects `-`/`.` argv0, NULs, and relative cwd. Always `--`.
-- Folder clicks go through `Theme.openDir`.
 - Image URLs go through `Fmt.imageUrl`.

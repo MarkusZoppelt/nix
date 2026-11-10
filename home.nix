@@ -79,10 +79,4 @@ in
     };
     ripgrep.enable = true;
   };
-
-  services = lib.optionalAttrs pkgs.stdenv.isLinux {
-    syncthing = {
-      enable = true;
-    };
-  };
 }
