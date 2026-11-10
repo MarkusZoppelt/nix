@@ -8,6 +8,10 @@
     ./quickshell.nix
   ];
 
+  # Linger and the GDM greeter reach graphical-session.target before a display
+  # exists. Hyprland imports WAYLAND_DISPLAY, then starts this target.
+  wayland.systemd.target = "hyprland-session.target";
+
   gtk.enable = true;
   dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 

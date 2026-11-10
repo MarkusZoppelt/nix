@@ -1,5 +1,6 @@
 {
   colors,
+  config,
   lib,
   pkgs,
   ...
@@ -36,6 +37,10 @@ in
     enable = true;
     systemd.enable = true;
   };
+
+  # The module only sets WantedBy. Hyprland stops and starts the session
+  # target on launch, which does not restart a unit that is not PartOf it.
+  systemd.user.services.quickshell.Unit.PartOf = [ config.wayland.systemd.target ];
 
   xdg.configFile.quickshell = {
     source = shell;
